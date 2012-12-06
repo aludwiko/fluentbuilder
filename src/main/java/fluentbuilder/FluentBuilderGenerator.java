@@ -35,42 +35,39 @@ public class FluentBuilderGenerator {
 	/**
 	 * default generated method name prefix is 'with', e.g. for field id method name will be 'withId(long id)';
 	 * @param methodPrefix - new method prefix
+	 * @return 
 	 */
-	public void withMethodPrefix(String methodPrefix) {
+	public FluentBuilderGenerator withMethodPrefix(String methodPrefix) {
 		this.methodPrefix = methodPrefix;
+		return this;
 	}
 
 	/**
 	 * default is 'builder'
-	 * @param methodPrefix - new builder name
+	 * @param methodPrefix - new builder name (camelcase notation)
+	 * @return 
 	 */
-	public void withBuilderName(String builderName) {
+	public FluentBuilderGenerator withBuilderName(String builderName) {
 		this.builderName = builderName;
+		return this;
 	}
 
 	/**
 	 * default is 'build'
 	 * @param launchBuildMethodName - new method name for launching build
+	 * @return 
 	 */
-	public void withLaunchBuildMethodName(String launchBuildMethodName) {
+	public FluentBuilderGenerator withLaunchBuildMethodName(String launchBuildMethodName) {
 		this.launchBuildMethodName = launchBuildMethodName;
+		return this;
 	}
 
 	/**
 	 * print builder to {@link System#out}
 	 */
 	public void printBuilder() {
-		printer.printComment(clazz.getName());
-	}
-
-	public void should() {
-
-		// given
-		// Joiner.on("as").skipNulls();
-		FluentBuilderGenerator.forClass(String.class).printBuilder();
-
-		// when
-
-		// then
+		printer.printComment(clazz.getSimpleName());
+		printer.printBuilderClass(builderName);
+		printer.printBuilderBody(clazz, methodPrefix, launchBuildMethodName, builderName);
 	}
 }
