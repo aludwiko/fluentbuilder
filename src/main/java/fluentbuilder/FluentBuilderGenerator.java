@@ -1,5 +1,5 @@
-/* 
- * Created on 03-12-2012 19:25:53 by aludwiko
+/*
+ * Created on 03-12-2012 19:25:53 by Andrzej Ludwikowski
  */
 
 package fluentbuilder;
