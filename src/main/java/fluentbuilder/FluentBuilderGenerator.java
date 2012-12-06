@@ -5,6 +5,7 @@
 package fluentbuilder;
 
 
+
 /**
  * 
  * @author Andrzej Ludwikowski
@@ -14,9 +15,8 @@ public class FluentBuilderGenerator {
 	private Class<?> clazz;
 	private String methodPrefix = "with";
 	private String builderName = "builder";
-
-
-//	private static FluentBuilderGeneratorPrinter printer = new FluentBuilderGeneratorPrinter();
+	private String launchBuildMethodName = "build";
+	private static FluentBuilderGeneratorPrinter printer = new FluentBuilderGeneratorPrinter(System.out);
 
 
 	private FluentBuilderGenerator(Class<?> clazz) {
@@ -48,8 +48,29 @@ public class FluentBuilderGenerator {
 		this.builderName = builderName;
 	}
 
-	public void printBuilder() {
+	/**
+	 * default is 'build'
+	 * @param launchBuildMethodName - new method name for launching build
+	 */
+	public void withLaunchBuildMethodName(String launchBuildMethodName) {
+		this.launchBuildMethodName = launchBuildMethodName;
+	}
 
-		//
+	/**
+	 * print builder to {@link System#out}
+	 */
+	public void printBuilder() {
+		printer.printComment(clazz.getName());
+	}
+
+	public void should() {
+
+		// given
+		// Joiner.on("as").skipNulls();
+		FluentBuilderGenerator.forClass(String.class).printBuilder();
+
+		// when
+
+		// then
 	}
 }
