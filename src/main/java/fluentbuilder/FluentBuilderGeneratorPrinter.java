@@ -9,6 +9,8 @@ import static org.apache.commons.lang.StringUtils.repeat;
 import static org.apache.commons.lang.StringUtils.uncapitalize;
 
 import java.io.PrintStream;
+import java.lang.reflect.Field;
+import java.util.List;
 
 
 public class FluentBuilderGeneratorPrinter {
@@ -30,8 +32,20 @@ public class FluentBuilderGeneratorPrinter {
 		printlnWithCurrentIndentation(" */");
 	}
 
-	protected void printlnWithCurrentIndentation(String text) {
+	private void printlnWithCurrentIndentation(String text) {
 		printIndentation(indentationLevel);
+		printStream.println(text);
+	}
+	
+	private void println(String text, String... values) {
+
+		printIndentation(indentationLevel);
+
+		int i = 0;
+		for (String value : values) {
+			text = text.replaceAll("#" + i, value);
+			i++;
+		}
 		printStream.println(text);
 	}
 
@@ -40,47 +54,17 @@ public class FluentBuilderGeneratorPrinter {
 		printStream.print(repeat(INDENTATION, level));
 	}
 
-	public void printBuilderClass(String builderName) {
+	public void printBuilderStaticInvocation(String builderName) {
 
-		printlnWithCurrentIndentation(builderStaticClass(builderName));
+		println("public static #0 #1() {", capitalize(builderName), uncapitalize(builderName));
 		increaseIndentation();
-		printlnWithCurrentIndentation(builderReturnStaticClass(builderName));
+		println("return new #0();", builderName);
 		decreaseIndentation();
 		printlnWithCurrentIndentation("}");
-		printNewLine();
+		println();
 	}
 
-	/**
-	 * "return new Builder();"
-	 * @param builderName
-	 * @return
-	 */
-	private String builderReturnStaticClass(String builderName) {
-
-		StringBuffer returnClass = new StringBuffer("return new ");
-
-		returnClass.append(capitalize(builderName));
-		returnClass.append("();");
-
-		return returnClass.toString();
-	}
-
-	/**
-	 *  "public static Builder builder() {"
-	 */
-	private String builderStaticClass(String builderName) {
-
-		StringBuffer staticClass = new StringBuffer("public static ");
-
-		staticClass.append(capitalize(builderName));
-		staticClass.append(" ");
-		staticClass.append(uncapitalize(builderName));
-		staticClass.append("() {");
-
-		return staticClass.toString();
-	}
-
-	private void printNewLine() {
+	private void println() {
 		printStream.println();
 	}
 
@@ -92,12 +76,48 @@ public class FluentBuilderGeneratorPrinter {
 		indentationLevel++;
 	}
 
-	public void printBuilderBody(Class<?> clazz, String methodPrefix, String launchBuildMethodName, String builderName) {
+	public void printBuilderBegin(String className, String builderName) {
 
-		printlnWithCurrentIndentation("public static class " + capitalize(builderName) + " {");
+		println("public static class #0 {", capitalize(builderName));
 		increaseIndentation();
-		printNewLine();
-//		print("private final " + className + " " + varName + " = new " + className + "();");
+		println();
+		println("private final #0 #1 = new #0();", capitalize(className), uncapitalize(className));
+		println();
+	}
+
+	/**
+	 * for each field prints new "with" statement, eg. for <code>name</code> will be
+	 * <br/> 
+	 * <code>public Builder withName(String name) { sample.name = name; return this; }</code>
+	 * 
+	 * @param fields
+	 * @param builderName
+	 * @param className
+	 * @param methodPrefix
+	 */
+	public void printBuilderBody(List<Field> fields, String builderName, String className, String methodPrefix) {
+
+		for (Field field : fields) {
+
+			String fieldName = field.getName();
+
+			println("public #0 #1#2(#3 #4) { #5.#4 = #4; return this; }",
+					capitalize(builderName),
+					methodPrefix,
+					capitalize(fieldName),
+					field.getType().getSimpleName(),
+					fieldName,
+					uncapitalize(className));
+		}
+	}
+
+	public void printBuilderEnd(String className, String launchBuildMethodName) {
+
+		println();
+		println("public #0 #1() { return #2;}", className, launchBuildMethodName, uncapitalize(className));
+		decreaseIndentation();
+		printlnWithCurrentIndentation("}");
+		printlnWithCurrentIndentation("/** @formatter:on */");
 	}
 
 }

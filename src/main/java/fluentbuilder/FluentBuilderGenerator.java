@@ -17,6 +17,7 @@ public class FluentBuilderGenerator {
 	private String builderName = "builder";
 	private String launchBuildMethodName = "build";
 	private static FluentBuilderGeneratorPrinter printer = new FluentBuilderGeneratorPrinter(System.out);
+	private static FluentBuilderFieldProvider fieldProvider = new FluentBuilderFieldProvider();
 
 
 	private FluentBuilderGenerator(Class<?> clazz) {
@@ -67,7 +68,9 @@ public class FluentBuilderGenerator {
 	 */
 	public void printBuilder() {
 		printer.printComment(clazz.getSimpleName());
-		printer.printBuilderClass(builderName);
-		printer.printBuilderBody(clazz, methodPrefix, launchBuildMethodName, builderName);
+		printer.printBuilderStaticInvocation(builderName);
+		printer.printBuilderBegin(clazz.getSimpleName(), builderName);
+		printer.printBuilderBody(fieldProvider.findProperFields(clazz), builderName, clazz.getSimpleName(), methodPrefix);
+		printer.printBuilderEnd(clazz.getSimpleName(), launchBuildMethodName);
 	}
 }
