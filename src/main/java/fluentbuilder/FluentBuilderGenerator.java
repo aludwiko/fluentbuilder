@@ -12,6 +12,7 @@ package fluentbuilder;
  */
 public class FluentBuilderGenerator {
 
+ //toto
 	private Class<?> clazz;
 	private String methodPrefix = "with";
 	private String builderName = "builder";
