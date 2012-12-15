@@ -16,7 +16,7 @@ import java.util.List;
 public class FluentBuilderGeneratorPrinter {
 
 	private PrintStream printStream;
-	private static String INDENTATION = "\t";
+	private static final String INDENTATION = "\t";
 	private int indentationLevel;
 
 
@@ -58,7 +58,7 @@ public class FluentBuilderGeneratorPrinter {
 
 		println("public static #0 #1() {", capitalize(builderName), uncapitalize(builderName));
 		increaseIndentation();
-		println("return new #0();", builderName);
+		println("return new #0();", capitalize(builderName));
 		decreaseIndentation();
 		printlnWithCurrentIndentation("}");
 		println();

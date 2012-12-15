@@ -56,6 +56,15 @@
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>2.5.2</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<rulesets>
+						<ruleset>tools/pmd/pmd_ruleset.xml</ruleset>
+					</rulesets>
+				</configuration>
+			</plugin>
 		</plugins>
 	</reporting>
 </project>
