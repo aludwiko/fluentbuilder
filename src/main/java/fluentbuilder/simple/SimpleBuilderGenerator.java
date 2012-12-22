@@ -2,7 +2,9 @@
  * Created on 03-12-2012 19:25:53 by Andrzej Ludwikowski
  */
 
-package fluentbuilder;
+package fluentbuilder.simple;
+
+import fluentbuilder.common.FluentBuilderFieldProvider;
 
 
 
@@ -10,17 +12,17 @@ package fluentbuilder;
  * 
  * @author Andrzej Ludwikowski
  */
-public class FluentBuilderGenerator {
+public class SimpleBuilderGenerator {
 
 	private Class<?> clazz;
 	private String methodPrefix = "with";
 	private String builderName = "builder";
 	private String launchBuildMethodName = "build";
-	private static FluentBuilderGeneratorPrinter printer = new FluentBuilderGeneratorPrinter(System.out);
+	private static SimpleBuilderGeneratorPrinter printer = new SimpleBuilderGeneratorPrinter(System.out);
 	private static FluentBuilderFieldProvider fieldProvider = new FluentBuilderFieldProvider();
 
 
-	private FluentBuilderGenerator(Class<?> clazz) {
+	private SimpleBuilderGenerator(Class<?> clazz) {
 		this.clazz = clazz;
 	}
 
@@ -29,8 +31,8 @@ public class FluentBuilderGenerator {
 	 * @param clazz - class for builder generation
 	 * @return
 	 */
-	public static FluentBuilderGenerator forClass(Class<?> clazz) {
-		return new FluentBuilderGenerator(clazz);
+	public static SimpleBuilderGenerator forClass(Class<?> clazz) {
+		return new SimpleBuilderGenerator(clazz);
 	}
 
 	/**
@@ -38,7 +40,7 @@ public class FluentBuilderGenerator {
 	 * @param methodPrefix - new method prefix
 	 * @return 
 	 */
-	public FluentBuilderGenerator withMethodPrefix(String methodPrefix) {
+	public SimpleBuilderGenerator withMethodPrefix(String methodPrefix) {
 		this.methodPrefix = methodPrefix;
 		return this;
 	}
@@ -48,7 +50,7 @@ public class FluentBuilderGenerator {
 	 * @param methodPrefix - new builder name (camelcase notation)
 	 * @return 
 	 */
-	public FluentBuilderGenerator withBuilderName(String builderName) {
+	public SimpleBuilderGenerator withBuilderName(String builderName) {
 		this.builderName = builderName;
 		return this;
 	}
@@ -58,7 +60,7 @@ public class FluentBuilderGenerator {
 	 * @param launchBuildMethodName - new method name for launching build
 	 * @return 
 	 */
-	public FluentBuilderGenerator withLaunchBuildMethodName(String launchBuildMethodName) {
+	public SimpleBuilderGenerator withLaunchBuildMethodName(String launchBuildMethodName) {
 		this.launchBuildMethodName = launchBuildMethodName;
 		return this;
 	}

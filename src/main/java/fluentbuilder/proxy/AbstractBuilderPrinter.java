@@ -1,10 +1,15 @@
-package abstractfluentbuilder;
+/*
+ * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
+ */
+package fluentbuilder.proxy;
 
 import static org.apache.commons.lang.StringUtils.capitalize;
 
 import java.io.PrintStream;
-import java.lang.reflect.Field;
 import java.util.List;
+
+import fluentbuilder.common.BuilderPrinter;
+import fluentbuilder.common.FieldDto;
 
 
 public class AbstractBuilderPrinter extends BuilderPrinter {
@@ -24,22 +29,21 @@ public class AbstractBuilderPrinter extends BuilderPrinter {
 		println("public abstract class #0 extends AbstractBuilder<#1, #0>{", builderName, className);
 	}
 
-	public void printBuilderBody(List<Field> fields, String builderName, String methodPrefix) {
+	public void printBuilderBody(List<FieldDto> fields, String builderName, String methodPrefix) {
 
 		increaseIndentation();
 		println();
 
-		for (Field field : fields) {
+		for (FieldDto field : fields) {
 
 			String fieldName = field.getName();
 
-			// public abstract CKlasaTestowaBuilder withTypeByte(byte typeByte);
 			println("public abstract #0 #1#2(#3 #4);",
 					builderName,
 					methodPrefix,
 					capitalize(fieldName),
-					field.getType().toString(),
-					fieldName);
+					field.getType(),
+					field.getName());
 		}
 
 		decreaseIndentation();

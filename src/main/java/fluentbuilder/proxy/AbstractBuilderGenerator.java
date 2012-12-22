@@ -1,7 +1,10 @@
-package abstractfluentbuilder;
+/*
+ * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
+ */
+package fluentbuilder.proxy;
 
 import static org.springframework.util.StringUtils.hasText;
-import fluentbuilder.FluentBuilderFieldProvider;
+import fluentbuilder.common.FluentBuilderFieldProvider;
 
 
 public class AbstractBuilderGenerator {

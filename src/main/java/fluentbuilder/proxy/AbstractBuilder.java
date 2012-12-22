@@ -1,4 +1,7 @@
-package abstractfluentbuilder;
+/*
+ * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
+ */
+package fluentbuilder.proxy;
 
 
 public abstract class AbstractBuilder<T, B> {
@@ -8,9 +11,18 @@ public abstract class AbstractBuilder<T, B> {
 	public static final String BUILD_METHOD_NAME = "build";
 
 
+	/**
+	 * return target object for further modification, e.g. invoking domain methods 
+	 */
 	protected abstract T targetObject();
 
+	/**
+	 * return current builder
+	 */
 	protected abstract B builder();
 
+	/**
+	 * build target object
+	 */
 	public abstract T build();
 }

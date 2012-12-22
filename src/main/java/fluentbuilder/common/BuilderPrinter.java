@@ -1,4 +1,8 @@
-package abstractfluentbuilder;
+/*
+ * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
+ */
+
+package fluentbuilder.common;
 
 import static org.apache.commons.lang.StringUtils.repeat;
 

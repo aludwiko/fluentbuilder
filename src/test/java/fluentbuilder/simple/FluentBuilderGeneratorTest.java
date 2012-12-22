@@ -2,9 +2,13 @@
  * Created on 03-12-2012 19:37:34 by Andrzej Ludwikowski
  */
 
-package fluentbuilder;
+package fluentbuilder.simple;
 
 import org.junit.Test;
+
+import fluentbuilder.simple.Sample;
+import fluentbuilder.simple.SimpleBuilderGenerator;
+
 
 
 public class FluentBuilderGeneratorTest {
@@ -15,7 +19,7 @@ public class FluentBuilderGeneratorTest {
 		// given
 
 		// when
-		FluentBuilderGenerator.forClass(Sample.class)
+		SimpleBuilderGenerator.forClass(Sample.class)
 								.printBuilder();
 
 		// then
@@ -27,7 +31,7 @@ public class FluentBuilderGeneratorTest {
 		// given
 
 		// when
-		FluentBuilderGenerator.forClass(Sample.class)
+		SimpleBuilderGenerator.forClass(Sample.class)
 								.withBuilderName("Budowiczy")
 								.withLaunchBuildMethodName("buduj")
 								.withMethodPrefix("z")

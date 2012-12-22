@@ -1,4 +1,7 @@
-package abstractfluentbuilder;
+/*
+ * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
+ */
+package fluentbuilder.proxy;
 
 import java.util.Date;
 import java.util.List;
@@ -23,7 +26,7 @@ public class SampleForTests {
 	private boolean typeBoolean;
 	private Boolean typeObjectBoolean;
 	private String typeString;
-	private List<String> typeListaString;
+	private List<String> typeStringList;
 
 
 	public byte getTypeByte() {
@@ -162,11 +165,11 @@ public class SampleForTests {
 		this.typeString = typeString;
 	}
 
-	public List<String> getTypeListaString() {
-		return typeListaString;
+	public List<String> getTypeStringList() {
+		return typeStringList;
 	}
 
-	public void setTypeListaString(List<String> typeListaString) {
-		this.typeListaString = typeListaString;
+	public void setTypeStringList(List<String> typeStringList) {
+		this.typeStringList = typeStringList;
 	}
 }

@@ -2,9 +2,11 @@
  * Created on 09-12-2012 09:51:05 by Andrzej Ludwikowski
  */
 
-package fluentbuilder;
+package fluentbuilder.simple;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * sample class to show/check fluent builder
@@ -18,4 +20,5 @@ public class Sample implements Serializable {
 
 	private int id;
 	private String name;
+	private Map<String, List<Integer>> map;
 }

@@ -1,8 +1,11 @@
-package abstractfluentbuilder;
+/*
+ * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
+ */
+package fluentbuilder.proxy;
 
-import static abstractfluentbuilder.AbstractBuilder.ACCESS_BUILDER_METHOD_NAME;
-import static abstractfluentbuilder.AbstractBuilder.ACCESS_TARGET_OBJECT_METHOD_NAME;
-import static abstractfluentbuilder.AbstractBuilder.BUILD_METHOD_NAME;
+import static fluentbuilder.proxy.AbstractBuilder.ACCESS_BUILDER_METHOD_NAME;
+import static fluentbuilder.proxy.AbstractBuilder.ACCESS_TARGET_OBJECT_METHOD_NAME;
+import static fluentbuilder.proxy.AbstractBuilder.BUILD_METHOD_NAME;
 import static org.apache.commons.lang.StringUtils.uncapitalize;
 
 import java.lang.reflect.Field;

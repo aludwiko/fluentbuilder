@@ -2,57 +2,31 @@
  * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
  */
 
-package fluentbuilder;
+package fluentbuilder.simple;
 
 import static org.apache.commons.lang.StringUtils.capitalize;
-import static org.apache.commons.lang.StringUtils.repeat;
 import static org.apache.commons.lang.StringUtils.uncapitalize;
 
 import java.io.PrintStream;
-import java.lang.reflect.Field;
 import java.util.List;
 
+import fluentbuilder.common.BuilderPrinter;
+import fluentbuilder.common.FieldDto;
 
-public class FluentBuilderGeneratorPrinter {
+public class SimpleBuilderGeneratorPrinter extends BuilderPrinter {
 
-	private PrintStream printStream;
-	private static final String INDENTATION = "\t";
-	private int indentationLevel;
-
-
-	public FluentBuilderGeneratorPrinter(PrintStream printStream) {
-		this.printStream = printStream;
+	public SimpleBuilderGeneratorPrinter(PrintStream printStream) {
+		super(printStream);
 	}
 
 	public void printComment(String className) {
 
-		printlnWithCurrentIndentation("/** ");
-		printlnWithCurrentIndentation(" * Fluent builder for " + className);
-		printlnWithCurrentIndentation(" * @formatter:off");
-		printlnWithCurrentIndentation(" */");
+		println("/** ");
+		println(" * Fluent builder for " + className);
+		println(" * @formatter:off");
+		println(" */");
 	}
 
-	private void printlnWithCurrentIndentation(String text) {
-		printIndentation(indentationLevel);
-		printStream.println(text);
-	}
-	
-	private void println(String text, String... values) {
-
-		printIndentation(indentationLevel);
-
-		int i = 0;
-		for (String value : values) {
-			text = text.replaceAll("#" + i, value);
-			i++;
-		}
-		printStream.println(text);
-	}
-
-	private void printIndentation(int level) {
-
-		printStream.print(repeat(INDENTATION, level));
-	}
 
 	public void printBuilderStaticInvocation(String builderName) {
 
@@ -60,20 +34,8 @@ public class FluentBuilderGeneratorPrinter {
 		increaseIndentation();
 		println("return new #0();", capitalize(builderName));
 		decreaseIndentation();
-		printlnWithCurrentIndentation("}");
+		println("}");
 		println();
-	}
-
-	private void println() {
-		printStream.println();
-	}
-
-	private void decreaseIndentation() {
-		indentationLevel--;
-	}
-
-	private void increaseIndentation() {
-		indentationLevel++;
 	}
 
 	public void printBuilderBegin(String className, String builderName) {
@@ -95,9 +57,9 @@ public class FluentBuilderGeneratorPrinter {
 	 * @param className
 	 * @param methodPrefix
 	 */
-	public void printBuilderBody(List<Field> fields, String builderName, String className, String methodPrefix) {
+	public void printBuilderBody(List<FieldDto> fields, String builderName, String className, String methodPrefix) {
 
-		for (Field field : fields) {
+		for (FieldDto field : fields) {
 
 			String fieldName = field.getName();
 
@@ -105,8 +67,8 @@ public class FluentBuilderGeneratorPrinter {
 					capitalize(builderName),
 					methodPrefix,
 					capitalize(fieldName),
-					field.getType().getSimpleName(),
-					fieldName,
+					field.getType(),
+					field.getName(),
 					uncapitalize(className));
 		}
 	}
@@ -116,8 +78,8 @@ public class FluentBuilderGeneratorPrinter {
 		println();
 		println("public #0 #1() { return #2;}", className, launchBuildMethodName, uncapitalize(className));
 		decreaseIndentation();
-		printlnWithCurrentIndentation("}");
-		printlnWithCurrentIndentation("/** @formatter:on */");
+		println("}");
+		println("/** @formatter:on */");
 	}
 
 }
