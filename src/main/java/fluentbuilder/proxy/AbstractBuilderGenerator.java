@@ -14,6 +14,7 @@ public class AbstractBuilderGenerator {
 	private String builderName;
 	private AbstractBuilderPrinter printer = new AbstractBuilderPrinter(System.out);
 	private FluentBuilderFieldProvider fieldProvider = new FluentBuilderFieldProvider();
+	private boolean staticCreate;
 
 
 	private AbstractBuilderGenerator(Class<?> clazz) {
@@ -39,6 +40,11 @@ public class AbstractBuilderGenerator {
 		return this;
 	}
 
+	public AbstractBuilderGenerator withStaticCreate(boolean staticCreate) {
+		this.staticCreate = staticCreate;
+		return this;
+	}
+
 	/**
 	 * default is ClassNameBuilder
 	 * @param methodPrefix - new builder name (camelcase notation)
@@ -60,6 +66,11 @@ public class AbstractBuilderGenerator {
 		printer.printComment(className);
 		printer.printBuilderBegin(className, realBuilderName);
 		printer.printBuilderBody(fieldProvider.findProperFields(clazz), realBuilderName, methodPrefix);
+
+		if (staticCreate) {
+			printer.printsticCreateMethod(realBuilderName);
+		}
+
 		printer.printBuilderEnd();
 	}
 

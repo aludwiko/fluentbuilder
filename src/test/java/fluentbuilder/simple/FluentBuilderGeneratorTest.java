@@ -6,9 +6,6 @@ package fluentbuilder.simple;
 
 import org.junit.Test;
 
-import fluentbuilder.simple.Sample;
-import fluentbuilder.simple.SimpleBuilderGenerator;
-
 
 
 public class FluentBuilderGeneratorTest {
@@ -20,6 +17,7 @@ public class FluentBuilderGeneratorTest {
 
 		// when
 		SimpleBuilderGenerator.forClass(Sample.class)
+								.withMethodPrefix("with")
 								.printBuilder();
 
 		// then

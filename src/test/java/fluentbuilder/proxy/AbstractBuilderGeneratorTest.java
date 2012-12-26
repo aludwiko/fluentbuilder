@@ -6,9 +6,6 @@ package fluentbuilder.proxy;
 
 import org.junit.Test;
 
-import fluentbuilder.proxy.AbstractBuilderGenerator;
-import fluentbuilder.proxy.SampleForTests;
-
 
 public class AbstractBuilderGeneratorTest {
 
@@ -18,7 +15,9 @@ public class AbstractBuilderGeneratorTest {
 		// given
 
 		// when
-		AbstractBuilderGenerator.forClass(SampleForTests.class).printBuilder();
+		AbstractBuilderGenerator.forClass(SampleForTests.class)
+								.withStaticCreate(true)
+								.printBuilder();
 
 		// then
 	}

@@ -5,6 +5,7 @@ package fluentbuilder.proxy;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 public class SampleForTests {
@@ -27,7 +28,17 @@ public class SampleForTests {
 	private Boolean typeObjectBoolean;
 	private String typeString;
 	private List<String> typeStringList;
+	private Map<String, List<Integer>> complexGeneric;
 
+
+
+	public Map<String, List<Integer>> getComplexGeneric() {
+		return complexGeneric;
+	}
+
+	public void setComplexGeneric(Map<String, List<Integer>> complexGeneric) {
+		this.complexGeneric = complexGeneric;
+	}
 
 	public byte getTypeByte() {
 		return typeByte;
