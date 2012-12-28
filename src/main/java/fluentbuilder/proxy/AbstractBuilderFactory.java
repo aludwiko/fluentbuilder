@@ -91,7 +91,7 @@ public class AbstractBuilderFactory {
 	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static <X extends AbstractBuilder<T, B>, T, B> X createDefaultImplementation(Class<X> abstractBuilderClass) {
+	public static <X extends AbstractBuilder<T, B>, T, B> X createImplementation(Class<X> abstractBuilderClass) {
 
 		Class[] resolveTypeArguments = GenericTypeResolver.resolveTypeArguments(abstractBuilderClass, AbstractBuilder.class);
 

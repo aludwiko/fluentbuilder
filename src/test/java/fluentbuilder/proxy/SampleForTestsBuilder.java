@@ -54,6 +54,6 @@ public abstract class SampleForTestsBuilder extends AbstractBuilder<SampleForTes
 	public abstract SampleForTestsBuilder withComplexGeneric(Map<String, List<Integer>> complexGeneric);
 
 	public static SampleForTestsBuilder create() {
-		return AbstractBuilderFactory.createDefaultImplementation(SampleForTestsBuilder.class);
+		return AbstractBuilderFactory.createImplementation(SampleForTestsBuilder.class);
 	}
 }

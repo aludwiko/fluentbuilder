@@ -21,6 +21,7 @@ import com.google.common.base.Predicate;
 
 public class FluentBuilderFieldProvider {
 
+	private static final String PACKAGE_REGEXP = "([a-z]*\\.)";
 	private static final Predicate<Field> ONLY_PROPER_FIELDS = new Predicate<Field>() {
 
 		@Override
@@ -48,7 +49,7 @@ public class FluentBuilderFieldProvider {
 
 				ParameterizedType parameterizedType = (ParameterizedType) type;
 				String parameterizedTypeStr = parameterizedType.toString();
-				return parameterizedTypeStr.replaceAll("([a-z]*\\.)", "");
+				return parameterizedTypeStr.replaceAll(PACKAGE_REGEXP, "");
 			}
 
 			return field.getType().getSimpleName();
