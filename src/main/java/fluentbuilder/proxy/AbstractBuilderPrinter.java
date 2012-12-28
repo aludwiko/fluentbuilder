@@ -57,7 +57,7 @@ public class AbstractBuilderPrinter extends BuilderPrinter {
 		increaseIndentation();
 		println("public static #0 create(){", realBuilderName);
 		increaseIndentation();
-		println("return AbstractBuilderFactory.createDefaultImplementation(#0.class);", realBuilderName);
+		println("return AbstractBuilderFactory.createImplementation(#0.class);", realBuilderName);
 		decreaseIndentation();
 		println("}");
 		decreaseIndentation();
