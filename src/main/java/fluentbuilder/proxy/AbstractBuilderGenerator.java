@@ -15,7 +15,7 @@ public class AbstractBuilderGenerator {
 	private AbstractBuilderPrinter printer = new AbstractBuilderPrinter(System.out);
 	private FluentBuilderFieldProvider fieldProvider = new FluentBuilderFieldProvider();
 	private boolean staticCreate;
-
+	private boolean varargsForCollections = true;
 
 	private AbstractBuilderGenerator(Class<?> clazz) {
 		this.clazz = clazz;
@@ -45,6 +45,11 @@ public class AbstractBuilderGenerator {
 		return this;
 	}
 
+	public AbstractBuilderGenerator withVarargsForCollections(boolean varargsForCollections) {
+		this.varargsForCollections = varargsForCollections;
+		return this;
+	}
+
 	/**
 	 * default is ClassNameBuilder
 	 * @param methodPrefix - new builder name (camelcase notation)
@@ -65,10 +70,15 @@ public class AbstractBuilderGenerator {
 
 		printer.printComment(className);
 		printer.printBuilderBegin(className, realBuilderName);
-		printer.printBuilderBody(fieldProvider.findProperFields(clazz), realBuilderName, methodPrefix);
 
 		if (staticCreate) {
-			printer.printsticCreateMethod(realBuilderName);
+			printer.printCreateMethod(realBuilderName);
+		}
+
+		printer.printBuilderBody(fieldProvider.findProperFields(clazz), realBuilderName, methodPrefix);
+
+		if (varargsForCollections) {
+			printer.printVarargsMethods(fieldProvider.findOnlyCollectionFields(clazz), realBuilderName, methodPrefix);
 		}
 
 		printer.printBuilderEnd();

@@ -19,6 +19,7 @@ public class AbstractBuilderGeneratorTest {
 		// when
 		AbstractBuilderGenerator.forClass(Order.class)
 								.withStaticCreate(true)
+								.withVarargsForCollections(true)
 								.printBuilder();
 
 		// then
