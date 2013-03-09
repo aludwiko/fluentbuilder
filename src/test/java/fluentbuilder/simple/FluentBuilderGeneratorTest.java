@@ -6,6 +6,9 @@ package fluentbuilder.simple;
 
 import org.junit.Test;
 
+import fluentbuilder.generator.simple.Sample;
+import fluentbuilder.generator.simple.SimpleBuilderGenerator;
+
 
 
 public class FluentBuilderGeneratorTest {

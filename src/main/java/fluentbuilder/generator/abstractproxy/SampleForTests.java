@@ -1,7 +1,7 @@
 /*
  * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
  */
-package fluentbuilder.proxy;
+package fluentbuilder.generator.abstractproxy;
 
 import java.util.Date;
 import java.util.List;

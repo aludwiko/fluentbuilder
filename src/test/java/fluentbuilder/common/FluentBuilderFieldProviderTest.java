@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import fluentbuilder.simple.Sample;
+import fluentbuilder.generator.simple.Sample;
 
 
 public class FluentBuilderFieldProviderTest {

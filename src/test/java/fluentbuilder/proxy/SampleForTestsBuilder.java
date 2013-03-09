@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import fluentbuilder.generator.abstractproxy.AbstractBuilder;
+import fluentbuilder.generator.abstractproxy.AbstractBuilderFactory;
+import fluentbuilder.generator.abstractproxy.SampleForTests;
+
 
 /** 
  * Fluent builder for SampleForTests

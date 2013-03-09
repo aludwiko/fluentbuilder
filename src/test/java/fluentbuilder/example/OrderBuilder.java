@@ -7,8 +7,8 @@ package fluentbuilder.example;
 import java.util.Date;
 import java.util.List;
 
-import fluentbuilder.proxy.AbstractBuilder;
-import fluentbuilder.proxy.AbstractBuilderFactory;
+import fluentbuilder.generator.abstractproxy.AbstractBuilder;
+import fluentbuilder.generator.abstractproxy.AbstractBuilderFactory;
 
 
 /** 

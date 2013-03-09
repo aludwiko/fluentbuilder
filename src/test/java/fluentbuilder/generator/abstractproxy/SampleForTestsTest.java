@@ -2,7 +2,7 @@
  * Created on 22-12-2012 09:35:44 by Andrzej Ludwikowski
  */
 
-package fluentbuilder.proxy;
+package fluentbuilder.generator.abstractproxy;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -14,6 +14,10 @@ import org.junit.Test;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import fluentbuilder.proxy.SampleForTestsBuilder;
+
+import fluentbuilder.generator.abstractproxy.SampleForTests;
 
 
 public class SampleForTestsTest {

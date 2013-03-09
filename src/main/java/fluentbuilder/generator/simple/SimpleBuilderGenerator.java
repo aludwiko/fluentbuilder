@@ -2,7 +2,7 @@
  * Created on 03-12-2012 19:25:53 by Andrzej Ludwikowski
  */
 
-package fluentbuilder.simple;
+package fluentbuilder.generator.simple;
 
 import fluentbuilder.common.FluentBuilderFieldProvider;
 

@@ -2,7 +2,7 @@
  * Created on 09-12-2012 09:51:05 by Andrzej Ludwikowski
  */
 
-package fluentbuilder.simple;
+package fluentbuilder.generator.simple;
 
 import java.io.Serializable;
 import java.util.List;

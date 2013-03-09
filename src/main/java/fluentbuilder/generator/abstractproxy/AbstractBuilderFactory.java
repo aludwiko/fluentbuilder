@@ -1,11 +1,11 @@
 /*
  * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
  */
-package fluentbuilder.proxy;
+package fluentbuilder.generator.abstractproxy;
 
-import static fluentbuilder.proxy.AbstractBuilder.ACCESS_BUILDER_METHOD_NAME;
-import static fluentbuilder.proxy.AbstractBuilder.ACCESS_TARGET_OBJECT_METHOD_NAME;
-import static fluentbuilder.proxy.AbstractBuilder.BUILD_METHOD_NAME;
+import static fluentbuilder.generator.abstractproxy.AbstractBuilder.ACCESS_BUILDER_METHOD_NAME;
+import static fluentbuilder.generator.abstractproxy.AbstractBuilder.ACCESS_TARGET_OBJECT_METHOD_NAME;
+import static fluentbuilder.generator.abstractproxy.AbstractBuilder.BUILD_METHOD_NAME;
 import static java.lang.reflect.Modifier.isAbstract;
 import static org.apache.commons.lang.StringUtils.uncapitalize;
 

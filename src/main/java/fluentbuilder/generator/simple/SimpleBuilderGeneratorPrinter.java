@@ -2,7 +2,7 @@
  * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
  */
 
-package fluentbuilder.simple;
+package fluentbuilder.generator.simple;
 
 import static org.apache.commons.lang.StringUtils.capitalize;
 import static org.apache.commons.lang.StringUtils.uncapitalize;
