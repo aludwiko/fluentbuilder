@@ -44,7 +44,7 @@ public class AbstractBuilderPrinter extends BuilderPrinter {
 					methodPrefix,
 					capitalize(fieldName),
 					field.getType(),
-					field.getName());
+					fieldName);
 		}
 
 		decreaseIndentation();
