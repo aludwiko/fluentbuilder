@@ -4,6 +4,10 @@
 
 package fluentbuilder.processor;
 
+import static fluentbuilder.processor.ProcessorContext.JAVAX_PERSISTENCE_EMBEDDABLE;
+import static fluentbuilder.processor.ProcessorContext.JAVAX_PERSISTENCE_ENTITY;
+import static fluentbuilder.processor.ProcessorContext.JAVAX_PERSISTENCE_MAPPEDSUPERCLASS;
+
 import java.util.Collection;
 import java.util.Set;
 
@@ -19,7 +23,7 @@ import fluentbuilder.model.ClassMirror;
 
 
 @SupportedAnnotationTypes({
-		"javax.persistence.Entity", "javax.persistence.MappedSuperclass", "javax.persistence.Embeddable"
+		JAVAX_PERSISTENCE_ENTITY, JAVAX_PERSISTENCE_MAPPEDSUPERCLASS, JAVAX_PERSISTENCE_EMBEDDABLE
 })
 @SupportedOptions({
 
@@ -27,7 +31,7 @@ import fluentbuilder.model.ClassMirror;
 public class FluentBuilderProcessor extends AbstractProcessor {
 
 	private ProcessorContext context;
-	private ClassMirrorConverter classMirrorConverter;
+	private ClassMirrorProvider classMirrorProvider;
 	private ClassWriter classWriter;
 
 
@@ -35,6 +39,8 @@ public class FluentBuilderProcessor extends AbstractProcessor {
 	public synchronized void init(ProcessingEnvironment processingEnv) {
 		super.init(processingEnv);
 		context = new ProcessorContext(processingEnv);
+		classMirrorProvider = new ClassMirrorProvider(new ClassVerifier(context));
+		classWriter = new ClassWriter(context);
 	}
 
 	@Override
@@ -42,9 +48,9 @@ public class FluentBuilderProcessor extends AbstractProcessor {
 
 		Set<? extends Element> elements = roundEnv.getRootElements();
 		
-		Collection<ClassMirror> classMirrors = classMirrorConverter.convert(elements);
+		Collection<ClassMirror> classMirrors = classMirrorProvider.prepareMirrors(elements);
 
-		classWriter.write(context, classMirrors);
+		classWriter.write(classMirrors);
 		
 		return false;
 	}

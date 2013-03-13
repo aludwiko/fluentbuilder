@@ -4,8 +4,8 @@
 
 package fluentbuilder.processor;
 
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Collection;
 
 import fluentbuilder.model.ClassMirror;
@@ -13,11 +13,23 @@ import fluentbuilder.model.ClassMirror;
 
 public class ClassWriter {
 
+	private final ProcessorContext context;
 
-	public void write(ProcessorContext context, Collection<ClassMirror> classMirrors) {
+	public ClassWriter(ProcessorContext context) {
+		this.context = context;
+	}
 
-		OutputStream out = System.out;
-		PrintStream printStream = new PrintStream(out);
+	public void write(Collection<ClassMirror> classMirrors) {
+
+		Writer writer = new StringWriter();
+
+		for (ClassMirror classMirror : classMirrors) {
+
+
+			new AbstractBuilderPrinter(writer).printClass();
+		}
+
+		System.out.println(writer.toString());
 
 	}
 

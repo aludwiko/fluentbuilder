@@ -13,13 +13,24 @@ import javax.lang.model.element.Element;
 import fluentbuilder.model.ClassMirror;
 
 
-public class ClassMirrorConverter {
+public class ClassMirrorProvider {
 
-	public Collection<ClassMirror> convert(Set<? extends Element> elements) {
+	private final ClassVerifier classVerifier;
+
+
+	public ClassMirrorProvider(ClassVerifier classVerifier) {
+		this.classVerifier = classVerifier;
+	}
+
+	public Collection<ClassMirror> prepareMirrors(Set<? extends Element> elements) {
 
 		Set<ClassMirror> classMirrors = new HashSet<ClassMirror>();
 
 		for (Element element : elements) {
+
+			if (classVerifier.shouldGenerateBuilder(element)) {
+
+			}
 
 		}
 
