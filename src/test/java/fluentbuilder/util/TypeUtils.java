@@ -22,6 +22,11 @@ public class TypeUtils {
 		List<String> annotationClassNames = new ArrayList<String>();
 		Collections.addAll(annotationClassNames, annotations);
 
+		return containsAnnotation(element, annotationClassNames);
+	}
+
+	public static boolean containsAnnotation(Element element, Collection<String> annotationClassNames) {
+
 		List<? extends AnnotationMirror> annotationMirrors = element.getAnnotationMirrors();
 		for (AnnotationMirror mirror : annotationMirrors) {
 			if (annotationClassNames.contains(mirror.getAnnotationType().toString())) {
@@ -29,9 +34,5 @@ public class TypeUtils {
 			}
 		}
 		return false;
-	}
-
-	public static boolean containsAnnotation(Element element, Collection<String> annotations) {
-
 	}
 }

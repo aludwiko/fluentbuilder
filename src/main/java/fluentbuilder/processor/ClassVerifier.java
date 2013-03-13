@@ -6,8 +6,6 @@ package fluentbuilder.processor;
 
 import javax.lang.model.element.Element;
 
-import fluentbuilder.util.TypeUtils;
-
 
 public class ClassVerifier {
 
@@ -22,7 +20,6 @@ public class ClassVerifier {
 
 		if (context.isAcceptJavaPersisentceAnnotations()){
 			
-				TypeUtils.containsAnnotation(element, annotations)
 		}
 		
 		
