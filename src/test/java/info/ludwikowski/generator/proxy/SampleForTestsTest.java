@@ -6,8 +6,6 @@ package info.ludwikowski.generator.proxy;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-import info.ludwikowski.generator.proxy.SampleForTests;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +63,8 @@ public class SampleForTestsTest {
 								.withTypeObjectLong(typeObjectLong)
 								.withTypeObjectShort(typeObjectShort)
 								.withTypeString(typeString)
-								.withTypeStringList(typeStringList).build();
+																.withTypeStringList(typeStringList)
+																.buduj();
 
 		// then
 		assertThat(sampleForTests.getTypeByte()).isEqualTo(typeByte);

@@ -11,7 +11,9 @@ public class AbstractBuilderGenerator {
 
 	private Class<?> clazz;
 	private String methodPrefix = "with";
-	private String builderName;
+	private String builderNamePostfix = "Builder";
+	private String staticCreateMethodName;
+	private String buildMethodName;
 	private AbstractBuilderPrinter printer = new AbstractBuilderPrinter(System.out);
 	private FluentBuilderFieldProvider fieldProvider = new FluentBuilderFieldProvider();
 	private boolean staticCreate;
@@ -51,12 +53,30 @@ public class AbstractBuilderGenerator {
 	}
 
 	/**
-	 * default is ClassNameBuilder
-	 * @param methodPrefix - new builder name (camelcase notation)
+	 * default is Builder
+	 * @param builderNamePostfix - new builder name posfix
 	 * @return 
 	 */
-	public AbstractBuilderGenerator withBuilderName(String builderName) {
-		this.builderName = builderName;
+	public AbstractBuilderGenerator withBuilderNamePostfix(String builderNamePostfix) {
+		this.builderNamePostfix = builderNamePostfix;
+		return this;
+	}
+
+	/**
+	 * @param staticCreateMethodName - custom create method name
+	 * @return
+	 */
+	public AbstractBuilderGenerator withStaticCreateMethodName(String staticCreateMethodName) {
+		this.staticCreateMethodName = staticCreateMethodName;
+		return this;
+	}
+
+	/**
+	 * @param buildMethodName - custom build method name
+	 * @return 
+	 */
+	public AbstractBuilderGenerator withBuildMethodName(String buildMethodName) {
+		this.buildMethodName = buildMethodName;
 		return this;
 	}
 
@@ -66,13 +86,19 @@ public class AbstractBuilderGenerator {
 	public void printBuilder() {
 
 		String className = clazz.getSimpleName();
-		String realBuilderName = builderName(className, builderName);
+		String realBuilderName = builderName(className);
 
 		printer.printComment(className);
 		printer.printBuilderBegin(className, realBuilderName);
 
 		if (staticCreate) {
-			printer.printCreateMethod(realBuilderName);
+			printer.printCreateMethod(realBuilderName, staticCreateMethodName);
+		}
+
+		printer.printGetPrefixMethod(methodPrefix);
+		
+		if (hasText(buildMethodName)) {
+			printer.printBuildMethod(className, buildMethodName);
 		}
 
 		printer.printBuilderBody(fieldProvider.findProperFields(clazz), realBuilderName, methodPrefix);
@@ -84,11 +110,8 @@ public class AbstractBuilderGenerator {
 		printer.printBuilderEnd();
 	}
 
-	private String builderName(String className, String builderName) {
-		if (hasText(builderName)) {
-			return builderName;
-		}
-		return className + "Builder";
+	private String builderName(String className) {
+		return className + builderNamePostfix;
 	}
 
 }

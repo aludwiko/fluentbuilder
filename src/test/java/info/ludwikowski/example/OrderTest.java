@@ -6,8 +6,6 @@ package info.ludwikowski.example;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-import info.ludwikowski.example.Order;
-
 import java.util.Date;
 
 import org.junit.Test;
@@ -28,5 +26,19 @@ public class OrderTest {
 
 		// then
 		assertThat(realizedOrder.isRealized()).isTrue();
+	}
+
+	@Test
+	public void shouldPolish() {
+
+		// given
+
+		// when
+		Order order = OrderBudowniczy.utworz().zCreateDate(new Date())
+						.zrealizowane()
+						.buduj();
+
+		// then
+		assertThat(order.isRealized()).isTrue();
 	}
 }

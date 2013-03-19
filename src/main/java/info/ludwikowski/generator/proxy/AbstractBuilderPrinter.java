@@ -4,9 +4,9 @@
 package info.ludwikowski.generator.proxy;
 
 import static org.apache.commons.lang.StringUtils.capitalize;
-
 import info.ludwikowski.common.BuilderPrinter;
 import info.ludwikowski.common.FieldDto;
+import info.ludwikowski.util.StringUtils;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -55,15 +55,23 @@ public class AbstractBuilderPrinter extends BuilderPrinter {
 		println("}");
 	}
 
-	public void printCreateMethod(String realBuilderName) {
+	public void printCreateMethod(String realBuilderName, String staticCreateMethodName) {
 		increaseIndentation();
 		println();
-		println("public static #0 create(){", realBuilderName);
+		println("public static #0 #1(){", realBuilderName, staticCreateMethodName(staticCreateMethodName));
 		increaseIndentation();
 		println("return AbstractBuilderFactory.createImplementation(#0.class);", realBuilderName);
 		decreaseIndentation();
 		println("}");
 		decreaseIndentation();
+	}
+
+	private String staticCreateMethodName(String staticCreateMethodName) {
+
+		if (StringUtils.hasText(staticCreateMethodName)) {
+			return staticCreateMethodName;
+		}
+		return "create";
 	}
 
 	public void printVarargsMethods(List<FieldDto> collectionFields, String realBuilderName, String methodPrefix) {
@@ -91,6 +99,30 @@ public class AbstractBuilderPrinter extends BuilderPrinter {
 		else if (collection.isAssignableFrom(Set.class)) {
 			println("return #0#1(Sets.newHashSet(#2));", methodPrefix, capitalize(fieldName), fieldName);
 		}
+	}
+
+	public void printGetPrefixMethod(String methodPrefix) {
+
+		println();
+		increaseIndentation();
+		println("public static final String getPrefix() {");
+		increaseIndentation();
+		println("return \"#0\";", methodPrefix);
+		decreaseIndentation();
+		println("}");
+		decreaseIndentation();
+	}
+
+	public void printBuildMethod(String className, String buildMethodName) {
+
+		println();
+		increaseIndentation();
+		println("public #0 #1() {", capitalize(className), buildMethodName);
+		increaseIndentation();
+		println("return build();");
+		decreaseIndentation();
+		println("}");
+		decreaseIndentation();
 	}
 
 }

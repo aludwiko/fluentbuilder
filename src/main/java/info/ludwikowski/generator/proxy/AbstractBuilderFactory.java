@@ -26,7 +26,7 @@ public class AbstractBuilderFactory {
 	private static final String PREFIX_WITH = "with";
 
 	@SuppressWarnings("unchecked")
-	public static <X extends AbstractBuilder<T, B>, T, B> X createImplementation(Class<X> abstractClass, final T targetObject) {
+	public static <X extends AbstractBuilder<T, B>, T, B> X createImplementation(final Class<X> abstractClass, final T targetObject) {
 
 		Enhancer enhancer = new Enhancer();
 		enhancer.setSuperclass(abstractClass);
@@ -46,13 +46,13 @@ public class AbstractBuilderFactory {
 				else if (ACCESS_BUILDER_METHOD_NAME.equals(methodName)) {
 					return proxy;
 				}
-				else if (useProxyForMethod(method)) {
+				else if (useProxyForMethod(method, prefixForProxy(abstractClass))) {
 
 					if (method.getParameterTypes().length != 1) {
 						throw new UnsupportedOperationException("method should have one parameter");
 					}
 
-					String fieldName = uncapitalize(methodName.substring(PREFIX_WITH.length()));
+					String fieldName = uncapitalize(methodName.substring(prefixForProxy(abstractClass).length()));
 
 					setField(targetObject, args, fieldName);
 
@@ -63,6 +63,31 @@ public class AbstractBuilderFactory {
 					// use orignal implementation
 					return methodProxy.invokeSuper(proxy, args);
 				}
+			}
+
+			private String prefixForProxy(Class<X> abstractClass) {
+
+				try {
+					Method method = abstractClass.getMethod("getPrefix");
+					return (String) method.invoke(null);
+				}
+				catch (SecurityException e) {
+					e.printStackTrace();
+				}
+				catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				}
+				catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				}
+				catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+				catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+
+				return PREFIX_WITH;
 			}
 
 			private <N> void setField(final N targetObject, Object[] args, String fieldName) throws NoSuchFieldException, IllegalAccessException {
@@ -76,10 +101,11 @@ public class AbstractBuilderFactory {
 
 			/**
 			 * only abstract methods  with special prefix can be override by proxy
+			 * @param proxyPrefix 
 			 */
-			private boolean useProxyForMethod(Method method) {
+			private boolean useProxyForMethod(Method method, String proxyPrefix) {
 
-				return method.getName().startsWith(PREFIX_WITH) && isAbstract(method.getModifiers());
+				return method.getName().startsWith(proxyPrefix) && isAbstract(method.getModifiers());
 			}
 		});
 		return (X) enhancer.create();

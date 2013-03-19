@@ -5,7 +5,6 @@
 package info.ludwikowski.generator.proxy;
 
 import info.ludwikowski.example.Order;
-import info.ludwikowski.generator.proxy.AbstractBuilderGenerator;
 
 import org.junit.Test;
 
@@ -22,6 +21,10 @@ public class AbstractBuilderGeneratorTest {
 		AbstractBuilderGenerator.forClass(Order.class)
 								.withStaticCreate(true)
 								.withVarargsForCollections(true)
+								.withStaticCreateMethodName("utworz")
+								.withBuildMethodName("buduj111")
+								.withMethodPrefix("z")
+								.withBuilderNamePostfix("Budowniczy")
 								.printBuilder();
 
 		// then

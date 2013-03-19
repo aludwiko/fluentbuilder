@@ -4,10 +4,6 @@
 
 package info.ludwikowski.generator.proxy;
 
-import info.ludwikowski.generator.proxy.AbstractBuilder;
-import info.ludwikowski.generator.proxy.AbstractBuilderFactory;
-import info.ludwikowski.generator.proxy.SampleForTests;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +15,14 @@ import java.util.Map;
  * 
  */
 public abstract class SampleForTestsBuilder extends AbstractBuilder<SampleForTests, SampleForTestsBuilder> {
+
+	public static final String getPrefix() {
+		return "with";
+	}
+
+	public SampleForTests buduj() {
+		return build();
+	}
 
 	public abstract SampleForTestsBuilder withTypeByte(byte typeByte);
 
