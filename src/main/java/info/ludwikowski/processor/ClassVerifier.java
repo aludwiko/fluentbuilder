@@ -4,6 +4,9 @@
 
 package info.ludwikowski.processor;
 
+import static info.ludwikowski.processor.ProcessorContext.JPA_ANNOTATIONS;
+import static info.ludwikowski.util.TypeUtils.containsAnnotation;
+
 import javax.lang.model.element.Element;
 
 
@@ -16,12 +19,15 @@ public class ClassVerifier {
 		this.context = context;
 	}
 
-	public boolean shouldGenerateBuilder(Element element) {
+	public boolean generateBuilder(Element element) {
 
-		if (context.isAcceptJavaPersisentceAnnotations()){
-			
+		if (containsAnnotation(element, GenerateBuilder.class.getCanonicalName())) {
+			return true;
 		}
 		
+		if (context.isAcceptJavaPersisentceAnnotations() && containsAnnotation(element, JPA_ANNOTATIONS)) {
+			return true;
+		}
 		
 		return false;
 	}

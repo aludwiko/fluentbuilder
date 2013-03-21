@@ -29,7 +29,7 @@ public class ClassMirrorProvider {
 
 		for (Element element : elements) {
 
-			if (classVerifier.shouldGenerateBuilder(element)) {
+			if (classVerifier.generateBuilder(element)) {
 
 			}
 

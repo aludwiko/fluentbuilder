@@ -19,6 +19,7 @@ public class ProcessorContext {
 	public static final String GENERATE_STATIC_CREATE_METHOD = "generateStaticCreateMethod";
 	public static final String GENERATE_VARARGS_FOR_COLLECTIONS = "generateVarargsForCollections";
 	public static final String ACCEPT_JAVA_PERSISTENCE_ANNOTATIONS = "acceptJavaPersisentceAnnotations";
+
 	public static final String JAVAX_PERSISTENCE_ENTITY = "javax.persistence.Entity";
 	public static final String JAVAX_PERSISTENCE_MAPPEDSUPERCLASS = "javax.persistence.MappedSuperclass";
 	public static final String JAVAX_PERSISTENCE_EMBEDDABLE = "javax.persistence.Embeddable";
@@ -30,7 +31,7 @@ public class ProcessorContext {
 		List<String> jpaAnnotations = new ArrayList<String>(3);
 		jpaAnnotations.add(JAVAX_PERSISTENCE_ENTITY);
 		jpaAnnotations.add(JAVAX_PERSISTENCE_MAPPEDSUPERCLASS);
-		jpaAnnotations.add(JAVAX_PERSISTENCE_MAPPEDSUPERCLASS);
+		jpaAnnotations.add(JAVAX_PERSISTENCE_EMBEDDABLE);
 		JPA_ANNOTATIONS = Collections.unmodifiableList(jpaAnnotations);
 	}
 
