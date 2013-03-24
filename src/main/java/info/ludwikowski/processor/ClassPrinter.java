@@ -8,7 +8,7 @@ import static org.apache.commons.lang.StringUtils.repeat;
 
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.List;
+import java.util.Set;
 
 
 public abstract class ClassPrinter {
@@ -24,9 +24,11 @@ public abstract class ClassPrinter {
 
 	public abstract void printClassWithBody();
 
-	public abstract List<String> getFullClassNamesForImports();
+	public abstract Set<String> getFullClassNamesForImports();
 
 	public abstract String getPackageName();
+	
+	public abstract void printClassComment();
 
 	public void printClass() {
 
@@ -35,9 +37,9 @@ public abstract class ClassPrinter {
 		printImportStatements();
 		println();
 		println();
+		printClassComment();
 		printClassWithBody();
 	}
-
 
 	private void printImportStatements() {
 

@@ -5,6 +5,7 @@
 package info.ludwikowski.processor;
 
 import info.ludwikowski.model.ClassMirror;
+import info.ludwikowski.model.ClassMirrorImpl;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -31,8 +32,8 @@ public class ClassMirrorProvider {
 
 			if (classVerifier.generateBuilder(element)) {
 
+				classMirrors.add(new ClassMirrorImpl(element));
 			}
-
 		}
 
 		return classMirrors;

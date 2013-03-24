@@ -26,8 +26,7 @@ public class ClassWriter {
 
 		for (ClassMirror classMirror : classMirrors) {
 
-
-			new AbstractBuilderPrinter(writer).printClass();
+			new AbstractBuilderPrinter(writer, classMirror).printClass();
 		}
 
 		System.out.println(writer.toString());

@@ -38,6 +38,7 @@ public class ProcessorContext {
 	private String methodPrefix = "with";
 	private String builderClassPostfix = "Builder";
 	private String abstractBuilderClassPrefix = "Abstract";
+	private String staticCreateMethodName = "create";
 	private boolean acceptJavaPersisentceAnnotations = true;
 	private boolean staticCreate = true;
 	private boolean varargsForCollections = true;
@@ -45,6 +46,18 @@ public class ProcessorContext {
 
 	public ProcessorContext(ProcessingEnvironment processingEnv) {
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getMethodPrefix() {
+		return methodPrefix;
+	}
+
+	public String getStaticCreateMethodName() {
+		return staticCreateMethodName;
+	}
+
+	public boolean isStaticCreate() {
+		return staticCreate;
 	}
 
 	public boolean isAcceptJavaPersisentceAnnotations() {

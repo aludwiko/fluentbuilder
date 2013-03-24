@@ -6,8 +6,14 @@ package info.ludwikowski.model;
 
 import java.util.List;
 
+import javax.lang.model.element.Element;
+
 
 public class ClassMirrorImpl implements ClassMirror {
+
+	public ClassMirrorImpl(Element element) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public List<MemberMirror> getMembers() {

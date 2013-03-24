@@ -5,6 +5,7 @@
 package info.ludwikowski.model;
 
 import java.util.List;
+import java.util.Set;
 
 
 public interface ClassMirror {
@@ -15,5 +16,7 @@ public interface ClassMirror {
 
 	List<MemberMirror> getMembers();
 
-	String getImports();
+	Set<String> getImports();
+
+	List<MemberMirror> getVarArgsMembers();
 }

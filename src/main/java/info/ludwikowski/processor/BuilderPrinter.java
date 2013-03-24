@@ -8,8 +8,8 @@ import info.ludwikowski.generator.proxy.AbstractBuilderFactory;
 import info.ludwikowski.model.ClassMirror;
 
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 
@@ -35,8 +35,8 @@ public class BuilderPrinter extends ClassPrinter {
 	}
 
 	@Override
-	public List<String> getFullClassNamesForImports() {
-		ArrayList<String> fullClassNames = new ArrayList<String>();
+	public Set<String> getFullClassNamesForImports() {
+		Set<String> fullClassNames = new TreeSet<String>();
 		fullClassNames.add(AbstractBuilderFactory.class.getCanonicalName());
 		return fullClassNames;
 	}
@@ -44,6 +44,14 @@ public class BuilderPrinter extends ClassPrinter {
 	@Override
 	public String getPackageName() {
 		return classMirror.getPackageName();
+	}
+
+	@Override
+	public void printClassComment() {
+		println("/** ");
+		println(" * Fluent builder for " + classMirror.getSimpleName());
+		println(" * Don't hasitate to put your custom methods here. ");
+		println(" */");
 	}
 
 }
