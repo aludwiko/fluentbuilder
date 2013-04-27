@@ -1,4 +1,4 @@
-/* 
+/*
  * Created on 22-03-2013 17:48:01 by Andrzej Ludwikowski
  */
 
@@ -8,7 +8,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import info.ludwikowski.model.ClassMirror;
 import info.ludwikowski.model.MemberMirror;
-import info.ludwikowski.model.MemberMirrorImpl;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -21,7 +20,6 @@ import org.junit.Test;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
 
 public class AbstractBuilderPrinterTest {
 
@@ -56,8 +54,8 @@ public class AbstractBuilderPrinterTest {
 
 		List<MemberMirror> members = Lists.newArrayList();
 
-		members.add(new MemberMirrorImpl("java.lang.Set<pl.package.Foo>", "foos"));
-		members.add(new MemberMirrorImpl("java.lang.List<pl.package.Bar>", "bars"));
+		// members.add(new MemberMirrorImpl("foos", "Set", "Set<Foo>", null));
+		// members.add(new MemberMirrorImpl("bars", "List", "List<Bar>", null));
 
 		return members;
 	}
@@ -66,7 +64,7 @@ public class AbstractBuilderPrinterTest {
 
 		List<MemberMirror> members = Lists.newArrayList();
 
-		members.add(new MemberMirrorImpl("java.lang.String", "name"));
+		// members.add(new MemberMirrorImpl("name", "String", "String", null));
 
 		return members;
 	}

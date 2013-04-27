@@ -3,7 +3,7 @@
  */
 package info.ludwikowski.generator.proxy;
 
-import static org.apache.commons.lang.StringUtils.capitalize;
+import static info.ludwikowski.util.StringUtils.capitalize;
 import info.ludwikowski.common.BuilderPrinter;
 import info.ludwikowski.common.FieldDto;
 import info.ludwikowski.util.StringUtils;
@@ -11,7 +11,6 @@ import info.ludwikowski.util.StringUtils;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Set;
-
 
 
 public class AbstractBuilderPrinter extends BuilderPrinter {
@@ -77,11 +76,11 @@ public class AbstractBuilderPrinter extends BuilderPrinter {
 	public void printVarargsMethods(List<FieldDto> collectionFields, String realBuilderName, String methodPrefix) {
 		increaseIndentation();
 		println();
-		
+
 		for (FieldDto field : collectionFields) {
 
 			String fieldName = field.getName();
-			
+
 			println("public #0 #1#2(#3... #4){", realBuilderName, methodPrefix, capitalize(fieldName), field.getType(), fieldName);
 			increaseIndentation();
 			printCollectionCreation(methodPrefix, fieldName, field.getCollection());
@@ -92,7 +91,7 @@ public class AbstractBuilderPrinter extends BuilderPrinter {
 	}
 
 	private void printCollectionCreation(String methodPrefix, String fieldName, Class<?> collection) {
-		
+
 		if (collection.isAssignableFrom(List.class)) {
 			println("return #0#1(Lists.newArrayList(#2));", methodPrefix, capitalize(fieldName), fieldName);
 		}

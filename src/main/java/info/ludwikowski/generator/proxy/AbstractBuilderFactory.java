@@ -6,8 +6,8 @@ package info.ludwikowski.generator.proxy;
 import static info.ludwikowski.generator.proxy.AbstractBuilder.ACCESS_BUILDER_METHOD_NAME;
 import static info.ludwikowski.generator.proxy.AbstractBuilder.ACCESS_TARGET_OBJECT_METHOD_NAME;
 import static info.ludwikowski.generator.proxy.AbstractBuilder.BUILD_METHOD_NAME;
+import static info.ludwikowski.util.StringUtils.uncapitalize;
 import static java.lang.reflect.Modifier.isAbstract;
-import static org.apache.commons.lang.StringUtils.uncapitalize;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -24,6 +24,7 @@ import org.springframework.core.GenericTypeResolver;
 public class AbstractBuilderFactory {
 
 	private static final String PREFIX_WITH = "with";
+
 
 	@SuppressWarnings("unchecked")
 	public static <X extends AbstractBuilder<T, B>, T, B> X createImplementation(final Class<X> abstractClass, final T targetObject) {

@@ -4,7 +4,7 @@
 
 package info.ludwikowski.processor;
 
-import static org.apache.commons.lang.StringUtils.repeat;
+import static info.ludwikowski.util.StringUtils.repeat;
 
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -27,7 +27,7 @@ public abstract class ClassPrinter {
 	public abstract Set<String> getFullClassNamesForImports();
 
 	public abstract String getPackageName();
-	
+
 	public abstract void printClassComment();
 
 	public void printClass() {

@@ -1,4 +1,4 @@
-/* 
+/*
  * Created on 09-03-2013 13:04:57 by Andrzej Ludwikowski
  */
 
@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 
 
 public class ProcessorContext {
@@ -23,7 +25,7 @@ public class ProcessorContext {
 	public static final String JAVAX_PERSISTENCE_ENTITY = "javax.persistence.Entity";
 	public static final String JAVAX_PERSISTENCE_MAPPEDSUPERCLASS = "javax.persistence.MappedSuperclass";
 	public static final String JAVAX_PERSISTENCE_EMBEDDABLE = "javax.persistence.Embeddable";
-	public static final String FLUENT_BUILDER_ANNOTATATION = "javax.persistence.Embeddable";
+	public static final String FLUENT_BUILDER_ANNOTATATION = "info.ludwikowski.processor.GenerateBuilder";
 
 	public static final List<String> JPA_ANNOTATIONS;
 
@@ -39,13 +41,14 @@ public class ProcessorContext {
 	private String builderClassPostfix = "Builder";
 	private String abstractBuilderClassPrefix = "Abstract";
 	private String staticCreateMethodName = "create";
-	private boolean acceptJavaPersisentceAnnotations = true;
+	private boolean acceptJavaPersisentceAnnotations = false;
 	private boolean staticCreate = true;
 	private boolean varargsForCollections = true;
+	private final ProcessingEnvironment processingEnv;
 
 
 	public ProcessorContext(ProcessingEnvironment processingEnv) {
-		// TODO Auto-generated constructor stub
+		this.processingEnv = processingEnv;
 	}
 
 	public String getMethodPrefix() {
@@ -70,6 +73,14 @@ public class ProcessorContext {
 
 	public String getBuilderClassPostfix() {
 		return builderClassPostfix;
+	}
+
+	public Elements getElementUtils() {
+		return processingEnv.getElementUtils();
+	}
+
+	public Types getTypeUtils() {
+		return processingEnv.getTypeUtils();
 	}
 
 }

@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: fluentbuilder
+Bundle-SymbolicName: fluentbuilder;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Export-Package: info.ludwikowski.common,
+ info.ludwikowski.example,
+ info.ludwikowski.generator.proxy,
+ info.ludwikowski.generator.simple,
+ info.ludwikowski.model,
+ info.ludwikowski.processor,
+ info.ludwikowski.simple,
+ info.ludwikowski.util
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jdt.apt.core

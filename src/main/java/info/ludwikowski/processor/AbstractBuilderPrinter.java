@@ -1,19 +1,19 @@
-/* 
+/*
  * Created on 10-03-2013 11:16:45 by Andrzej Ludwikowski
  */
 
 package info.ludwikowski.processor;
 
 import static info.ludwikowski.util.StringUtils.capitalize;
+import static info.ludwikowski.util.TypeUtils.isList;
+import static info.ludwikowski.util.TypeUtils.isSet;
 import info.ludwikowski.generator.proxy.AbstractBuilderFactory;
 import info.ludwikowski.model.ClassMirror;
 import info.ludwikowski.model.MemberMirror;
 
 import java.io.Writer;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 
 public class AbstractBuilderPrinter extends ClassPrinter {
 
@@ -31,7 +31,7 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 
 	@Override
 	public void printClassWithBody() {
-		
+
 		printBuilderBegin();
 		if (processorContext.isStaticCreate()) {
 			printCreateMethod();
@@ -55,7 +55,7 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 					builderName(),
 					processorContext.getMethodPrefix(),
 					capitalize(fieldName),
-					memberMirror.getType(),
+					memberMirror.getSimpleType(),
 					fieldName);
 		}
 
@@ -70,7 +70,7 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 
 			String fieldName = memberMirror.getName();
 
-			println("public #0 #1#2(#3... #4){", builderName(), processorContext.getMethodPrefix(), capitalize(fieldName), memberMirror.getType(), fieldName);
+			println("public #0 #1#2(#3... #4){", builderName(), processorContext.getMethodPrefix(), capitalize(fieldName), memberMirror.getCollectionElementSimpleName(), fieldName);
 			increaseIndentation();
 			printCollectionCreation(memberMirror);
 			decreaseIndentation();
@@ -81,19 +81,22 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 
 	private void printCollectionCreation(MemberMirror memberMirror) {
 
-		String type = removePackage(memberMirror.getType());
 		String fieldName = memberMirror.getName();
 
-		if (List.class.getCanonicalName().equals(type)) {
-			println("return #0#1(Lists.newArrayList(#2));", processorContext.getMethodPrefix(), capitalize(fieldName), fieldName);
+		if (isList(memberMirror.getCollectionType())) {
+			println("return #0#1(new ArrayList<#2>(Arrays.asList(#3)));",
+					processorContext.getMethodPrefix(),
+					capitalize(fieldName),
+					memberMirror.getCollectionElementSimpleName(),
+					memberMirror.getName());
 		}
-		else if (Set.class.getCanonicalName().equals(type)) {
-			println("return #0#1(Sets.newHashSet(#2));", processorContext.getMethodPrefix(), capitalize(fieldName), fieldName);
+		else if (isSet(memberMirror.getCollectionType())) {
+			println("return #0#1(new HashSet<#2>(Arrays.asList(#3));",
+					processorContext.getMethodPrefix(),
+					capitalize(fieldName),
+					memberMirror.getCollectionElementSimpleName(),
+					memberMirror.getName());
 		}
-	}
-
-	private static String removePackage(String value) {
-		return value.replaceAll(PACKAGE_REGEXP, "");
 	}
 
 	public void printCreateMethod() {

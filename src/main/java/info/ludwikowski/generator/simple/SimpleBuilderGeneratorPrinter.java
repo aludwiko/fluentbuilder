@@ -1,12 +1,11 @@
-/* 
+/*
  * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
  */
 
 package info.ludwikowski.generator.simple;
 
-import static org.apache.commons.lang.StringUtils.capitalize;
-import static org.apache.commons.lang.StringUtils.uncapitalize;
-
+import static info.ludwikowski.util.StringUtils.capitalize;
+import static info.ludwikowski.util.StringUtils.uncapitalize;
 import info.ludwikowski.common.BuilderPrinter;
 import info.ludwikowski.common.FieldDto;
 
@@ -27,7 +26,6 @@ public class SimpleBuilderGeneratorPrinter extends BuilderPrinter {
 		println(" * @formatter:off");
 		println(" */");
 	}
-
 
 	public void printBuilderStaticInvocation(String builderName) {
 

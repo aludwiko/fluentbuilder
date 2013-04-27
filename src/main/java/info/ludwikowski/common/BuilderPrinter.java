@@ -4,7 +4,7 @@
 
 package info.ludwikowski.common;
 
-import static org.apache.commons.lang.StringUtils.repeat;
+import static info.ludwikowski.util.StringUtils.repeat;
 
 import java.io.PrintStream;
 

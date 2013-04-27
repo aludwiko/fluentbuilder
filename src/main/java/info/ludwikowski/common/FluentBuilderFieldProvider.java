@@ -9,6 +9,7 @@ import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.reflect.Modifier.isFinal;
 import static java.lang.reflect.Modifier.isStatic;
+import info.ludwikowski.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -24,10 +25,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-
 public class FluentBuilderFieldProvider {
 
-	private static final String PACKAGE_REGEXP = "([a-z]*\\.)";
 	private static final Predicate<Field> ONLY_PROPER_FIELDS = new Predicate<Field>() {
 
 		@Override
@@ -65,14 +64,14 @@ public class FluentBuilderFieldProvider {
 
 		@Override
 		public FieldDto apply(Field field) {
-			
+
 			String fieldType = fieldTypeForVarArgs(field);
-			
-			if (fieldType != null){
-				
+
+			if (fieldType != null) {
+
 				return new FieldDto(field.getName(), fieldType, field.getType());
 			}
-			//kolekcja nie jest generyczna więc zostanie pominięta, nulle są następnie odfitrowywane
+			// kolekcja nie jest generyczna więc zostanie pominięta, nulle są następnie odfitrowywane
 			return null;
 
 		}
@@ -88,12 +87,11 @@ public class FluentBuilderFieldProvider {
 			ParameterizedType parameterizedType = (ParameterizedType) type;
 			Type actualType = parameterizedType.getActualTypeArguments()[0];
 			// odcinamy class
-			return removePackage(actualType.toString()).substring(6);
+			return StringUtils.removePackage(actualType.toString()).substring(6);
 		}
-		//kolekcja nie jest generyczna
+		// kolekcja nie jest generyczna
 		return null;
 	}
-
 
 	private static String fieldType(Field field) {
 
@@ -103,26 +101,21 @@ public class FluentBuilderFieldProvider {
 
 			ParameterizedType parameterizedType = (ParameterizedType) type;
 			String parameterizedTypeStr = parameterizedType.toString();
-			return removePackage(parameterizedTypeStr);
+			return StringUtils.removePackage(parameterizedTypeStr);
 		}
 
 		return field.getType().getSimpleName();
-	}
-
-	private static String removePackage(String value) {
-		return value.replaceAll(PACKAGE_REGEXP, "");
 	}
 
 	private static boolean isGeneric(Type genericType) {
 		return genericType instanceof ParameterizedType;
 	}
 
-
 	/**
 	 * return only non final non static fields
 	 */
 	public List<FieldDto> findProperFields(Class<?> clazz) {
-		
+
 		List<Field> properFields = newArrayList(filter(newArrayList(clazz.getDeclaredFields()), ONLY_PROPER_FIELDS));
 
 		return newArrayList(transform(properFields, TO_FIELDS_DTO));
