@@ -83,4 +83,8 @@ public class ProcessorContext {
 		return processingEnv.getTypeUtils();
 	}
 
+	public ProcessingEnvironment getProcessingEnvironment() {
+		return processingEnv;
+	}
+
 }

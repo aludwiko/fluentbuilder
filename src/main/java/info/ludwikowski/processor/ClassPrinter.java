@@ -7,6 +7,7 @@ package info.ludwikowski.processor;
 import static info.ludwikowski.util.StringUtils.repeat;
 
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Set;
 
@@ -15,22 +16,24 @@ public abstract class ClassPrinter {
 
 	private static String INDENTATION = "\t";
 	private int indentationLevel = 0;
-	private PrintWriter printWriter;
+	private StringBuffer stringBuffer = new StringBuffer();
+//	private PrintWriter printWriter = new PrintWriter(new StringWriter());
 
 
-	public ClassPrinter(Writer writer) {
-		this.printWriter = new PrintWriter(writer);
-	}
+	protected abstract void printClassWithBody();
 
-	public abstract void printClassWithBody();
+	protected abstract Set<String> getFullClassNamesForImports();
 
-	public abstract Set<String> getFullClassNamesForImports();
+	protected abstract String getPackageName();
 
-	public abstract String getPackageName();
-
-	public abstract void printClassComment();
-
-	public void printClass() {
+	protected abstract void printClassComment();
+	
+	/**
+	 * class name with package
+	 */
+	public abstract String getFullClassName();
+	
+	public String printClass() {
 
 		println("package #0;", getPackageName());
 		println();
@@ -39,6 +42,8 @@ public abstract class ClassPrinter {
 		println();
 		printClassComment();
 		printClassWithBody();
+		
+		return stringBuffer.toString();
 	}
 
 	private void printImportStatements() {
@@ -55,7 +60,12 @@ public abstract class ClassPrinter {
 	protected void println(String text) {
 
 		printIndentation(indentationLevel);
-		printWriter.println(text);
+		appendln(text);
+	}
+
+	private void appendln(String text) {
+		stringBuffer.append(text);
+		stringBuffer.append("\n");
 	}
 
 	protected void println(String text, String... values) {
@@ -67,16 +77,16 @@ public abstract class ClassPrinter {
 			text = text.replaceAll("#" + i, value);
 			i++;
 		}
-		printWriter.println(text);
+		appendln(text);
 	}
 
 	protected void printIndentation(int level) {
 
-		printWriter.print(repeat(INDENTATION, level));
+		stringBuffer.append(repeat(INDENTATION, level));
 	}
 
 	protected void println() {
-		printWriter.println();
+		stringBuffer.append("\n");
 	}
 
 	protected void decreaseIndentation() {

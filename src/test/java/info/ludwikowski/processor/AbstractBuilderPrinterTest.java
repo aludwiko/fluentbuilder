@@ -33,7 +33,7 @@ public class AbstractBuilderPrinterTest {
 
 		// given
 		ClassMirror mirror = mock(ClassMirror.class);
-		AbstractBuilderPrinter abstractBuilderPrinter = new AbstractBuilderPrinter(writer, processorContext, mirror);
+		AbstractBuilderPrinter abstractBuilderPrinter = new AbstractBuilderPrinter(processorContext, mirror);
 
 		String name = "Order";
 		String packageName = "test.builder";

@@ -49,7 +49,6 @@ public class ClassMirrorImpl implements ClassMirror {
 			if (member != null) {
 				members.add(member);
 			}
-			System.out.println(field);
 		}
 	}
 

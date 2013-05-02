@@ -33,7 +33,7 @@ public class BuilderPrinterTest {
 
 		// given
 		ClassMirror mirror = mock(ClassMirror.class);
-		BuilderPrinter builderPrinter = new BuilderPrinter(writer, processorContext, mirror);
+		BuilderPrinter builderPrinter = new BuilderPrinter(processorContext, mirror);
 		
 		String name = "Order";
 		String packageName = "test.builder";

@@ -11,14 +11,16 @@ import info.ludwikowski.processor.ProcessorContext;
 import info.ludwikowski.util.StringUtils;
 import info.ludwikowski.util.TypeUtils;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.type.TypeVariable;
 import javax.lang.model.util.SimpleTypeVisitor6;
 
 public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirror, Element> {
@@ -28,13 +30,28 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 
 	public MemberMirrorGeneratorVisitor(ProcessorContext context) {
 		this.context = context;
-		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public MemberMirror visitPrimitive(PrimitiveType primitiveType, Element element) {
+		
+		return simpleTypes(primitiveType, element);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private MemberMirror simpleTypes(TypeMirror primitiveType, Element element) {
+		
+		String name = element.toString();
+		String simpleType = simpleType(primitiveType.toString());
+		
+		return MemberMirrorImpl.simpleMirror(name,
+				simpleType,
+				Collections.EMPTY_SET);
 	}
 
 	@Override
-	public MemberMirror visitTypeVariable(TypeVariable declaredType, Element p) {
-		// TODO Auto-generated method stub
-		return super.visitTypeVariable(declaredType, p);
+	public MemberMirror visitArray(ArrayType t, Element element) {
+		return simpleTypes(t, element);	
 	}
 
 	@Override
