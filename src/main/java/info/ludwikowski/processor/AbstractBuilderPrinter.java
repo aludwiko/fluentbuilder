@@ -50,7 +50,7 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 			String fieldName = memberMirror.getName();
 
 			println("public abstract #0 #1#2(#3 #4);",
-					abstractBuilderClassName(),
+					abstractBuilderNameWithGeneric(),
 					processorContext.getMethodPrefix(),
 					capitalize(fieldName),
 					memberMirror.getSimpleType(),
@@ -74,7 +74,7 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 			String fieldName = memberMirror.getName();
 
 			println("public #0 #1#2(#3... #4){",
-					builderClassName(),
+					abstractBuilderNameWithGeneric(),
 					processorContext.getMethodPrefix(),
 					capitalize(fieldName),
 					memberMirror.getCollectionElementSimpleName(),
@@ -85,10 +85,6 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 			println("}");
 		}
 		decreaseIndentation();
-	}
-
-	private String builderClassName() {
-		return classMirror.getSimpleName() + processorContext.getBuilderClassPostfix();
 	}
 
 	private void printCollectionCreation(MemberMirror memberMirror) {
@@ -116,7 +112,11 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 	}
 
 	private void printBuilderBegin() {
-		println("public abstract class #0<B> extends AbstractBuilder<#2, B> {", abstractBuilderName(), abstractBuilderClassName(), classMirror.getSimpleName());
+		println("public abstract class #0 extends AbstractBuilder<#2, B> {", abstractBuilderNameWithGeneric(), abstractBuilderClassName(), classMirror.getSimpleName());
+	}
+	
+	private String abstractBuilderNameWithGeneric() {
+		return processorContext.getAbstractBuilderClassPrefix() + abstractBuilderClassName() + "<B>";
 	}
 
 	private String abstractBuilderName() {

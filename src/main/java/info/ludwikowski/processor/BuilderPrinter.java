@@ -34,7 +34,7 @@ public class BuilderPrinter extends ClassPrinter {
 		
 		println("public abstract class #0 extends #1#0<#0> {",
 				builderName(),
-				processorContext.getBuilderClassPostfix());
+				processorContext.getAbstractBuilderClassPrefix());
 		
 		if (processorContext.isStaticCreate()) {
 			printCreateMethod();
