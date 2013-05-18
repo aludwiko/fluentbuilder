@@ -4,7 +4,7 @@
 
 package info.ludwikowski.example;
 
-import info.ludwikowski.example.Order;
+import info.ludwikowski.generator.proxy.AbstractBuilderFactory;
 
 
 
@@ -13,6 +13,10 @@ import info.ludwikowski.example.Order;
  * 
  */
 public abstract class OrderBuilder extends AbstractOrderBuilder<OrderBuilder> {
+
+	public static OrderBuilder create() {
+		return AbstractBuilderFactory.createImplementation(OrderBuilder.class);
+	}
 
 	public OrderBuilder realized() {
 		Order order = targetObject();

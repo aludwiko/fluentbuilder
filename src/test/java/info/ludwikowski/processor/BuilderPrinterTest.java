@@ -6,10 +6,7 @@ package info.ludwikowski.processor;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-
 import info.ludwikowski.model.ClassMirror;
-import info.ludwikowski.processor.BuilderPrinter;
-import info.ludwikowski.processor.ProcessorContext;
 
 import java.io.StringWriter;
 import java.io.Writer;

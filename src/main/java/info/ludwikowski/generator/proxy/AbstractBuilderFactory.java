@@ -76,7 +76,6 @@ public class AbstractBuilderFactory {
 					e.printStackTrace();
 				}
 				catch (NoSuchMethodException e) {
-					e.printStackTrace();
 				}
 				catch (IllegalArgumentException e) {
 					e.printStackTrace();

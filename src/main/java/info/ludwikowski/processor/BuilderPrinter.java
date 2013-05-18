@@ -7,7 +7,6 @@ package info.ludwikowski.processor;
 import info.ludwikowski.generator.proxy.AbstractBuilderFactory;
 import info.ludwikowski.model.ClassMirror;
 
-import java.io.Writer;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -33,10 +32,9 @@ public class BuilderPrinter extends ClassPrinter {
 	protected void printClassWithBody() {
 		
 		
-		println("public abstract class #0#1 extends #2#0#1<#0#1> {",
-				classMirror.getSimpleName(),
-				processorContext.getBuilderClassPostfix(),
-				processorContext.getAbstractBuilderClassPrefix());
+		println("public abstract class #0 extends #1#0<#0> {",
+				builderName(),
+				processorContext.getBuilderClassPostfix());
 		
 		if (processorContext.isStaticCreate()) {
 			printCreateMethod();
@@ -54,10 +52,6 @@ public class BuilderPrinter extends ClassPrinter {
 		decreaseIndentation();
 		println("}");
 		decreaseIndentation();
-	}
-	
-	private String builderName() {
-		return classMirror.getSimpleName() + processorContext.getBuilderClassPostfix();
 	}
 	
 	@Override
@@ -78,6 +72,10 @@ public class BuilderPrinter extends ClassPrinter {
 		println(" * Fluent builder for " + classMirror.getSimpleName());
 		println(" * Don't hasitate to put your custom methods here. ");
 		println(" */");
+	}
+
+	private String builderName() {
+		return classMirror.getSimpleName() + processorContext.getBuilderClassPostfix();
 	}
 
 }

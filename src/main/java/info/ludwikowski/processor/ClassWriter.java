@@ -17,8 +17,6 @@ import javax.annotation.processing.Filer;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
 
-import com.sun.mirror.apt.Filer.Location;
-
 
 
 public class ClassWriter {

@@ -5,9 +5,6 @@
 package info.ludwikowski.common;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-
-import info.ludwikowski.common.FieldDto;
-import info.ludwikowski.common.FluentBuilderFieldProvider;
 import info.ludwikowski.generator.simple.Sample;
 
 import java.util.List;

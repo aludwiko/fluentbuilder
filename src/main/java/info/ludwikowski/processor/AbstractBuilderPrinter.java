@@ -8,11 +8,9 @@ import static info.ludwikowski.util.StringUtils.capitalize;
 import static info.ludwikowski.util.TypeUtils.isList;
 import static info.ludwikowski.util.TypeUtils.isSet;
 import info.ludwikowski.generator.proxy.AbstractBuilder;
-import info.ludwikowski.generator.proxy.AbstractBuilderFactory;
 import info.ludwikowski.model.ClassMirror;
 import info.ludwikowski.model.MemberMirror;
 
-import java.io.Writer;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -75,13 +73,22 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 
 			String fieldName = memberMirror.getName();
 
-			println("public #0 #1#2(#3... #4){", abstractBuilderClassName(), processorContext.getMethodPrefix(), capitalize(fieldName), memberMirror.getCollectionElementSimpleName(), fieldName);
+			println("public #0 #1#2(#3... #4){",
+					builderClassName(),
+					processorContext.getMethodPrefix(),
+					capitalize(fieldName),
+					memberMirror.getCollectionElementSimpleName(),
+					fieldName);
 			increaseIndentation();
 			printCollectionCreation(memberMirror);
 			decreaseIndentation();
 			println("}");
 		}
 		decreaseIndentation();
+	}
+
+	private String builderClassName() {
+		return classMirror.getSimpleName() + processorContext.getBuilderClassPostfix();
 	}
 
 	private void printCollectionCreation(MemberMirror memberMirror) {

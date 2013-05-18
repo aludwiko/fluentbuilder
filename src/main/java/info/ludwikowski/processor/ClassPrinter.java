@@ -6,9 +6,6 @@ package info.ludwikowski.processor;
 
 import static info.ludwikowski.util.StringUtils.repeat;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Set;
 
 
