@@ -41,6 +41,7 @@ public class FluentBuilderProcessor extends AbstractProcessor {
 		ClassVerifier classVerifier = new ClassVerifier(context);
 		classMirrorProvider = new ClassMirrorProvider(classVerifier, context);
 		classWriter = new ClassWriter(context);
+		context.logConfiguration();
 	}
 
 	@Override

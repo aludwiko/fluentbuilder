@@ -31,7 +31,6 @@ public class ClassMirrorImpl implements ClassMirror {
 		simpleName = typeElement.getSimpleName().toString();
 		packageName = typeElement.getQualifiedName().toString().replace("." + simpleName, StringUtils.EMPTY);
 		fillMemberMirrors(element, context);
-		// TODO Auto-generated constructor stub
 	}
 
 	private void fillMemberMirrors(Element element, ProcessorContext context) {

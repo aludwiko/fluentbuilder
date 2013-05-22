@@ -9,8 +9,6 @@ import info.ludwikowski.model.ClassMirror;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Collection;
 
 import javax.annotation.processing.Filer;
@@ -29,55 +27,49 @@ public class ClassWriter {
 
 	public void write(Collection<ClassMirror> classMirrors) {
 		
-		Writer writer = new StringWriter();
-
 		for (ClassMirror classMirror : classMirrors) {
 
 			printAbstractBuilderPrinter(classMirror);
 			printBuilderPrinter(classMirror);
-			
-//			new BuilderPrinter(writer, context, classMirror).printClass();
 		}
-		
-		System.out.println(writer.toString());
-		
-//		try {
-//			writer.flush();
-//			writer.close();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 
 	private void printBuilderPrinter(ClassMirror classMirror) {
 		
 		try {
-			
+
 			BuilderPrinter printer = new BuilderPrinter(context, classMirror);
-			
-			
+
 			Filer filer = context.getProcessingEnvironment().getFiler();
-			FileObject resource = filer.getResource(StandardLocation.SOURCE_OUTPUT, printer.getPackageName(), "TestBuilder.java");
-			
-			if (resource.getLastModified()< 0){
-			
+			FileObject resource = filer.getResource(StandardLocation.SOURCE_OUTPUT,
+					printer.getPackageName(),
+					printer.builderName() + ".java");
+
+			if (resourceNotExists(resource)) {
+
 				FileObject fo = context.getProcessingEnvironment().getFiler()
-						.createSourceFile(printer.getFullClassName());
-	
-				
+										.createSourceFile(printer.getFullClassName());
+
 				OutputStream os = fo.openOutputStream();
 				PrintWriter pw = new PrintWriter(os);
-	
+
 				pw.print(printer.printClass());
-	
+
 				pw.flush();
 				pw.close();
+				context.logInfo("created: " + printer.getFullClassName());
+				return;
 			}
-
-		} catch (IOException e) {
+			context.logInfo("already exists: " + printer.getFullClassName());
+		}
+		catch (IOException e) {
+			context.logError(e.getMessage());
 			e.printStackTrace();
 		}
+	}
+
+	private boolean resourceNotExists(FileObject resource) {
+		return resource == null || resource.getLastModified() <= 0;
 	}
 
 	private void printAbstractBuilderPrinter(ClassMirror classMirror) {
@@ -94,8 +86,10 @@ public class ClassWriter {
 
 			pw.flush();
 			pw.close();
+			context.logInfo("updataed or created class: " + printer.getFullClassName());
 
 		} catch (IOException e) {
+			context.logError(e.getMessage());
 			e.printStackTrace();
 		}
 	}

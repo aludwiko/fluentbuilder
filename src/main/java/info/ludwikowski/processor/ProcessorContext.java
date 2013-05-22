@@ -11,6 +11,7 @@ import java.util.List;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
+import javax.tools.Diagnostic.Kind;
 
 
 public class ProcessorContext {
@@ -21,6 +22,7 @@ public class ProcessorContext {
 	public static final String GENERATE_STATIC_CREATE_METHOD = "generateStaticCreateMethod";
 	public static final String GENERATE_VARARGS_FOR_COLLECTIONS = "generateVarargsForCollections";
 	public static final String ACCEPT_JAVA_PERSISTENCE_ANNOTATIONS = "acceptJavaPersisentceAnnotations";
+	public static final String DEBUG = "debug";
 
 	public static final String JAVAX_PERSISTENCE_ENTITY = "javax.persistence.Entity";
 	public static final String JAVAX_PERSISTENCE_MAPPEDSUPERCLASS = "javax.persistence.MappedSuperclass";
@@ -45,12 +47,14 @@ public class ProcessorContext {
 	private boolean staticCreate = true;
 	private boolean varargsForCollections = true;
 	private final ProcessingEnvironment processingEnv;
+	private boolean debug = false;
 
 
 	public ProcessorContext(ProcessingEnvironment processingEnv) {
 		this.processingEnv = processingEnv;
+		this.debug = Boolean.parseBoolean(processingEnv.getOptions().get(DEBUG));
 	}
-
+	
 	public String getMethodPrefix() {
 		return methodPrefix;
 	}
@@ -85,6 +89,31 @@ public class ProcessorContext {
 
 	public ProcessingEnvironment getProcessingEnvironment() {
 		return processingEnv;
+	}
+
+	public void logInfo(String message) {
+		log(Kind.NOTE, message);
+	}
+
+	private void log(Kind kind, String message) {
+		if (debug) {
+			processingEnv.getMessager().printMessage(kind, message);
+		}
+	}
+
+	public void logError(String message) {
+		log(Kind.ERROR, message);
+	}
+
+	public void logConfiguration() {
+		processingEnv.getMessager().printMessage(Kind.NOTE, toString());
+	}
+
+	@Override
+	public String toString() {
+		return "ProcessorContext [methodPrefix=" + methodPrefix + ", builderClassPostfix=" + builderClassPostfix + ", abstractBuilderClassPrefix=" + abstractBuilderClassPrefix
+				+ ", staticCreateMethodName=" + staticCreateMethodName + ", acceptJavaPersisentceAnnotations=" + acceptJavaPersisentceAnnotations + ", staticCreate="
+				+ staticCreate + ", varargsForCollections=" + varargsForCollections + ", processingEnv=" + processingEnv + ", debug=" + debug + "]";
 	}
 
 }

@@ -74,7 +74,7 @@ public class BuilderPrinter extends ClassPrinter {
 		println(" */");
 	}
 
-	private String builderName() {
+	public String builderName() {
 		return classMirror.getSimpleName() + processorContext.getBuilderClassPostfix();
 	}
 
