@@ -9,23 +9,17 @@ import java.util.Set;
 public interface MemberMirror {
 
 	/**
-	 * java.util.Set
-	 * 
-	 * @return
+	 * full collection name like: java.util.Set
 	 */
 	String getCollectionType();
 
 	/**
-	 * private Set<Client> clients => Set<Client>
-	 * 
-	 * @return
+	 * simple field type like: Set<Client>
 	 */
 	String getSimpleType();
 
 	/**
-	 * private Set<Client> clients => clients
-	 * 
-	 * @return
+	 * filed name like: clients
 	 */
 	String getName();
 
@@ -34,9 +28,7 @@ public interface MemberMirror {
 	boolean isSupporterVarargsCollection();
 
 	/**
-	 * e.q. Client
-	 * 
-	 * @return
+	 * collections element simple name like: Client
 	 */
 	String getCollectionElementSimpleName();
 }

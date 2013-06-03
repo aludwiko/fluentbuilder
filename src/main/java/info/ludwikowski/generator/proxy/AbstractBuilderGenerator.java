@@ -6,7 +6,6 @@ package info.ludwikowski.generator.proxy;
 import static org.springframework.util.StringUtils.hasText;
 import info.ludwikowski.common.FluentBuilderFieldProvider;
 
-
 public class AbstractBuilderGenerator {
 
 	private Class<?> clazz;
@@ -16,8 +15,9 @@ public class AbstractBuilderGenerator {
 	private String buildMethodName;
 	private AbstractBuilderPrinter printer = new AbstractBuilderPrinter(System.out);
 	private FluentBuilderFieldProvider fieldProvider = new FluentBuilderFieldProvider();
-	private boolean staticCreate;
+	private boolean staticCreate = true;
 	private boolean varargsForCollections = true;
+
 
 	private AbstractBuilderGenerator(Class<?> clazz) {
 		this.clazz = clazz;
@@ -34,8 +34,9 @@ public class AbstractBuilderGenerator {
 
 	/**
 	 * default generated method name prefix is 'with', e.g. for field id method name will be 'withId(long id)';
+	 * 
 	 * @param methodPrefix - new method prefix
-	 * @return 
+	 * @return
 	 */
 	public AbstractBuilderGenerator withMethodPrefix(String methodPrefix) {
 		this.methodPrefix = methodPrefix;
@@ -54,8 +55,9 @@ public class AbstractBuilderGenerator {
 
 	/**
 	 * default is Builder
+	 * 
 	 * @param builderNamePostfix - new builder name posfix
-	 * @return 
+	 * @return
 	 */
 	public AbstractBuilderGenerator withBuilderNamePostfix(String builderNamePostfix) {
 		this.builderNamePostfix = builderNamePostfix;
@@ -73,7 +75,7 @@ public class AbstractBuilderGenerator {
 
 	/**
 	 * @param buildMethodName - custom build method name
-	 * @return 
+	 * @return
 	 */
 	public AbstractBuilderGenerator withBuildMethodName(String buildMethodName) {
 		this.buildMethodName = buildMethodName;
@@ -96,7 +98,7 @@ public class AbstractBuilderGenerator {
 		}
 
 		printer.printGetPrefixMethod(methodPrefix);
-		
+
 		if (hasText(buildMethodName)) {
 			printer.printBuildMethod(className, buildMethodName);
 		}

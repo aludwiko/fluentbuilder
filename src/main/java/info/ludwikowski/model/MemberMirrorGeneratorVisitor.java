@@ -31,19 +31,19 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 	public MemberMirrorGeneratorVisitor(ProcessorContext context) {
 		this.context = context;
 	}
-	
+
 	@Override
 	public MemberMirror visitPrimitive(PrimitiveType primitiveType, Element element) {
-		
+
 		return simpleTypes(primitiveType, element);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private MemberMirror simpleTypes(TypeMirror primitiveType, Element element) {
-		
+
 		String name = element.toString();
 		String simpleType = simpleType(primitiveType.toString());
-		
+
 		return MemberMirrorImpl.simpleMirror(name,
 				simpleType,
 				Collections.EMPTY_SET);
@@ -51,7 +51,7 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 
 	@Override
 	public MemberMirror visitArray(ArrayType t, Element element) {
-		return simpleTypes(t, element);	
+		return simpleTypes(t, element);
 	}
 
 	@Override
