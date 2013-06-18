@@ -4,9 +4,14 @@
 
 package info.ludwikowski.processor;
 
+import static info.ludwikowski.util.StringUtils.hasText;
+import static java.lang.Boolean.parseBoolean;
+import info.ludwikowski.common.Context;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.util.Elements;
@@ -14,11 +19,13 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
 
 
-public class ProcessorContext {
+public class ProcessorContext extends Context {
 
 	public static final String METHOD_PREFIX = "methodPrefix";
+	public static final String BUILD_METHOD_NAME = "buildMethodName";
 	public static final String BUILDER_CLASS_POSTFIX = "builderClassPostfix";
 	public static final String BUILDER_CLASS_PREFIX = "builderClassPrefix";
+	public static final String STATIC_CREATE_METHOD_NAME = "staticCreateMethodName";
 	public static final String GENERATE_STATIC_CREATE_METHOD = "generateStaticCreateMethod";
 	public static final String GENERATE_VARARGS_FOR_COLLECTIONS = "generateVarargsForCollections";
 	public static final String ACCEPT_JAVA_PERSISTENCE_ANNOTATIONS = "acceptJavaPersisentceAnnotations";
@@ -39,44 +46,34 @@ public class ProcessorContext {
 		JPA_ANNOTATIONS = Collections.unmodifiableList(jpaAnnotations);
 	}
 
-	private String methodPrefix = "with";
-	private String builderClassPostfix = "Builder";
-	private String abstractBuilderClassPrefix = "Abstract";
-	private String staticCreateMethodName = "create";
-	private boolean acceptJavaPersisentceAnnotations = false;
-	private boolean staticCreate = true;
-	private boolean varargsForCollections = true;
-	private final ProcessingEnvironment processingEnv;
 	private boolean debug = false;
+	private boolean acceptJavaPersisentceAnnotations = false;
+	private final ProcessingEnvironment processingEnv;
 
 
 	public ProcessorContext(ProcessingEnvironment processingEnv) {
+		Map<String, String> options = processingEnv.getOptions();
 		this.processingEnv = processingEnv;
-		this.debug = Boolean.parseBoolean(processingEnv.getOptions().get(DEBUG));
-	}
-	
-	public String getMethodPrefix() {
-		return methodPrefix;
-	}
-
-	public String getStaticCreateMethodName() {
-		return staticCreateMethodName;
-	}
-
-	public boolean isStaticCreate() {
-		return staticCreate;
+		this.debug = getBoolean(options, DEBUG, false);
+		this.acceptJavaPersisentceAnnotations = getBoolean(options, ACCEPT_JAVA_PERSISTENCE_ANNOTATIONS, false);
+		setAbstractBuilderClassPrefix(options.get(BUILDER_CLASS_PREFIX));
+		setBuilderClassPostfix(options.get(BUILDER_CLASS_POSTFIX));
+		setBuildMethodName(options.get(BUILD_METHOD_NAME));
+		setMethodPrefix(options.get(METHOD_PREFIX));
+		setStaticCreate(getBoolean(options, GENERATE_STATIC_CREATE_METHOD, true));
+		setStaticCreateMethodName(options.get(STATIC_CREATE_METHOD_NAME));
+		setVarargsForCollections(getBoolean(options, GENERATE_VARARGS_FOR_COLLECTIONS, true));
 	}
 
-	public boolean isAcceptJavaPersisentceAnnotations() {
-		return acceptJavaPersisentceAnnotations;
-	}
+	private boolean getBoolean(Map<String, String> options, String key, boolean defaultValue) {
 
-	public String getAbstractBuilderClassPrefix() {
-		return abstractBuilderClassPrefix;
-	}
+		String option = options.get(key);
 
-	public String getBuilderClassPostfix() {
-		return builderClassPostfix;
+		if (hasText(option)) {
+			return parseBoolean(option);
+		}
+
+		return defaultValue;
 	}
 
 	public Elements getElementUtils() {
@@ -109,11 +106,22 @@ public class ProcessorContext {
 		processingEnv.getMessager().printMessage(Kind.NOTE, toString());
 	}
 
-	@Override
-	public String toString() {
-		return "ProcessorContext [methodPrefix=" + methodPrefix + ", builderClassPostfix=" + builderClassPostfix + ", abstractBuilderClassPrefix=" + abstractBuilderClassPrefix
-				+ ", staticCreateMethodName=" + staticCreateMethodName + ", acceptJavaPersisentceAnnotations=" + acceptJavaPersisentceAnnotations + ", staticCreate="
-				+ staticCreate + ", varargsForCollections=" + varargsForCollections + ", processingEnv=" + processingEnv + ", debug=" + debug + "]";
+	public boolean isAcceptJavaPersisentceAnnotations() {
+		return acceptJavaPersisentceAnnotations;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ProcessorContext [debug=");
+		builder.append(debug);
+		builder.append(", acceptJavaPersisentceAnnotations=");
+		builder.append(acceptJavaPersisentceAnnotations);
+		builder.append(", processingEnv=");
+		builder.append(processingEnv);
+		builder.append(", toString()=");
+		builder.append(super.toString());
+		builder.append("]");
+		return builder.toString();
+	}
 }

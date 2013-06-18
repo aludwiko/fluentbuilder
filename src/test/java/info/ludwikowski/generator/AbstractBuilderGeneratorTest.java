@@ -2,9 +2,10 @@
  * Created on 18-12-2012 18:36:14 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.generator.proxy;
+package info.ludwikowski.generator;
 
 import info.ludwikowski.example.Order;
+import info.ludwikowski.generator.AbstractBuilderGenerator;
 
 import org.junit.Test;
 
@@ -24,8 +25,8 @@ public class AbstractBuilderGeneratorTest {
 								.withStaticCreateMethodName("utworz")
 								.withBuildMethodName("buduj111")
 								.withMethodPrefix("z")
-								.withBuilderNamePostfix("Budowniczy")
-								.printBuilder();
+								.withBuilderClassPostfix("Budowniczy")
+								.printBuilders();
 
 		// then
 	}

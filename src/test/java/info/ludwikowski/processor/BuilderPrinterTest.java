@@ -6,6 +6,7 @@ package info.ludwikowski.processor;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import info.ludwikowski.common.BuilderPrinter;
 import info.ludwikowski.model.ClassMirror;
 
 import java.io.StringWriter;
@@ -30,7 +31,7 @@ public class BuilderPrinterTest {
 
 		// given
 		ClassMirror mirror = mock(ClassMirror.class);
-		BuilderPrinter builderPrinter = new BuilderPrinter(processorContext, mirror);
+		BuilderPrinter builderPrinter = new BuilderPrinter(mirror, processorContext);
 		
 		String name = "Order";
 		String packageName = "test.builder";

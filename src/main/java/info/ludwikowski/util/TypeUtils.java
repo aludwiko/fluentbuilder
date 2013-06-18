@@ -6,6 +6,7 @@ package info.ludwikowski.util;
 
 import static info.ludwikowski.util.StringUtils.nullToEmpty;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
 
 public class TypeUtils {
 
@@ -55,5 +57,25 @@ public class TypeUtils {
 
 	public static boolean isListOrSet(String type) {
 		return isList(type) || isSet(type);
+	}
+
+	public static boolean isStaticOrFinal(Element field) {
+		return isStatic(field) || isFinal(field);
+	}
+
+	private static boolean isFinal(Element field) {
+		return field.getModifiers().contains(Modifier.FINAL);
+	}
+
+	private static boolean isStatic(Element field) {
+		return field.getModifiers().contains(Modifier.STATIC);
+	}
+
+	public static boolean isStaticOrFinal(Field field) {
+		
+		int modifiers = field.getModifiers();
+
+		return java.lang.reflect.Modifier.isFinal(modifiers)
+				|| java.lang.reflect.Modifier.isStatic(modifiers);
 	}
 }

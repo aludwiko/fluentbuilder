@@ -4,7 +4,7 @@
 
 package info.ludwikowski.example;
 
-import info.ludwikowski.generator.proxy.AbstractBuilder;
+import info.ludwikowski.common.AbstractBuilder;
 
 import java.util.Date;
 import java.util.List;

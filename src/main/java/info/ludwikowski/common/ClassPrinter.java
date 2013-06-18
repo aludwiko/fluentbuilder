@@ -2,7 +2,7 @@
  * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.processor;
+package info.ludwikowski.common;
 
 import static info.ludwikowski.util.StringUtils.repeat;
 
@@ -14,14 +14,13 @@ public abstract class ClassPrinter {
 	private static String INDENTATION = "\t";
 	private int indentationLevel = 0;
 	private StringBuffer stringBuffer = new StringBuffer();
-//	private PrintWriter printWriter = new PrintWriter(new StringWriter());
 
+
+	public abstract String getPackageName();
 
 	protected abstract void printClassWithBody();
 
 	protected abstract Set<String> getFullClassNamesForImports();
-
-	protected abstract String getPackageName();
 
 	protected abstract void printClassComment();
 	

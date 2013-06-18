@@ -4,12 +4,12 @@
 
 package info.ludwikowski.model;
 
-import static info.ludwikowski.util.TypeUtils.isList;
+import static info.ludwikowski.model.ImportsHelper.createNecessaryImports;
+import static info.ludwikowski.model.ImportsHelper.onlyImports;
 import static info.ludwikowski.util.TypeUtils.isListOrSet;
 import static info.ludwikowski.util.TypeUtils.simpleType;
 import info.ludwikowski.processor.ProcessorContext;
 import info.ludwikowski.util.StringUtils;
-import info.ludwikowski.util.TypeUtils;
 
 import java.util.Collections;
 import java.util.Set;
@@ -93,24 +93,11 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 
 		String type = returnedElement.toString();
 
-		if (isListOrSet(returnedElement.toString())) {
-			if (isList(type)) {
-				imports.add("java.util.ArrayList");
-				imports.add("java.util.List");
-			}
-			else if (TypeUtils.isSet(type)) {
-				imports.add("java.util.HashSet");
-				imports.add("java.util.Set");
-			}
-			imports.add("java.util.Arrays");
-		}
-		else {
-			imports.add(returnedElement.toString());
-		}
+		imports.addAll(createNecessaryImports(type));
 
 		for (TypeMirror typeMirror : declaredType.getTypeArguments()) {
 
-			imports.addAll(StringUtils.onlyImports(typeMirror.toString()));
+			imports.addAll(onlyImports(typeMirror.toString()));
 		}
 		return imports;
 	}

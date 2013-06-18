@@ -6,6 +6,7 @@ package info.ludwikowski.processor;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import info.ludwikowski.common.AbstractBuilderPrinter;
 import info.ludwikowski.model.ClassMirror;
 import info.ludwikowski.model.MemberMirror;
 

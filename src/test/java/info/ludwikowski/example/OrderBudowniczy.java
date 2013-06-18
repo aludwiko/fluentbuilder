@@ -4,8 +4,8 @@
 
 package info.ludwikowski.example;
 
-import info.ludwikowski.generator.proxy.AbstractBuilder;
-import info.ludwikowski.generator.proxy.AbstractBuilderFactory;
+import info.ludwikowski.common.AbstractBuilder;
+import info.ludwikowski.common.AbstractBuilderFactory;
 
 import java.util.Date;
 import java.util.List;

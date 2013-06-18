@@ -1,51 +1,82 @@
-/*
- * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
+/* 
+ * Created on 10-03-2013 11:17:24 by Andrzej Ludwikowski
  */
 
 package info.ludwikowski.common;
 
-import static info.ludwikowski.util.StringUtils.repeat;
+import info.ludwikowski.model.ClassMirror;
 
-import java.io.PrintStream;
-
-
-public abstract class BuilderPrinter {
-
-	private static String INDENTATION = "\t";
-	private int indentationLevel = 0;
-	private PrintStream printStream;
+import java.util.Set;
+import java.util.TreeSet;
 
 
-	public BuilderPrinter(PrintStream printStream) {
-		this.printStream = printStream;
+
+public class BuilderPrinter extends ClassPrinter {
+
+	private final Context context;
+	private final ClassMirror classMirror;
+
+
+	public BuilderPrinter(ClassMirror classMirror, Context context) {
+		this.classMirror = classMirror;
+		this.context = context;
+	}
+	
+	@Override
+	public String getFullClassName() {
+		return getPackageName() + "." + classMirror.getSimpleName() + context.getBuilderClassPostfix();
 	}
 
-	protected void println(String text, String... values) {
-
-		printIndentation(indentationLevel);
-
-		int i = 0;
-		for (String value : values) {
-			text = text.replaceAll("#" + i, value);
-			i++;
+	@Override
+	protected void printClassWithBody() {
+		
+		
+		println("public abstract class #0 extends #1#0<#0> {",
+				builderName(),
+				context.getAbstractBuilderClassPrefix());
+		
+		if (context.isStaticCreate()) {
+			printCreateMethod();
 		}
-		printStream.println(text);
+		
+		println("}");
+	}
+	
+	private void printCreateMethod() {
+		increaseIndentation();
+		println();
+		println("public static #0 #1(){", builderName(), context.getStaticCreateMethodName());
+		increaseIndentation();
+		println("return AbstractBuilderFactory.createImplementation(#0.class);", builderName());
+		decreaseIndentation();
+		println("}");
+		decreaseIndentation();
+	}
+	
+	@Override
+	protected Set<String> getFullClassNamesForImports() {
+		Set<String> fullClassNames = new TreeSet<String>();
+		if (context.isStaticCreate()) {
+			fullClassNames.add(AbstractBuilderFactory.class.getCanonicalName());
+		}
+		return fullClassNames;
 	}
 
-	protected void printIndentation(int level) {
-
-		printStream.print(repeat(INDENTATION, level));
+	@Override
+	public String getPackageName() {
+		return classMirror.getPackageName();
 	}
 
-	protected void println() {
-		printStream.println();
+	@Override
+	protected void printClassComment() {
+		println("/** ");
+		println(" * Fluent builder for #0.", classMirror.getSimpleName());
+		println(" * Don't hesitate to put your custom methods here. ");
+		println(" */");
 	}
 
-	protected void decreaseIndentation() {
-		indentationLevel--;
+	public String builderName() {
+		return classMirror.getSimpleName() + context.getBuilderClassPostfix();
 	}
 
-	protected void increaseIndentation() {
-		indentationLevel++;
-	}
 }

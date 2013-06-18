@@ -2,12 +2,12 @@
  * Created on 10-03-2013 11:16:45 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.processor;
+package info.ludwikowski.common;
 
+import static info.ludwikowski.common.AbstractBuilder.BUILDER_METHOD_PREFIX;
 import static info.ludwikowski.util.StringUtils.capitalize;
 import static info.ludwikowski.util.TypeUtils.isList;
 import static info.ludwikowski.util.TypeUtils.isSet;
-import info.ludwikowski.generator.proxy.AbstractBuilder;
 import info.ludwikowski.model.ClassMirror;
 import info.ludwikowski.model.MemberMirror;
 
@@ -16,17 +16,17 @@ import java.util.TreeSet;
 
 public class AbstractBuilderPrinter extends ClassPrinter {
 
-	private final ClassMirror classMirror;
-	private final ProcessorContext processorContext;
+	protected final ClassMirror classMirror;
+	protected final Context context;
 
 
-	public AbstractBuilderPrinter(ProcessorContext processorContext, ClassMirror classMirror) {
+	public AbstractBuilderPrinter(Context context, ClassMirror classMirror) {
 		this.classMirror = classMirror;
-		this.processorContext = processorContext;
+		this.context = context;
 	}
 	
 	private String abstractBuilderClassName(){
-		return classMirror.getSimpleName() + processorContext.getBuilderClassPostfix();
+		return classMirror.getSimpleName() + context.getBuilderClassPostfix();
 	}
 	
 
@@ -34,13 +34,45 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 	protected void printClassWithBody() {
 
 		printBuilderBegin();
+		printBuilderMethodPrefixGetter();
+		printBuilderBuildMethod();
 		printBuilderBody();
 		printVarargsMethods();
-
 		printBuilderEnd();
 	}
 
-	private void printBuilderBody() {
+	protected void printBuilderBuildMethod() {
+		if (context.getBuildMethodName() != null) {
+			println();
+			increaseIndentation();
+			println("public #0 #1(){", classMirror.getSimpleName(), context.getBuildMethodName());
+			increaseIndentation();
+			println("return build();");
+			decreaseIndentation();
+			println("}");
+			decreaseIndentation();
+		}
+	}
+
+	/**
+	 * public static final String getPrefix() {
+	 * return "with";
+	 * }
+	 */
+	protected void printBuilderMethodPrefixGetter() {
+		if (!BUILDER_METHOD_PREFIX.equals(context.getMethodPrefix())) {
+			println();
+			increaseIndentation();
+			println("public static final String getPrefix() {");
+			increaseIndentation();
+			println("return \"#0\";", context.getMethodPrefix());
+			decreaseIndentation();
+			println("}");
+			decreaseIndentation();
+		}
+	}
+
+	protected void printBuilderBody() {
 
 		increaseIndentation();
 		println();
@@ -50,8 +82,8 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 			String fieldName = memberMirror.getName();
 
 			println("public abstract #0 #1#2(#3 #4);",
-					abstractBuilderNameWithGeneric(),
-					processorContext.getMethodPrefix(),
+					abstractBuilderFullName(),
+					context.getMethodPrefix(),
 					capitalize(fieldName),
 					memberMirror.getSimpleType(),
 					fieldName);
@@ -65,7 +97,12 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 		return getPackageName() + "." + abstractBuilderName();
 	}
 
-	private void printVarargsMethods() {
+	protected void printVarargsMethods() {
+
+		if (!context.isVarargsForCollections()) {
+			return;
+		}
+
 		increaseIndentation();
 		println();
 
@@ -74,8 +111,8 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 			String fieldName = memberMirror.getName();
 
 			println("public #0 #1#2(#3... #4){",
-					abstractBuilderNameWithGeneric(),
-					processorContext.getMethodPrefix(),
+					abstractBuilderFullName(),
+					context.getMethodPrefix(),
 					capitalize(fieldName),
 					memberMirror.getCollectionElementSimpleName(),
 					fieldName);
@@ -93,34 +130,34 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 
 		if (isList(memberMirror.getCollectionType())) {
 			println("return #0#1(new ArrayList<#2>(Arrays.asList(#3)));",
-					processorContext.getMethodPrefix(),
+					context.getMethodPrefix(),
 					capitalize(fieldName),
 					memberMirror.getCollectionElementSimpleName(),
 					memberMirror.getName());
 		}
 		else if (isSet(memberMirror.getCollectionType())) {
 			println("return #0#1(new HashSet<#2>(Arrays.asList(#3));",
-					processorContext.getMethodPrefix(),
+					context.getMethodPrefix(),
 					capitalize(fieldName),
 					memberMirror.getCollectionElementSimpleName(),
 					memberMirror.getName());
 		}
 	}
 
-	private void printBuilderEnd() {
+	protected void printBuilderEnd() {
 		println("}");
 	}
 
-	private void printBuilderBegin() {
-		println("public abstract class #0 extends AbstractBuilder<#2, B> {", abstractBuilderNameWithGeneric(), abstractBuilderClassName(), classMirror.getSimpleName());
+	protected void printBuilderBegin() {
+		println("public abstract class #0 extends AbstractBuilder<#1, B> {", abstractBuilderFullName(), classMirror.getSimpleName());
 	}
 	
-	private String abstractBuilderNameWithGeneric() {
-		return processorContext.getAbstractBuilderClassPrefix() + abstractBuilderClassName() + "<B>";
+	protected String abstractBuilderFullName() {
+		return context.getAbstractBuilderClassPrefix() + abstractBuilderClassName() + "<B>";
 	}
 
 	private String abstractBuilderName() {
-		return processorContext.getAbstractBuilderClassPrefix() + abstractBuilderClassName();
+		return context.getAbstractBuilderClassPrefix() + abstractBuilderClassName();
 	}
 
 	@Override
@@ -135,17 +172,15 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 	}
 
 	@Override
-	protected String getPackageName() {
+	public String getPackageName() {
 		return classMirror.getPackageName();
 	}
 
 	@Override
 	protected void printClassComment() {
 		println("/** ");
-		println(" * Abstract builder for " + classMirror.getSimpleName());
-		println(" * After changes in " + classMirror.getSimpleName() +
-				" this class will be overriden, so dont' put any changes here, use "
-				+ classMirror.getSimpleName() + processorContext.getBuilderClassPostfix() + " instead.");
+		println(" * Abstract builder for #0. ", classMirror.getSimpleName());
+		println(" * After changes in #0 this class will be overridden, so don't put any changes here, use #1 instead.", classMirror.getSimpleName(), abstractBuilderClassName());
 		println(" */");
 	}
 

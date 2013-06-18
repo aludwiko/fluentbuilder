@@ -4,7 +4,7 @@
 
 package info.ludwikowski.example;
 
-import info.ludwikowski.generator.proxy.AbstractBuilderFactory;
+import info.ludwikowski.common.AbstractBuilderFactory;
 
 
 

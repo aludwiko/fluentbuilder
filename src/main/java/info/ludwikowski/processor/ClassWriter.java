@@ -4,6 +4,8 @@
 
 package info.ludwikowski.processor;
 
+import info.ludwikowski.common.AbstractBuilderPrinter;
+import info.ludwikowski.common.BuilderPrinter;
 import info.ludwikowski.model.ClassMirror;
 
 import java.io.IOException;
@@ -38,7 +40,7 @@ public class ClassWriter {
 		
 		try {
 
-			BuilderPrinter printer = new BuilderPrinter(context, classMirror);
+			BuilderPrinter printer = new BuilderPrinter(classMirror, context);
 
 			Filer filer = context.getProcessingEnvironment().getFiler();
 			FileObject resource = filer.getResource(StandardLocation.SOURCE_OUTPUT,

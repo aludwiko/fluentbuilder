@@ -4,7 +4,12 @@
 
 package info.ludwikowski.processor;
 
-
+/**
+ * Marker interface for classes that should have builder generated.
+ * 
+ * @author andrzej.ludwikowski
+ * 
+ */
 public @interface GenerateBuilder {
 
 }

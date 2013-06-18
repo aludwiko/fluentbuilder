@@ -1,7 +1,7 @@
 /*
  * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
  */
-package info.ludwikowski.generator.proxy;
+package info.ludwikowski.example;
 
 import java.util.Date;
 import java.util.List;

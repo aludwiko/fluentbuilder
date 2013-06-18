@@ -2,7 +2,11 @@
  * Created on 22-12-2012 09:00:56 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.generator.proxy;
+package info.ludwikowski.generator;
+
+import info.ludwikowski.common.AbstractBuilder;
+import info.ludwikowski.common.AbstractBuilderFactory;
+import info.ludwikowski.example.SampleForTests;
 
 import java.util.Date;
 import java.util.List;

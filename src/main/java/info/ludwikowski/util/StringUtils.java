@@ -4,29 +4,15 @@
 
 package info.ludwikowski.util;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtils {
 
 	private static final String PACKAGE_REGEXP = "([a-z]*\\.)";
 	private static final String IMPORT_STATEMENT_REGEXP = "([a-zA-Z_]{1}[a-zA-Z0-9_]*(\\.[a-zA-Z_]{1}[a-zA-Z0-9_]*)*)";
-	private static Pattern importStatementPattern = Pattern.compile(IMPORT_STATEMENT_REGEXP);
+	public static Pattern importStatementPattern = Pattern.compile(IMPORT_STATEMENT_REGEXP);
 	public static final String EMPTY = "";
 
-
-	public static Set<String> onlyImports(String type) {
-
-		Set<String> imports = new HashSet<String>();
-		Matcher matcher = importStatementPattern.matcher(type);
-
-		while (matcher.find()) {
-			imports.add(matcher.group());
-		}
-		return imports;
-	}
 
 	public static String removePackage(String value) {
 		return value.replaceAll(PACKAGE_REGEXP, "");

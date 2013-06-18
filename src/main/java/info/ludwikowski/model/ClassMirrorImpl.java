@@ -4,16 +4,17 @@
 
 package info.ludwikowski.model;
 
+import info.ludwikowski.common.Context;
 import info.ludwikowski.processor.ProcessorContext;
 import info.ludwikowski.util.StringUtils;
+import info.ludwikowski.util.TypeUtils;
 
+import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.lang.model.element.Element;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.ElementFilter;
 
@@ -21,7 +22,6 @@ public class ClassMirrorImpl implements ClassMirror {
 
 	private String simpleName;
 	private String packageName;
-	private Set<String> imports = new TreeSet<String>();
 	private List<MemberMirror> members = new LinkedList<MemberMirror>();
 
 
@@ -33,13 +33,45 @@ public class ClassMirrorImpl implements ClassMirror {
 		fillMemberMirrors(element, context);
 	}
 
+	public ClassMirrorImpl(Class<?> clazz, Context context) {
+
+		simpleName = clazz.getSimpleName();
+		packageName = clazz.getCanonicalName().replace("." + simpleName, StringUtils.EMPTY);
+
+		fillMemberMirrors(clazz, context);
+	}
+
+	private void fillMemberMirrors(Class<?> clazz, Context context) {
+
+		List<Field> properFileds = properFileds(clazz);
+
+		for (Field field : properFileds) {
+
+			members.add(MemberMirrorCreator.create(field, context));
+		}
+	}
+
+	private List<Field> properFileds(Class<?> clazz) {
+
+		List<Field> properFields = new LinkedList<Field>();
+
+		for (Field field : clazz.getDeclaredFields()) {
+
+			if (!TypeUtils.isStaticOrFinal(field)) {
+
+				properFields.add(field);
+			}
+		}
+		return properFields;
+	}
+
 	private void fillMemberMirrors(Element element, ProcessorContext context) {
 
 		List<? extends Element> fieldsOfClass = ElementFilter.fieldsIn(element.getEnclosedElements());
 
 		for (Element field : fieldsOfClass) {
 
-			if (isStatic(field) || isFinal(field)) {
+			if (TypeUtils.isStaticOrFinal(field)) {
 				continue;
 			}
 
@@ -49,14 +81,6 @@ public class ClassMirrorImpl implements ClassMirror {
 				members.add(member);
 			}
 		}
-	}
-
-	private boolean isFinal(Element field) {
-		return field.getModifiers().contains(Modifier.FINAL);
-	}
-
-	private boolean isStatic(Element field) {
-		return field.getModifiers().contains(Modifier.STATIC);
 	}
 
 	@Override
@@ -72,11 +96,13 @@ public class ClassMirrorImpl implements ClassMirror {
 	@Override
 	public Set<String> getImports() {
 
+		Imports imports = new Imports();
+
 		for (MemberMirror member : members) {
 			imports.addAll(member.getImports());
 		}
 
-		return imports;
+		return imports.asSet();
 	}
 
 	@Override

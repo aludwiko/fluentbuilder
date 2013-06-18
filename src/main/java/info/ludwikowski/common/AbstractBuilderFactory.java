@@ -1,13 +1,14 @@
 /*
  * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
  */
-package info.ludwikowski.generator.proxy;
+package info.ludwikowski.common;
 
-import static info.ludwikowski.generator.proxy.AbstractBuilder.ACCESS_BUILDER_METHOD_NAME;
-import static info.ludwikowski.generator.proxy.AbstractBuilder.ACCESS_TARGET_OBJECT_METHOD_NAME;
-import static info.ludwikowski.generator.proxy.AbstractBuilder.BUILD_METHOD_NAME;
+import static info.ludwikowski.common.AbstractBuilder.ACCESS_BUILDER_METHOD_NAME;
+import static info.ludwikowski.common.AbstractBuilder.ACCESS_TARGET_OBJECT_METHOD_NAME;
+import static info.ludwikowski.common.AbstractBuilder.BUILD_METHOD_NAME;
 import static info.ludwikowski.util.StringUtils.uncapitalize;
 import static java.lang.reflect.Modifier.isAbstract;
+
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -23,9 +24,14 @@ import org.springframework.core.GenericTypeResolver;
 
 public class AbstractBuilderFactory {
 
-	private static final String PREFIX_WITH = "with";
-
-
+	/**
+	 * Create proxy implemetation for {@link AbstractBuilder} using custom target Object,
+	 * useful for target object without default construdtor.
+	 * 
+	 * @param abstractClass
+	 * @param targetObject
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static <X extends AbstractBuilder<T, B>, T, B> X createImplementation(final Class<X> abstractClass, final T targetObject) {
 
@@ -87,7 +93,7 @@ public class AbstractBuilderFactory {
 					e.printStackTrace();
 				}
 
-				return PREFIX_WITH;
+				return AbstractBuilder.BUILDER_METHOD_PREFIX;
 			}
 
 			private <N> void setField(final N targetObject, Object[] args, String fieldName) throws NoSuchFieldException, IllegalAccessException {
@@ -112,7 +118,10 @@ public class AbstractBuilderFactory {
 	}
 
 	/**
-	 * requires that target object has default constructor (can be private)
+	 * 
+	 * Create proxy implementation for {@link AbstractBuilder}.
+	 * Requires that target object has default constructor (can be private).
+	 * 
 	 * @param abstractBuilderClass
 	 * @return
 	 */

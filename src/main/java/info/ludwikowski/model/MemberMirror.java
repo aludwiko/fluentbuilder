@@ -4,7 +4,6 @@
 
 package info.ludwikowski.model;
 
-import java.util.Set;
 
 public interface MemberMirror {
 
@@ -23,7 +22,7 @@ public interface MemberMirror {
 	 */
 	String getName();
 
-	Set<String> getImports();
+	Imports getImports();
 
 	boolean isSupporterVarargsCollection();
 
