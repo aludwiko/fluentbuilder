@@ -13,15 +13,11 @@ import java.util.TreeSet;
 
 public class BuilderPrinter extends ClassPrinter {
 
-	private final Context context;
-	private final ClassMirror classMirror;
-
-
-	public BuilderPrinter(ClassMirror classMirror, Context context) {
-		this.classMirror = classMirror;
-		this.context = context;
-	}
 	
+	public BuilderPrinter(ClassMirror classMirror, Context context) {
+		super(classMirror, context);
+	}
+
 	@Override
 	public String getFullClassName() {
 		return getPackageName() + "." + classMirror.getSimpleName() + context.getBuilderClassPostfix();
@@ -35,24 +31,10 @@ public class BuilderPrinter extends ClassPrinter {
 				builderName(),
 				context.getAbstractBuilderClassPrefix());
 		
-		if (context.isStaticCreate()) {
-			printCreateMethod();
-		}
-		
+		printCreateMethod();
 		println("}");
 	}
-	
-	private void printCreateMethod() {
-		increaseIndentation();
-		println();
-		println("public static #0 #1(){", builderName(), context.getStaticCreateMethodName());
-		increaseIndentation();
-		println("return AbstractBuilderFactory.createImplementation(#0.class);", builderName());
-		decreaseIndentation();
-		println("}");
-		decreaseIndentation();
-	}
-	
+
 	@Override
 	protected Set<String> getFullClassNamesForImports() {
 		Set<String> fullClassNames = new TreeSet<String>();
@@ -75,6 +57,7 @@ public class BuilderPrinter extends ClassPrinter {
 		println(" */");
 	}
 
+	@Override
 	public String builderName() {
 		return classMirror.getSimpleName() + context.getBuilderClassPostfix();
 	}

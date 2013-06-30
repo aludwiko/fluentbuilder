@@ -7,10 +7,12 @@ public class Context {
 	private String methodPrefix = "with";
 	private String builderClassPostfix = "Builder";
 	private String abstractBuilderClassPrefix = "Abstract";
-	private String staticCreateMethodName = "create";
-	private String buildMethodName = null;
+	private String staticCreateMethodName;
+	private String buildMethodName;
+	private String ignoredClassPrefix;
 	private boolean staticCreate = true;
 	private boolean varargsForCollections = true;
+	private boolean useIndefineArticles = true;
 
 
 	public String getMethodPrefix() {
@@ -79,6 +81,22 @@ public class Context {
 		}
 	}
 
+	public String getIgnoredClassPrefix() {
+		return ignoredClassPrefix;
+	}
+
+	public void setIgnoredClassPrefix(String ignoredClassPostfix) {
+		this.ignoredClassPrefix = ignoredClassPostfix;
+	}
+
+	public boolean isUseIndefineArticles() {
+		return useIndefineArticles;
+	}
+
+	public void setUseIndefineArticles(boolean useIndefineArticles) {
+		this.useIndefineArticles = useIndefineArticles;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -92,10 +110,14 @@ public class Context {
 		builder.append(staticCreateMethodName);
 		builder.append(", buildMethodName=");
 		builder.append(buildMethodName);
+		builder.append(", ignoredClassPrefix=");
+		builder.append(ignoredClassPrefix);
 		builder.append(", staticCreate=");
 		builder.append(staticCreate);
 		builder.append(", varargsForCollections=");
 		builder.append(varargsForCollections);
+		builder.append(", useIndefineArticles=");
+		builder.append(useIndefineArticles);
 		builder.append("]");
 		return builder.toString();
 	}

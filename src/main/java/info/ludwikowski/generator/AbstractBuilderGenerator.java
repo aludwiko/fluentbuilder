@@ -30,7 +30,7 @@ public class AbstractBuilderGenerator {
 	}
 
 	/**
-	 * default generated method name prefix is 'with', e.g. for field id method name will be 'withId(long id)';
+	 * Default generated method name prefix is 'with', e.g. for field id method name will be 'withId(long id)';
 	 * 
 	 * @param methodPrefix - new method prefix
 	 * @return
@@ -40,18 +40,30 @@ public class AbstractBuilderGenerator {
 		return this;
 	}
 
+	/**
+	 * Default is <code>true<code>
+	 * 
+	 * @param staticCreate
+	 * @return
+	 */
 	public AbstractBuilderGenerator withStaticCreate(boolean staticCreate) {
 		context.setStaticCreate(staticCreate);
 		return this;
 	}
 
+	/**
+	 * Default is <code>true<code>
+	 * 
+	 * @param varargsForCollections
+	 * @return
+	 */
 	public AbstractBuilderGenerator withVarargsForCollections(boolean varargsForCollections) {
 		context.setVarargsForCollections(varargsForCollections);
 		return this;
 	}
 
 	/**
-	 * default is Builder
+	 * Default is Builder
 	 * 
 	 * @param builderNamePostfix - new builder name posfix
 	 * @return
@@ -62,6 +74,8 @@ public class AbstractBuilderGenerator {
 	}
 
 	/**
+	 * Default is "create"
+	 * 
 	 * @param staticCreateMethodName - custom create method name
 	 * @return
 	 */
@@ -71,6 +85,8 @@ public class AbstractBuilderGenerator {
 	}
 
 	/**
+	 * Default is "build"
+	 * 
 	 * @param buildMethodName - custom build method name
 	 * @return
 	 */
@@ -80,12 +96,28 @@ public class AbstractBuilderGenerator {
 	}
 
 	/**
+	 * If classes has some irrational prefix like 'C', builder can ignore this prefix
+	 * 
+	 * @param ignoredClassPostfix
+	 * @return
+	 */
+	public AbstractBuilderGenerator withIgnoredClassPrefix(String ignoredClassPrefix) {
+		context.setIgnoredClassPrefix(ignoredClassPrefix);
+		return this;
+	}
+
+	public AbstractBuilderGenerator withIndefiniteArticles(boolean indefiniteArticles) {
+		context.setUseIndefineArticles(indefiniteArticles);
+		return this;
+	}
+
+	/**
 	 * print two builders to {@link System#out}
 	 */
 	public void printBuilders() {
 
 		ClassMirror classMirror = new ClassMirrorImpl(clazz, context);
-		AbstractBuilderPrinter abstractBuilderPrinter = new AbstractBuilderPrinter(context, classMirror);
+		AbstractBuilderPrinter abstractBuilderPrinter = new AbstractBuilderPrinter(classMirror, context);
 		BuilderPrinter builderPrinter = new BuilderPrinter(classMirror, context);
 
 		System.out.println(abstractBuilderPrinter.printClass());
@@ -100,6 +132,6 @@ public class AbstractBuilderGenerator {
 	public void printSingleBuilder() {
 
 		ClassMirror classMirror = new ClassMirrorImpl(clazz, context);
-		System.out.println(new SingleBuilderPrinter(context, classMirror).printClass());
+		System.out.println(new SingleBuilderPrinter(classMirror, context).printClass());
 	}
 }

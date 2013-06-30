@@ -12,7 +12,9 @@ import java.util.List;
 
 public class Order {
 
+	@SuppressWarnings("unused")
 	private List<OrderItem> items;
+	@SuppressWarnings("unused")
 	private Date createDate;
 	private boolean realized;
 

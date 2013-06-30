@@ -10,6 +10,4 @@ package info.ludwikowski.processor;
  * @author andrzej.ludwikowski
  * 
  */
-public @interface GenerateBuilder {
-
-}
+public @interface GenerateBuilder {}

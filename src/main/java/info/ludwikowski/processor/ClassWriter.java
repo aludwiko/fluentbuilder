@@ -76,7 +76,7 @@ public class ClassWriter {
 
 	private void printAbstractBuilderPrinter(ClassMirror classMirror) {
 		try {
-			AbstractBuilderPrinter printer = new AbstractBuilderPrinter(context, classMirror);
+			AbstractBuilderPrinter printer = new AbstractBuilderPrinter(classMirror, context);
 			
 			FileObject fo = context.getProcessingEnvironment().getFiler()
 					.createSourceFile(printer.getFullClassName());

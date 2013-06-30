@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class SingleBuilderPrinter extends AbstractBuilderPrinter {
 
-	public SingleBuilderPrinter(Context context, ClassMirror classMirror) {
-		super(context, classMirror);
+	public SingleBuilderPrinter(ClassMirror classMirror, Context context) {
+		super(classMirror, context);
 	}
 
 	@Override
@@ -33,22 +33,6 @@ public class SingleBuilderPrinter extends AbstractBuilderPrinter {
 		return imports;
 	}
 
-	private void printCreateMethod() {
-
-		if (!context.isStaticCreate()) {
-			return;
-		}
-
-		increaseIndentation();
-		println();
-		println("public static #0 #1(){", builderName(), context.getStaticCreateMethodName());
-		increaseIndentation();
-		println("return AbstractBuilderFactory.createImplementation(#0.class);", builderName());
-		decreaseIndentation();
-		println("}");
-		decreaseIndentation();
-	}
-
 	@Override
 	protected void printClassComment() {
 		println("/**");
@@ -61,6 +45,7 @@ public class SingleBuilderPrinter extends AbstractBuilderPrinter {
 		println("public abstract class #0 extends AbstractBuilder<#1, #2> {", abstractBuilderFullName(), builderName(), classMirror.getSimpleName());
 	}
 
+	@Override
 	public String builderName() {
 		return classMirror.getSimpleName() + context.getBuilderClassPostfix();
 	}

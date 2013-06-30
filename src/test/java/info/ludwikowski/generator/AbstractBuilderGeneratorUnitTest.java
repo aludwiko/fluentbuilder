@@ -1,6 +1,6 @@
 package info.ludwikowski.generator;
 
-import info.ludwikowski.example.SampleForTests;
+import info.ludwikowski.example.COrder;
 
 import org.junit.Test;
 
@@ -13,13 +13,13 @@ public class AbstractBuilderGeneratorUnitTest {
 		// given
 
 		// when
-		AbstractBuilderGenerator.forClass(SampleForTests.class)
+		AbstractBuilderGenerator.forClass(COrder.class)
 								.withBuilderClassPostfix("Budowniczy")
 								.withBuildMethodName("buduj")
 								.withMethodPrefix("z")
 								.withStaticCreate(true)
-								.withStaticCreateMethodName("utworz")
 								.withVarargsForCollections(true)
+								.withIgnoredClassPrefix("C")
 								.printSingleBuilder();
 
 		// then

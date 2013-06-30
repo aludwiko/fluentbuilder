@@ -16,19 +16,13 @@ import java.util.TreeSet;
 
 public class AbstractBuilderPrinter extends ClassPrinter {
 
-	protected final ClassMirror classMirror;
-	protected final Context context;
-
-
-	public AbstractBuilderPrinter(Context context, ClassMirror classMirror) {
-		this.classMirror = classMirror;
-		this.context = context;
+	public AbstractBuilderPrinter(ClassMirror classMirror, Context context) {
+		super(classMirror, context);
 	}
-	
+
 	private String abstractBuilderClassName(){
 		return classMirror.getSimpleName() + context.getBuilderClassPostfix();
 	}
-	
 
 	@Override
 	protected void printClassWithBody() {
@@ -94,7 +88,7 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 	
 	@Override
 	public String getFullClassName() {
-		return getPackageName() + "." + abstractBuilderName();
+		return getPackageName() + "." + builderName();
 	}
 
 	protected void printVarargsMethods() {
@@ -136,7 +130,7 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 					memberMirror.getName());
 		}
 		else if (isSet(memberMirror.getCollectionType())) {
-			println("return #0#1(new HashSet<#2>(Arrays.asList(#3));",
+			println("return #0#1(new HashSet<#2>(Arrays.asList(#3)));",
 					context.getMethodPrefix(),
 					capitalize(fieldName),
 					memberMirror.getCollectionElementSimpleName(),
@@ -156,7 +150,8 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 		return context.getAbstractBuilderClassPrefix() + abstractBuilderClassName() + "<B>";
 	}
 
-	private String abstractBuilderName() {
+	@Override
+	public String builderName() {
 		return context.getAbstractBuilderClassPrefix() + abstractBuilderClassName();
 	}
 
