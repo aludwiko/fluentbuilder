@@ -19,9 +19,6 @@ import javax.lang.model.element.Modifier;
 
 public class TypeUtils {
 
-	private static final String PACKAGE_REGEXP = "([a-z]*\\.)";
-
-
 	public static boolean containsAnnotation(Element element, String... annotations) {
 		assert element != null;
 		assert annotations != null;
@@ -41,10 +38,6 @@ public class TypeUtils {
 			}
 		}
 		return false;
-	}
-
-	public static String simpleType(String string) {
-		return string.replaceAll(PACKAGE_REGEXP, "");
 	}
 
 	public static boolean isSet(String type) {

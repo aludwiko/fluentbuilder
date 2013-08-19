@@ -16,6 +16,9 @@ import java.util.TreeSet;
 
 public class AbstractBuilderPrinter extends ClassPrinter {
 
+	private static final String GENERIC_B = "B";
+
+
 	public AbstractBuilderPrinter(ClassMirror classMirror, Context context) {
 		super(classMirror, context);
 	}
@@ -76,7 +79,7 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 			String fieldName = memberMirror.getName();
 
 			println("public abstract #0 #1#2(#3 #4);",
-					abstractBuilderFullName(),
+					abstractBuilderReturnName(),
 					context.getMethodPrefix(),
 					capitalize(fieldName),
 					memberMirror.getSimpleType(),
@@ -105,7 +108,7 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 			String fieldName = memberMirror.getName();
 
 			println("public #0 #1#2(#3... #4){",
-					abstractBuilderFullName(),
+					abstractBuilderReturnName(),
 					context.getMethodPrefix(),
 					capitalize(fieldName),
 					memberMirror.getCollectionElementSimpleName(),
@@ -143,11 +146,15 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 	}
 
 	protected void printBuilderBegin() {
-		println("public abstract class #0 extends AbstractBuilder<#1, B> {", abstractBuilderFullName(), classMirror.getSimpleName());
+		println("public abstract class #0 extends AbstractBuilder<#1, #2> {", abstractBuilderFullClassName(), classMirror.getSimpleName(), GENERIC_B);
 	}
 	
-	protected String abstractBuilderFullName() {
+	private String abstractBuilderFullClassName() {
 		return context.getAbstractBuilderClassPrefix() + abstractBuilderClassName() + "<B>";
+	}
+
+	protected String abstractBuilderReturnName() {
+		return GENERIC_B;
 	}
 
 	@Override

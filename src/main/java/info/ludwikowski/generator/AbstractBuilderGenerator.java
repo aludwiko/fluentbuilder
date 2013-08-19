@@ -65,11 +65,22 @@ public class AbstractBuilderGenerator {
 	/**
 	 * Default is Builder
 	 * 
-	 * @param builderNamePostfix - new builder name posfix
+	 * @param builderNamePostfix - new builder klass name posfix
 	 * @return
 	 */
 	public AbstractBuilderGenerator withBuilderClassPostfix(String builderClassPostfix) {
 		context.setBuilderClassPostfix(builderClassPostfix);
+		return this;
+	}
+
+	/**
+	 * Default is Abstract
+	 * 
+	 * @param abstractBuilderClassPrefix - new abstract builder class name prefix
+	 * @return
+	 */
+	public AbstractBuilderGenerator withAbstractBuilderClassPrefix(String abstractBuilderClassPrefix) {
+		context.setAbstractBuilderClassPrefix(abstractBuilderClassPrefix);
 		return this;
 	}
 

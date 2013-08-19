@@ -5,7 +5,6 @@
 package info.ludwikowski.generator;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-
 import info.ludwikowski.example.SampleForTests;
 
 import java.util.Date;
@@ -87,5 +86,6 @@ public class SampleForTestsTest {
 		assertThat(sampleForTests.getTypeString()).isEqualTo(typeString);
 		assertThat(sampleForTests.getTypeStringList()).isEqualTo(typeStringList);
 		assertThat(sampleForTests.getComplexGeneric()).isEqualTo(complexGeneric);
+
 	}
 }

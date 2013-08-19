@@ -46,7 +46,7 @@ public class ClassVerifierTest {
 		// given
 		Element element = mock(Element.class);
 		AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
-		String type = "info.ludwikowski.processor.GenerateBuilder";
+		String type = "info.ludwikowski.annotation.GenerateBuilder";
 
 		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
 		doReturn(annotationMirrors).when(element).getAnnotationMirrors();

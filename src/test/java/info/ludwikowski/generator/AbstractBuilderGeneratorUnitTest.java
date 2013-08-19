@@ -20,7 +20,7 @@ public class AbstractBuilderGeneratorUnitTest {
 								.withStaticCreate(true)
 								.withVarargsForCollections(true)
 								.withIgnoredClassPrefix("C")
-								.printSingleBuilder();
+								.printBuilders();
 
 		// then
 	}

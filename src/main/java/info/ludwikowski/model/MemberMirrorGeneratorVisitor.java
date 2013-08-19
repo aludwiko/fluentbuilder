@@ -6,8 +6,8 @@ package info.ludwikowski.model;
 
 import static info.ludwikowski.model.ImportsHelper.createNecessaryImports;
 import static info.ludwikowski.model.ImportsHelper.onlyImports;
+import static info.ludwikowski.util.StringUtils.removePackage;
 import static info.ludwikowski.util.TypeUtils.isListOrSet;
-import static info.ludwikowski.util.TypeUtils.simpleType;
 import info.ludwikowski.processor.ProcessorContext;
 import info.ludwikowski.util.StringUtils;
 
@@ -42,7 +42,7 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 	private MemberMirror simpleTypes(TypeMirror primitiveType, Element element) {
 
 		String name = element.toString();
-		String simpleType = simpleType(primitiveType.toString());
+		String simpleType = removePackage(primitiveType.toString());
 
 		return MemberMirrorImpl.simpleMirror(name,
 				simpleType,
@@ -60,7 +60,7 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 		TypeElement returnedElement = (TypeElement) context.getTypeUtils().asElement(declaredType);
 
 		String name = element.toString();
-		String simpleType = simpleType(declaredType.toString());
+		String simpleType = removePackage(declaredType.toString());
 		Set<String> imports = imports(declaredType, returnedElement);
 		String type = returnedElement.toString();
 

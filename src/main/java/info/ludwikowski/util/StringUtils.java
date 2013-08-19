@@ -12,7 +12,7 @@ public class StringUtils {
 
 	private static final String A = "a";
 	private static final String AN = "an";
-	private static final String PACKAGE_REGEXP = "([a-z]*\\.)";
+	private static final String PACKAGE_PART_REGEXP = "([a-zA-Z0-9]*\\.)";
 	private static final String IMPORT_STATEMENT_REGEXP = "([a-zA-Z_]{1}[a-zA-Z0-9_]*(\\.[a-zA-Z_]{1}[a-zA-Z0-9_]*)*)";
 	public static Pattern importStatementPattern = Pattern.compile(IMPORT_STATEMENT_REGEXP);
 	public static final String EMPTY = "";
@@ -27,7 +27,7 @@ public class StringUtils {
 	}
 
 	public static String removePackage(String value) {
-		return value.replaceAll(PACKAGE_REGEXP, "");
+		return value.replaceAll(PACKAGE_PART_REGEXP, "");
 	}
 
 	public static boolean hasText(String staticCreateMethodName) {

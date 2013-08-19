@@ -7,8 +7,8 @@ package info.ludwikowski.common;
  * 
  * @author andrzej.ludwikowski
  * 
- * @param <T> builder type
- * @param <B> target object type
+ * @param <T> target object type
+ * @param <B> builder type
  */
 public abstract class AbstractBuilder<T, B> {
 

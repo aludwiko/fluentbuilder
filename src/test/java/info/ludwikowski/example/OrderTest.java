@@ -5,6 +5,7 @@
 package info.ludwikowski.example;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import info.ludwikowski.generator.AbstractBuilderGenerator;
 
 import java.util.Date;
 
@@ -26,19 +27,12 @@ public class OrderTest {
 
 		// then
 		assertThat(realizedOrder.isRealized()).isTrue();
-	}
 
-	@Test
-	public void shouldPolish() {
-
-		// given
-
-		// when
-		Order order = OrderBudowniczy.utworz().zCreateDate(new Date())
-						.zrealizowane()
-						.buduj();
-
-		// then
-		assertThat(order.isRealized()).isTrue();
+		AbstractBuilderGenerator.forClass(Order.class)
+								.withIndefiniteArticles(false)
+								.withVarargsForCollections(false)
+								// join two builders in one class
+								// .printSingleBuilder();
+								.printBuilders();
 	}
 }

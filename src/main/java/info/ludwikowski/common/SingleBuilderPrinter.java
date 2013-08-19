@@ -22,7 +22,7 @@ public class SingleBuilderPrinter extends AbstractBuilderPrinter {
 	}
 
 	@Override
-	protected String abstractBuilderFullName() {
+	protected String abstractBuilderReturnName() {
 		return builderName();
 	}
 
@@ -42,7 +42,7 @@ public class SingleBuilderPrinter extends AbstractBuilderPrinter {
 
 	@Override
 	protected void printBuilderBegin() {
-		println("public abstract class #0 extends AbstractBuilder<#1, #2> {", abstractBuilderFullName(), builderName(), classMirror.getSimpleName());
+		println("public abstract class #0 extends AbstractBuilder<#1, #2> {", abstractBuilderReturnName(), classMirror.getSimpleName(), builderName());
 	}
 
 	@Override

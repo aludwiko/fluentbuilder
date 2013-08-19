@@ -6,6 +6,7 @@ package info.ludwikowski.processor;
 
 import static info.ludwikowski.processor.ProcessorContext.JPA_ANNOTATIONS;
 import static info.ludwikowski.util.TypeUtils.containsAnnotation;
+import info.ludwikowski.annotation.GenerateBuilder;
 
 import javax.lang.model.element.Element;
 
