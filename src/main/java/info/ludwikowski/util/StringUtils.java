@@ -82,7 +82,7 @@ public class StringUtils {
 		return string;
 	}
 
-	public static String addIndefineArticle(String string) {
+	public static String addIndefiniteArticle(String string) {
 
 		char firstChar = Character.toLowerCase(string.charAt(0));
 

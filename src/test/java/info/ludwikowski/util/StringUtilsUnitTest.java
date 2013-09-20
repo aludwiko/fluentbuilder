@@ -41,7 +41,7 @@ public class StringUtilsUnitTest {
 		String string = "Order";
 
 		// when
-		String result = StringUtils.addIndefineArticle(string);
+		String result = StringUtils.addIndefiniteArticle(string);
 
 		// then
 		assertThat(result).isEqualTo("anOrder");
@@ -54,7 +54,7 @@ public class StringUtilsUnitTest {
 		String string = "Bug";
 
 		// when
-		String result = StringUtils.addIndefineArticle(string);
+		String result = StringUtils.addIndefiniteArticle(string);
 
 		// then
 		assertThat(result).isEqualTo("aBug");

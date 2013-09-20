@@ -5,7 +5,7 @@
 package info.ludwikowski.common;
 
 import static info.ludwikowski.util.StringUtils.EMPTY;
-import static info.ludwikowski.util.StringUtils.addIndefineArticle;
+import static info.ludwikowski.util.StringUtils.addIndefiniteArticle;
 import static info.ludwikowski.util.StringUtils.hasText;
 import static info.ludwikowski.util.StringUtils.repeat;
 import static info.ludwikowski.util.StringUtils.uncapitalize;
@@ -136,8 +136,8 @@ public abstract class ClassPrinter {
 			className = removeClassPrefix(className);
 		}
 
-		if (context.isUseIndefineArticles()) {
-			className = addIndefineArticle(className);
+		if (context.isUseIndefiniteArticles()) {
+			className = addIndefiniteArticle(className);
 		}
 
 		return uncapitalize(className);

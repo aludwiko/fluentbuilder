@@ -30,7 +30,7 @@ public class ProcessorContext extends Context {
 	public static final String GENERATE_VARARGS_FOR_COLLECTIONS = "generateVarargsForCollections";
 	public static final String ACCEPT_JAVA_PERSISTENCE_ANNOTATIONS = "acceptJavaPersisentceAnnotations";
 	public static final String IGNORED_CLASS_PREFIX = "ignoredClassPrefix";
-	public static final String USE_INDEFINE_ARTICLES = "useIndefineArticles";
+	public static final String USE_INDEFINITE_ARTICLES = "useIndefiniteArticles";
 	public static final String DEBUG = "debug";
 
 	public static final String JAVAX_PERSISTENCE_ENTITY = "javax.persistence.Entity";
@@ -66,7 +66,7 @@ public class ProcessorContext extends Context {
 		setStaticCreateMethodName(options.get(STATIC_CREATE_METHOD_NAME));
 		setVarargsForCollections(getBoolean(options, GENERATE_VARARGS_FOR_COLLECTIONS, true));
 		setIgnoredClassPrefix(options.get(IGNORED_CLASS_PREFIX));
-		setUseIndefineArticles(getBoolean(options, USE_INDEFINE_ARTICLES, true));
+		setUseIndefiniteArticles(getBoolean(options, USE_INDEFINITE_ARTICLES, true));
 	}
 
 	private boolean getBoolean(Map<String, String> options, String key, boolean defaultValue) {

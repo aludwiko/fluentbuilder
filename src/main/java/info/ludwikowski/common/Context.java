@@ -12,7 +12,7 @@ public class Context {
 	private String ignoredClassPrefix;
 	private boolean staticCreate = true;
 	private boolean varargsForCollections = true;
-	private boolean useIndefineArticles = true;
+	private boolean useIndefiniteArticles = true;
 
 
 	public String getMethodPrefix() {
@@ -89,12 +89,12 @@ public class Context {
 		this.ignoredClassPrefix = ignoredClassPostfix;
 	}
 
-	public boolean isUseIndefineArticles() {
-		return useIndefineArticles;
+	public boolean isUseIndefiniteArticles() {
+		return useIndefiniteArticles;
 	}
 
-	public void setUseIndefineArticles(boolean useIndefineArticles) {
-		this.useIndefineArticles = useIndefineArticles;
+	public void setUseIndefiniteArticles(boolean useIndefiniteArticles) {
+		this.useIndefiniteArticles = useIndefiniteArticles;
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class Context {
 		builder.append(", varargsForCollections=");
 		builder.append(varargsForCollections);
 		builder.append(", useIndefineArticles=");
-		builder.append(useIndefineArticles);
+		builder.append(useIndefiniteArticles);
 		builder.append("]");
 		return builder.toString();
 	}

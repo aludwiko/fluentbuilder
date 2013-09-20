@@ -118,7 +118,7 @@ public class AbstractBuilderGenerator {
 	}
 
 	public AbstractBuilderGenerator withIndefiniteArticles(boolean indefiniteArticles) {
-		context.setUseIndefineArticles(indefiniteArticles);
+		context.setUseIndefiniteArticles(indefiniteArticles);
 		return this;
 	}
 
