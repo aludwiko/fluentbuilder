@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.ludwikowski</groupId>
 	<artifactId>fluentbuilder</artifactId>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   		<!--maven variable which points to your local repository -->
-<!-- 	 	<internal.repo.path>file://D:/Andrzej/Projekty/fluentbuilder/mvn-repo/</internal.repo.path> -->
-<!-- 	 	<project.build.directory>D:/Andrzej/Projekty/fluentbuilder</project.build.directory> -->
+<!-- 	 	<internal.repo.path>file://D:/Andrzej/PROJEKTY/workspace-kepler/mvn-repo/</internal.repo.path> -->
+<!-- 	 	<project.build.directory>D:/Andrzej/PROJEKTY/workspace-kepler/mvn-repo</project.build.directory> -->
 	</properties>
 
 	<distributionManagement>

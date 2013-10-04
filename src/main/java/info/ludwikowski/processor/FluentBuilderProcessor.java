@@ -35,6 +35,11 @@ public class FluentBuilderProcessor extends AbstractProcessor {
 
 
 	@Override
+	public SourceVersion getSupportedSourceVersion() {
+		return SourceVersion.latestSupported();
+	}
+
+	@Override
 	public synchronized void init(ProcessingEnvironment processingEnv) {
 		super.init(processingEnv);
 		context = new ProcessorContext(processingEnv);
