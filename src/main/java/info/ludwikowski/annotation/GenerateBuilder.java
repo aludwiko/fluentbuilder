@@ -1,4 +1,4 @@
-/* 
+/*
  * Created on 18-03-2013 18:35:37 by Andrzej Ludwikowski
  */
 
@@ -17,5 +17,5 @@ import java.lang.annotation.Target;
  * 
  */
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.SOURCE)
 public @interface GenerateBuilder {}
