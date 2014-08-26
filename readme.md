@@ -10,8 +10,10 @@ The BLUECARAT Edition is a fork of the original FluentBuilderGenerator project w
 * invocation of a particular constructor (BLUECARAT Edition)
 * support for classes with no default constructor without the need to modify the generated code (BLUECARAT Edition)
 
-GitHub Repository:
-GitHub Wiki:
+GitHub Repository: https://github.com/bluecarat/fluentbuilder
+
+GitHub Wiki: https://github.com/bluecarat/fluentbuilder/wiki
+
 
 ##Getting Started
 
@@ -99,7 +101,7 @@ final SampleClass testObject = aSampleClass.withName("Test").withId(0).build();
 More information can be found in the GitHub wiki at:
 
 ##Changelog
-1.0:
+1.0.13:
 
 - initial fork
 - basic refactoring of the original code
@@ -110,13 +112,16 @@ More information can be found in the GitHub wiki at:
 
 	
 ##Company Information
-Forked by BLUECARAT AG 
+Forked by BLUECARAT AG
+ 
 values at work.
 
 Albin-Köbis-Straße 4
+
 51147 Köln
 
 http://www.bluecarat.de/
+
 http://www.hochkaraeter.de/ 
 	
 ##License Information
