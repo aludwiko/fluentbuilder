@@ -120,9 +120,12 @@ Albin-Köbis-Straße 4
 
 51147 Köln
 
+info@bluecarat.de
+
 http://www.bluecarat.de/
 
 http://www.hochkaraeter.de/ 
+
 	
 ##License Information
 Licensed under the Apache License, Version 2.0 (the "License");
