@@ -3,18 +3,17 @@
  */
 package de.bluecarat.fluentbuilder.common;
 
+import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
+import info.ludwikowski.fluentbuilder.util.NameUtils;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import de.bluecarat.fluentbuilder.annotation.ReferencedField;
-
-import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
-import info.ludwikowski.fluentbuilder.util.NameUtils;
-
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import de.bluecarat.fluentbuilder.annotation.ReferencedField;
 
 /**
  * This class implements a MethodInterceptor. It is used to intercept method
@@ -92,7 +91,7 @@ public class FactoryMethodInterceptor<X> implements MethodInterceptor {
         }
         Object value = null;
         if (field.getType() == String.class) {
-            value = (String) args[0];
+            value = args[0];
         } else {
             value = args[0];
         }
@@ -105,11 +104,22 @@ public class FactoryMethodInterceptor<X> implements MethodInterceptor {
         try {
             final Method method = abstractClass.getMethod("getPrefix");
             return (String) method.invoke(null);
-        } catch (NoSuchMethodException e) {
+		}
+		catch (NoSuchMethodException e) {
             return AbstractBuilder.BUILDER_METHOD_PREFIX;
-        } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            throw new RuntimeException("Access error, aborting!", e);
+		}
+		catch (SecurityException e) {
+        	throw new RuntimeException("Access error, aborting!", e);
         }
+		catch (IllegalArgumentException e) {
+			throw new RuntimeException("Access error, aborting!", e);
+		}
+		catch (IllegalAccessException e) {
+			throw new RuntimeException("Access error, aborting!", e);
+		}
+		catch (InvocationTargetException e) {
+			throw new RuntimeException("Access error, aborting!", e);
+		}
     }
 
     /**

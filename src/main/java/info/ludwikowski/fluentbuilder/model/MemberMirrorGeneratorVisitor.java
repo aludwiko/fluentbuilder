@@ -6,6 +6,9 @@
  */
 package info.ludwikowski.fluentbuilder.model;
 
+import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
+import info.ludwikowski.fluentbuilder.util.TypeUtils;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,9 +31,6 @@ import org.apache.commons.lang.StringUtils;
 
 import de.bluecarat.fluentbuilder.model.MemberMirrorConstructorImpl;
 import de.bluecarat.fluentbuilder.model.ParameterMirror;
-
-import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
-import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 /**
  * A visitor for creating MemberMirrors by visiting Java elements.
@@ -119,9 +119,16 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
             field.setAccessible(true);
             final Object truncatedOwner = field.get(ownedElement);
             return truncatedOwner.toString();
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-            throw new RuntimeException("No access on owner field possible.", e);
+		}
+		catch (NoSuchFieldException e) {
+			throw new RuntimeException("No access on owner field possible.", e);
         }
+		catch (IllegalArgumentException e) {
+			throw new RuntimeException("No access on owner field possible.", e);
+		}
+		catch (IllegalAccessException e) {
+			throw new RuntimeException("No access on owner field possible.", e);
+		}
     }
 
     private boolean isGeneric(final DeclaredType declaredType) {
