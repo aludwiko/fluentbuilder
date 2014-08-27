@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<ruleset name="Custom ruleset" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+	<description>This ruleset checks my code for bad stuff</description>
+
+	<!-- define excludes here, inlcuding a justification -->
+	<exclude-pattern>.*/some/package/.*</exclude-pattern> <!-- STH: just an example -->
+
+	<!-- we use most of the pre defined rulesets -->
+	<rule ref="rulesets/java/basic.xml" />
+	<rule ref="rulesets/java/braces.xml" />
+	<rule ref="rulesets/java/clone.xml" />
+	<rule ref="rulesets/java/codesize.xml" />
+	<rule ref="rulesets/java/comments.xml" />
+	<rule ref="rulesets/java/coupling.xml" />
+	<rule ref="rulesets/java/design.xml">
+		<exclude name="EmptyMethodInAbstractClassShouldBeAbstract"/>
+	</rule>
+	<rule ref="rulesets/java/empty.xml" />
+	<rule ref="rulesets/java/finalizers.xml" />
+	<rule ref="rulesets/java/j2ee.xml" />
+	<rule ref="rulesets/java/javabeans.xml" />
+	<rule ref="rulesets/java/naming.xml" />
+	<rule ref="rulesets/java/optimizations.xml" />
+	<rule ref="rulesets/java/unnecessary.xml" />
+	<rule ref="rulesets/java/unusedcode.xml" />
+	<rule ref="rulesets/java/imports.xml" />
+	<rule ref="rulesets/java/typeresolution.xml" />
+	<rule ref="rulesets/java/strings.xml" />
+	<rule ref="rulesets/java/strictexception.xml" />
+	<rule ref="rulesets/java/sunsecure.xml" />
+	<rule ref="rulesets/java/logging-java.xml" />
+	<rule ref="rulesets/java/logging-jakarta-commons.xml" />
+	<rule ref="rulesets/xml/basic.xml" />
+	<rule ref="rulesets/xsl/xpath.xml" />
+	<rule ref="rulesets/ecmascript/basic.xml" />
+	<rule ref="rulesets/ecmascript/braces.xml" />
+	<rule ref="rulesets/ecmascript/unnecessary.xml" />
+
+	<!-- Here's some rules we'll specify one at a time -->
+	<rule ref="rulesets/java/controversial.xml/UseConcurrentHashMap" />
+	<rule ref="rulesets/java/controversial.xml/UseObjectForClearerAPI" />
+	<rule ref="rulesets/java/controversial.xml/AvoidLiteralsInIfCondition" />
+	<rule ref="rulesets/java/controversial.xml/AvoidPrefixingMethodParameters" />
+	<rule ref="rulesets/java/controversial.xml/OneDeclarationPerLine" />
+	<rule ref="rulesets/java/controversial.xml/DoNotCallGarbageCollectionExplicitly" />
+	<rule ref="rulesets/java/controversial.xml/AvoidAccessibilityAlteration" />
+	<rule ref="rulesets/java/controversial.xml/AvoidUsingNativeCode" />
+	<rule ref="rulesets/java/controversial.xml/AvoidUsingVolatile" />
+	<rule ref="rulesets/java/controversial.xml/DataflowAnomalyAnalysis" />
+	<rule ref="rulesets/java/controversial.xml/BooleanInversion" />
+	<rule ref="rulesets/java/controversial.xml/UnnecessaryParentheses" />
+	<rule ref="rulesets/java/controversial.xml/CallSuperInConstructor" />
+	<rule ref="rulesets/java/controversial.xml/SuspiciousOctalEscape" />
+	<rule ref="rulesets/java/controversial.xml/DontImportSun" />
+	<rule ref="rulesets/java/controversial.xml/AssignmentInOperand" />
+	<rule ref="rulesets/java/controversial.xml/UnnecessaryConstructor" />
+
+	<!-- Now we'll customize a rule's property value -->
+	<rule ref="rulesets/java/codesize.xml/CyclomaticComplexity">
+		<properties>
+			<property name="reportLevel" value="4" />
+		</properties>
+	</rule>
+
+</ruleset>

@@ -1,0 +1,15 @@
+Forked by
+ BLUECARAT AG
+ 
+ values at work.
+
+ Albin-Köbis-Straße 4
+ 51147 Köln
+
+ http://www.bluecarat.de
+                                                         
+Original Project written by A. Ludwikowski can be found at:
+ https://github.com/aludwiko/fluentbuilder/
+      
+This project is licensed under the Apache License 2.0
+for more information see the LICENSE file.
