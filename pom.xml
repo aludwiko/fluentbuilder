@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -35,6 +36,38 @@
 				</executions>
 			</plugin>
 			<plugin>
+			        <groupId>org.codehaus.mojo</groupId>
+			        <artifactId>build-helper-maven-plugin</artifactId>
+			        <version>1.9</version>
+			        <executions>
+			          <execution>
+			            <id>add-test-source</id>
+			            <phase>generate-test-sources</phase>
+			            <goals>
+			              <goal>add-test-source</goal>
+			            </goals>
+			            <configuration>
+			              <sources>
+			                <source>target/test/generated</source>
+			              </sources>
+			            </configuration>
+			          </execution>
+			          <!-- FIXME -->
+			          <execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/test/java/de/bluecarat/fluentbuilder/integration/samples</source>
+							</sources>
+						</configuration>
+					</execution>
+			        </executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<executions>
@@ -68,7 +101,7 @@
 								<processor>info.ludwikowski.fluentbuilder.processor.FluentBuilderProcessor</processor>
 							</processors>
 							<sourceDirectory>src/test/java/de/bluecarat/fluentbuilder/integration/samples</sourceDirectory>
-							<outputDirectory>src/test/generated</outputDirectory>
+							<outputDirectory>target/test/generated</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -169,27 +202,27 @@
 					<argLine>-XX:PermSize=256m ${argLine}</argLine>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.12</version>
-				<executions>
-					<execution>
-						<id>checkstyle</id>
-						<goals>
-							<goal>checkstyle</goal>
-						</goals>
-						<phase>compile</phase>
-					</execution>
-				</executions>
-				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
-					<failOnViolation>false</failOnViolation>
-					<includeTestSourceDirectory>false</includeTestSourceDirectory>
-					<configLocation>${basedir}/tools/config/checkstyle.xml</configLocation>
-					<suppressionsLocation>${basedir}/tools/config/checkstyle-suppressions.xml</suppressionsLocation>
-				</configuration>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-checkstyle-plugin</artifactId> -->
+<!-- 				<version>2.12</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<id>checkstyle</id> -->
+<!-- 						<goals> -->
+<!-- 							<goal>checkstyle</goal> -->
+<!-- 						</goals> -->
+<!-- 						<phase>compile</phase> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 				<configuration> -->
+<!-- 					<encoding>${project.build.sourceEncoding}</encoding> -->
+<!-- 					<failOnViolation>false</failOnViolation> -->
+<!-- 					<includeTestSourceDirectory>false</includeTestSourceDirectory> -->
+<!-- 					<configLocation>${basedir}/tools/config/checkstyle.xml</configLocation> -->
+<!-- 					<suppressionsLocation>${basedir}/tools/config/checkstyle-suppressions.xml</suppressionsLocation> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
@@ -382,6 +415,26 @@
 										<goals>
 											<goal>findbugs</goal>
 											<goal>check</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											build-helper-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.9,)
+										</versionRange>
+										<goals>
+											<goal>add-test-source</goal>
+											<goal>add-source</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
