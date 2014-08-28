@@ -21,22 +21,22 @@ import info.ludwikowski.fluentbuilder.common.Context;
  */
 public class ClassMirrorImplUnitTest {
 
-    @Test
-    public void shouldAddInheritatedMemberMirrors() {
-        // given
-        ClassMirrorImpl testClassMirror = new ClassMirrorImpl(ExtendsTestObject.class, new Context());
-        // when
-        List<MemberMirror> members = testClassMirror.getMembers();
-        // then
-        MemberMirror inheritatedMemberMirror = members.get(1);
-        assertThat(inheritatedMemberMirror.getName(), equalTo("uniqueExtendsField"));
-    }
+	@Test
+	public void shouldAddInheritatedMemberMirrors() {
+		// given
+		ClassMirrorImpl testClassMirror = new ClassMirrorImpl(ExtendsTestObject.class, new Context());
+		// when
+		List<MemberMirror> members = testClassMirror.getMembers();
+		// then
+		MemberMirror inheritatedMemberMirror = members.get(1);
+		assertThat(inheritatedMemberMirror.getName(), equalTo("uniqueExtendsField"));
+	}
 
-    @Test
-    public void shouldFillMemberMirrorsFromClass() {
-        ClassMirrorImpl testClassMirror = new ClassMirrorImpl(BaseTestObject.class, new Context());
-        List<MemberMirror> members = testClassMirror.getMembers();
-        assertThat(members.size(), is(10));
-    }
+	@Test
+	public void shouldFillMemberMirrorsFromClass() {
+		ClassMirrorImpl testClassMirror = new ClassMirrorImpl(BaseTestObject.class, new Context());
+		List<MemberMirror> members = testClassMirror.getMembers();
+		assertThat(members.size(), is(10));
+	}
 
 }

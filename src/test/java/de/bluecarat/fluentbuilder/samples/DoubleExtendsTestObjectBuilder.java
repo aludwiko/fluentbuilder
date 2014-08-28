@@ -9,11 +9,11 @@ import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
  * @author Jan van Esdonk
  */
 public abstract class DoubleExtendsTestObjectBuilder
-                                                    extends
-                                                    AbstractDoubleExtendsTestObjectBuilder<DoubleExtendsTestObjectBuilder> {
+		extends
+		AbstractDoubleExtendsTestObjectBuilder<DoubleExtendsTestObjectBuilder> {
 
-    public static DoubleExtendsTestObjectBuilder create() {
-        return AbstractBuilderFactory.createImplementation(DoubleExtendsTestObjectBuilder.class);
-    }
+	public static DoubleExtendsTestObjectBuilder create() {
+		return AbstractBuilderFactory.createImplementation(DoubleExtendsTestObjectBuilder.class);
+	}
 
 }

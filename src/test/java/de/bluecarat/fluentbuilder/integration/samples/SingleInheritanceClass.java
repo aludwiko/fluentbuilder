@@ -12,17 +12,18 @@ import de.bluecarat.fluentbuilder.annotation.GenerateBuilder;
 @SuppressWarnings("unused")
 public class SingleInheritanceClass extends TopSampleClass {
 
-    private int duplicatedInSubClasses;
-    private int duplicatedInTopAndSingleInheritanceClass;
-    private int duplicatedInSingleAndDoubleInheritanceClass;
-    private int onlyInSingleInheritanceClass;
+	private int duplicatedInSubClasses;
+	private int duplicatedInTopAndSingleInheritanceClass;
+	private int duplicatedInSingleAndDoubleInheritanceClass;
+	private int onlyInSingleInheritanceClass;
 
-    public int getOnlyInSingleInheritanceClass() {
-        return onlyInSingleInheritanceClass;
-    }
 
-    public int getSingleInheritanceClassDuplicatedInSingleAndDoubleInheritanceClass() {
-        return duplicatedInSingleAndDoubleInheritanceClass;
-    }
+	public int getOnlyInSingleInheritanceClass() {
+		return onlyInSingleInheritanceClass;
+	}
+
+	public int getSingleInheritanceClassDuplicatedInSingleAndDoubleInheritanceClass() {
+		return duplicatedInSingleAndDoubleInheritanceClass;
+	}
 
 }

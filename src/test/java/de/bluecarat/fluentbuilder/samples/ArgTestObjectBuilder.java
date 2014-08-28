@@ -10,8 +10,8 @@ import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
  */
 public abstract class ArgTestObjectBuilder extends AbstractArgTestObjectBuilder<ArgTestObjectBuilder> {
 
-    public static ArgTestObjectBuilder create() {
-        return AbstractBuilderFactory.createImplementation(ArgTestObjectBuilder.class);
-    }
+	public static ArgTestObjectBuilder create() {
+		return AbstractBuilderFactory.createImplementation(ArgTestObjectBuilder.class);
+	}
 
 }

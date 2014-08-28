@@ -25,93 +25,99 @@ import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
 /**
  * This class is responsible for writing out of ClassMirror generated builder
  * code to files.
+ * 
  * @author Andrzej Ludwikowski
  */
 public class ClassWriter {
 
-    private static final String CHARSET = "UTF-8";
-    private static final Logger LOGGER = Logger.getLogger(ClassMirrorImpl.class.getName());
+	private static final String CHARSET = "UTF-8";
+	private static final Logger LOGGER = Logger.getLogger(ClassMirrorImpl.class.getName());
 
-    private final ProcessorContext context;
+	private final ProcessorContext context;
 
-    /**
-     * Default constructor for a ClassWriter.
-     * @param context inhabits settings for the ClassWriter
-     */
-    public ClassWriter(final ProcessorContext context) {
-        this.context = context;
-    }
 
-    /**
-     * Writes a AbstractBuilder and Builder pair for a Collection of
-     * ClassMirrors to .java files.
-     * @param classMirrors Collection of ClassMirror for which Builders will be
-     *            written to files.
-     */
-    public final void write(final Collection<ClassMirror> classMirrors) {
+	/**
+	 * Default constructor for a ClassWriter.
+	 * 
+	 * @param context inhabits settings for the ClassWriter
+	 */
+	public ClassWriter(final ProcessorContext context) {
+		this.context = context;
+	}
 
-        for (final ClassMirror classMirror : classMirrors) {
+	/**
+	 * Writes a AbstractBuilder and Builder pair for a Collection of
+	 * ClassMirrors to .java files.
+	 * 
+	 * @param classMirrors Collection of ClassMirror for which Builders will be
+	 *            written to files.
+	 */
+	public final void write(final Collection<ClassMirror> classMirrors) {
 
-            printAbstractBuilderPrinter(classMirror);
-            printBuilderPrinter(classMirror);
-        }
-    }
+		for (final ClassMirror classMirror : classMirrors) {
 
-    private void printBuilderPrinter(final ClassMirror classMirror) {
+			printAbstractBuilderPrinter(classMirror);
+			printBuilderPrinter(classMirror);
+		}
+	}
 
-        try {
+	private void printBuilderPrinter(final ClassMirror classMirror) {
 
-            final BuilderPrinter printer = new BuilderPrinter(classMirror, context);
+		try {
 
-            final Filer filer = context.getProcessingEnvironment().getFiler();
-            final FileObject resource = filer.getResource(
-                    StandardLocation.SOURCE_OUTPUT,
-                    printer.getPackageName(),
-                    printer.builderName() + ".java");
-            if (resourceNotExists(resource)) {
-                final FileObject fo = context.getProcessingEnvironment().getFiler()
-                    .createSourceFile(printer.getFullClassName());
-                final OutputStream outputStream = fo.openOutputStream();
-                final OutputStreamWriter streamWriter = new OutputStreamWriter(outputStream, CHARSET);
-                final PrintWriter printWriter = new PrintWriter(streamWriter);
-                printWriter.print(printer.printClass());
-                printWriter.flush();
-                printWriter.close();
-                context.logInfo("created: " + printer.getFullClassName());
-                return;
-            }
-            context.logInfo("already exists: " + printer.getFullClassName());
-        } catch (final IOException e) {
-            context.logError(e.getMessage());
-            LOGGER.severe("Could not create new class file for " + classMirror.getSimpleName());
-        }
-    }
+			final BuilderPrinter printer = new BuilderPrinter(classMirror, context);
 
-    private boolean resourceNotExists(final FileObject resource) {
-        return resource == null || resource.getLastModified() <= 0;
-    }
+			final Filer filer = context.getProcessingEnvironment().getFiler();
+			final FileObject resource = filer.getResource(
+					StandardLocation.SOURCE_OUTPUT,
+					printer.getPackageName(),
+					printer.builderName() + ".java");
+			if (resourceNotExists(resource)) {
+				final FileObject fo = context.getProcessingEnvironment().getFiler()
+												.createSourceFile(printer.getFullClassName());
+				final OutputStream outputStream = fo.openOutputStream();
+				final OutputStreamWriter streamWriter = new OutputStreamWriter(outputStream, CHARSET);
+				final PrintWriter printWriter = new PrintWriter(streamWriter);
+				printWriter.print(printer.printClass());
+				printWriter.flush();
+				printWriter.close();
+				context.logInfo("created: " + printer.getFullClassName());
+				return;
+			}
+			context.logInfo("already exists: " + printer.getFullClassName());
+		}
+		catch (final IOException e) {
+			context.logError(e.getMessage());
+			LOGGER.severe("Could not create new class file for " + classMirror.getSimpleName());
+		}
+	}
 
-    private void printAbstractBuilderPrinter(final ClassMirror classMirror) {
-        try {
-            final PrinterForAbstractBuilder printer = new PrinterForAbstractBuilder(classMirror, context);
+	private boolean resourceNotExists(final FileObject resource) {
+		return resource == null || resource.getLastModified() <= 0;
+	}
 
-            final FileObject fo = context.getProcessingEnvironment().getFiler()
-                .createSourceFile(printer.getFullClassName());
+	private void printAbstractBuilderPrinter(final ClassMirror classMirror) {
+		try {
+			final PrinterForAbstractBuilder printer = new PrinterForAbstractBuilder(classMirror, context);
 
-            final OutputStream outputStream = fo.openOutputStream();
-            final OutputStreamWriter streamWriter = new OutputStreamWriter(outputStream, CHARSET);
-            final PrintWriter printWriter = new PrintWriter(streamWriter);
+			final FileObject fo = context.getProcessingEnvironment().getFiler()
+											.createSourceFile(printer.getFullClassName());
 
-            printWriter.print(printer.printClass());
+			final OutputStream outputStream = fo.openOutputStream();
+			final OutputStreamWriter streamWriter = new OutputStreamWriter(outputStream, CHARSET);
+			final PrintWriter printWriter = new PrintWriter(streamWriter);
 
-            printWriter.flush();
-            printWriter.close();
-            context.logInfo("updated or created class: " + printer.getFullClassName());
+			printWriter.print(printer.printClass());
 
-        } catch (final IOException e) {
-            context.logError(e.getMessage());
-            LOGGER.severe("Could not create new class file for " + classMirror.getSimpleName());
-        }
-    }
+			printWriter.flush();
+			printWriter.close();
+			context.logInfo("updated or created class: " + printer.getFullClassName());
+
+		}
+		catch (final IOException e) {
+			context.logError(e.getMessage());
+			LOGGER.severe("Could not create new class file for " + classMirror.getSimpleName());
+		}
+	}
 
 }

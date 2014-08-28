@@ -13,9 +13,9 @@ import java.lang.annotation.Target;
 
 /**
  * Marker interface for classes that should have builder generated.
+ * 
  * @author Andrzej Ludwikowski
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
-public @interface GenerateBuilder {
-}
+public @interface GenerateBuilder {}

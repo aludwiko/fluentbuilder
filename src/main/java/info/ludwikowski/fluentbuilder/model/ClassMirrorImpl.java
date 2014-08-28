@@ -27,169 +27,175 @@ import info.ludwikowski.fluentbuilder.util.TypeUtils;
 /**
  * Implements the ClassMirror interface. A ClassMirror represents a given class
  * and its member fields.
+ * 
  * @author Andrzej Ludwikowski
  * @author Jan van Esdonk
  */
 public class ClassMirrorImpl implements ClassMirror {
 
-    private static final Logger LOGGER = Logger.getLogger(ClassMirrorImpl.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ClassMirrorImpl.class.getName());
 
-    private final String simpleName;
-    private final String packageName;
-    private final List<MemberMirror> members = new LinkedList<MemberMirror>();
+	private final String simpleName;
+	private final String packageName;
+	private final List<MemberMirror> members = new LinkedList<MemberMirror>();
 
-    /**
-     * Creates a ClassMirrorImpl from a given element which represents a class.
-     * This is needed because the APT processes classes as elements.
-     * @param element - a class which is parsed to an element by the APT
-     * @param context - configuration for mirror creation and code generation
-     */
-    public ClassMirrorImpl(final Element element, final ProcessorContext context) {
-        final TypeElement typeElement = (TypeElement) element;
-        simpleName = typeElement.getSimpleName().toString();
-        packageName = typeElement.getQualifiedName().toString().replace("." + simpleName, NameUtils.EMPTY);
-        fillMemberMirrors(element, context);
-    }
 
-    /**
-     * Creates a ClassMirrorImpl from a given class with a given configuration.
-     * @param clazz - class which will be mirrored
-     * @param context - configuration for mirror creation and code generation
-     */
-    public ClassMirrorImpl(final Class<?> clazz, final Context context) {
+	/**
+	 * Creates a ClassMirrorImpl from a given element which represents a class.
+	 * This is needed because the APT processes classes as elements.
+	 * 
+	 * @param element - a class which is parsed to an element by the APT
+	 * @param context - configuration for mirror creation and code generation
+	 */
+	public ClassMirrorImpl(final Element element, final ProcessorContext context) {
+		final TypeElement typeElement = (TypeElement) element;
+		simpleName = typeElement.getSimpleName().toString();
+		packageName = typeElement.getQualifiedName().toString().replace("." + simpleName, NameUtils.EMPTY);
+		fillMemberMirrors(element, context);
+	}
 
-        simpleName = clazz.getSimpleName();
-        packageName = clazz.getCanonicalName().replace("." + simpleName, NameUtils.EMPTY);
-        fillMemberMirrors(clazz, context);
-    }
+	/**
+	 * Creates a ClassMirrorImpl from a given class with a given configuration.
+	 * 
+	 * @param clazz - class which will be mirrored
+	 * @param context - configuration for mirror creation and code generation
+	 */
+	public ClassMirrorImpl(final Class<?> clazz, final Context context) {
 
-    private void fillMemberMirrors(final Class<?> clazz, final Context context) {
-        final List<Field> properFields = properFields(clazz);
-        for (final Field field : properFields) {
-            members.add(MemberMirrorCreator.create(field, context));
-        }
-        fillSuperMemberMirrors(clazz, context);
-    }
+		simpleName = clazz.getSimpleName();
+		packageName = clazz.getCanonicalName().replace("." + simpleName, NameUtils.EMPTY);
+		fillMemberMirrors(clazz, context);
+	}
 
-    private List<Field> properFields(final Class<?> clazz) {
+	private void fillMemberMirrors(final Class<?> clazz, final Context context) {
+		final List<Field> properFields = properFields(clazz);
+		for (final Field field : properFields) {
+			members.add(MemberMirrorCreator.create(field, context));
+		}
+		fillSuperMemberMirrors(clazz, context);
+	}
 
-        final List<Field> properFields = new LinkedList<Field>();
+	private List<Field> properFields(final Class<?> clazz) {
 
-        for (final Field field : clazz.getDeclaredFields()) {
+		final List<Field> properFields = new LinkedList<Field>();
 
-            if (!TypeUtils.isStaticOrFinal(field)) {
+		for (final Field field : clazz.getDeclaredFields()) {
 
-                properFields.add(field);
-            }
-        }
-        return properFields;
-    }
+			if (!TypeUtils.isStaticOrFinal(field)) {
 
-    private void fillMemberMirrors(final Element element, final ProcessorContext context) {
+				properFields.add(field);
+			}
+		}
+		return properFields;
+	}
 
-        final List<? extends Element> fieldsOfClass = ElementFilter.fieldsIn(element.getEnclosedElements());
-        visitFieldsList(fieldsOfClass, context);
+	private void fillMemberMirrors(final Element element, final ProcessorContext context) {
 
-        final List<? extends ExecutableElement> constructorsOfClass = ElementFilter.constructorsIn(element
-            .getEnclosedElements());
-        visitConstructorList(constructorsOfClass, context);
+		final List<? extends Element> fieldsOfClass = ElementFilter.fieldsIn(element.getEnclosedElements());
+		visitFieldsList(fieldsOfClass, context);
 
-        try {
-            final Class<?> baseClass = Class.forName(element.toString());
-            fillSuperMemberMirrors(baseClass, context);
-        } catch (ClassNotFoundException e) {
-            LOGGER.severe("Could not find class: " + element.toString() + " No members added!");
-        }
-    }
+		final List<? extends ExecutableElement> constructorsOfClass = ElementFilter.constructorsIn(element
+																											.getEnclosedElements());
+		visitConstructorList(constructorsOfClass, context);
 
-    private void visitFieldsList(final List<? extends Element> fieldsOfClass, final ProcessorContext context) {
-        for (final Element field : fieldsOfClass) {
-            if (TypeUtils.isStaticOrFinal(field)) {
-                continue;
-            }
-            visitField(field, context);
-        }
-    }
+		try {
+			final Class<?> baseClass = Class.forName(element.toString());
+			fillSuperMemberMirrors(baseClass, context);
+		}
+		catch (ClassNotFoundException e) {
+			LOGGER.severe("Could not find class: " + element.toString() + " No members added!");
+		}
+	}
 
-    private void visitField(final Element field, final ProcessorContext context) {
-        final MemberMirrorGeneratorVisitor visitor = new MemberMirrorGeneratorVisitor(context);
-        final MemberMirror member = field.asType().accept(visitor, field);
-        if (member != null) {
-            members.add(member);
-        }
-    }
+	private void visitFieldsList(final List<? extends Element> fieldsOfClass, final ProcessorContext context) {
+		for (final Element field : fieldsOfClass) {
+			if (TypeUtils.isStaticOrFinal(field)) {
+				continue;
+			}
+			visitField(field, context);
+		}
+	}
 
-    private void visitConstructorList(final List<? extends ExecutableElement> constructorsOfClass,
-                                      final ProcessorContext context) {
-        for (ExecutableElement constructor : constructorsOfClass) {
-            final MemberMirrorGeneratorVisitor visitor = new MemberMirrorGeneratorVisitor(context);
-            final MemberMirror member = constructor.asType().accept(visitor, constructor);
-            if (member != null) {
-                members.add(member);
-            }
-        }
-    }
+	private void visitField(final Element field, final ProcessorContext context) {
+		final MemberMirrorGeneratorVisitor visitor = new MemberMirrorGeneratorVisitor(context);
+		final MemberMirror member = field.asType().accept(visitor, field);
+		if (member != null) {
+			members.add(member);
+		}
+	}
 
-    private void fillSuperMemberMirrors(final Class<?> clazz, final Context context) {
-        final Class<?> superClass = clazz.getSuperclass();
-        if (clazz.getSuperclass() != null && !"Object".equals(superClass.getName())) {
-            fillMemberMirrors(superClass, context);
-        }
-    }
+	private void visitConstructorList(final List<? extends ExecutableElement> constructorsOfClass,
+			final ProcessorContext context) {
+		for (ExecutableElement constructor : constructorsOfClass) {
+			final MemberMirrorGeneratorVisitor visitor = new MemberMirrorGeneratorVisitor(context);
+			final MemberMirror member = constructor.asType().accept(visitor, constructor);
+			if (member != null) {
+				members.add(member);
+			}
+		}
+	}
 
-    @Override
-    public final List<MemberMirror> getMembers() {
-        return members;
-    }
+	private void fillSuperMemberMirrors(final Class<?> clazz, final Context context) {
+		final Class<?> superClass = clazz.getSuperclass();
+		if (clazz.getSuperclass() != null && !"Object".equals(superClass.getName())) {
+			fillMemberMirrors(superClass, context);
+		}
+	}
 
-    /**
-     * This method returns all MemberMirrors which represent a class field.
-     * @return all class fields as a list of MemberMirrorImpl
-     */
-    public final List<MemberMirrorImpl> getFieldMembers() {
-        final List<MemberMirrorImpl> fieldMembers = new ArrayList<MemberMirrorImpl>();
-        for (MemberMirror memberMirror : members) {
-            if (memberMirror instanceof MemberMirrorImpl) {
-                fieldMembers.add((MemberMirrorImpl) memberMirror);
-            }
-        }
-        return fieldMembers;
-    }
+	@Override
+	public final List<MemberMirror> getMembers() {
+		return members;
+	}
 
-    @Override
-    public final String getPackageName() {
-        return packageName;
-    }
+	/**
+	 * This method returns all MemberMirrors which represent a class field.
+	 * 
+	 * @return all class fields as a list of MemberMirrorImpl
+	 */
+	public final List<MemberMirrorImpl> getFieldMembers() {
+		final List<MemberMirrorImpl> fieldMembers = new ArrayList<MemberMirrorImpl>();
+		for (MemberMirror memberMirror : members) {
+			if (memberMirror instanceof MemberMirrorImpl) {
+				fieldMembers.add((MemberMirrorImpl) memberMirror);
+			}
+		}
+		return fieldMembers;
+	}
 
-    @Override
-    public final Set<String> getImports() {
+	@Override
+	public final String getPackageName() {
+		return packageName;
+	}
 
-        final Imports imports = new Imports();
+	@Override
+	public final Set<String> getImports() {
 
-        for (final MemberMirror member : members) {
-            imports.addAll(member.getImports());
-        }
+		final Imports imports = new Imports();
 
-        return imports.asSet();
-    }
+		for (final MemberMirror member : members) {
+			imports.addAll(member.getImports());
+		}
 
-    @Override
-    public final String getSimpleName() {
-        return simpleName;
-    }
+		return imports.asSet();
+	}
 
-    @Override
-    public final List<MemberMirror> getVarArgsMembers() {
+	@Override
+	public final String getSimpleName() {
+		return simpleName;
+	}
 
-        final List<MemberMirror> varArgsMembers = new LinkedList<MemberMirror>();
+	@Override
+	public final List<MemberMirror> getVarArgsMembers() {
 
-        for (final MemberMirror member : members) {
-            if (member.isSupportedVarArgsCollection()) {
-                varArgsMembers.add(member);
-            }
-        }
+		final List<MemberMirror> varArgsMembers = new LinkedList<MemberMirror>();
 
-        return varArgsMembers;
-    }
+		for (final MemberMirror member : members) {
+			if (member.isSupportedVarArgsCollection()) {
+				varArgsMembers.add(member);
+			}
+		}
+
+		return varArgsMembers;
+	}
 
 }

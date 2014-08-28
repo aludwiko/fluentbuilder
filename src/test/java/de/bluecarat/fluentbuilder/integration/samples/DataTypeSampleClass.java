@@ -16,100 +16,101 @@ import de.bluecarat.fluentbuilder.annotation.GenerateBuilder;
 @SuppressWarnings("unused")
 public class DataTypeSampleClass {
 
-    private byte typeByte;
-    private Byte typeObjectByte;
-    private short typeShort;
-    private Short typeObjectShort;
-    private int typeInt;
-    private Integer typeObjectInteger;
-    private long typeLong;
-    private Long typeObjectLong;
-    private double typeDouble;
-    private Double typeObjectDouble;
-    private float typeFloat;
-    private Float typeObjectFloat;
-    private char typeChar;
-    private Date typeDate;
-    private boolean typeBoolean;
-    private Boolean typeObjectBoolean;
-    private String typeString;
-    private List<String> typeStringList;
-    private Map<String, List<Integer>> complexGeneric;
+	private byte typeByte;
+	private Byte typeObjectByte;
+	private short typeShort;
+	private Short typeObjectShort;
+	private int typeInt;
+	private Integer typeObjectInteger;
+	private long typeLong;
+	private Long typeObjectLong;
+	private double typeDouble;
+	private Double typeObjectDouble;
+	private float typeFloat;
+	private Float typeObjectFloat;
+	private char typeChar;
+	private Date typeDate;
+	private boolean typeBoolean;
+	private Boolean typeObjectBoolean;
+	private String typeString;
+	private List<String> typeStringList;
+	private Map<String, List<Integer>> complexGeneric;
 
-    public byte getTypeByte() {
-        return typeByte;
-    }
 
-    public Byte getTypeObjectByte() {
-        return typeObjectByte;
-    }
+	public byte getTypeByte() {
+		return typeByte;
+	}
 
-    public short getTypeShort() {
-        return typeShort;
-    }
+	public Byte getTypeObjectByte() {
+		return typeObjectByte;
+	}
 
-    public Short getTypeObjectShort() {
-        return typeObjectShort;
-    }
+	public short getTypeShort() {
+		return typeShort;
+	}
 
-    public int getTypeInt() {
-        return typeInt;
-    }
+	public Short getTypeObjectShort() {
+		return typeObjectShort;
+	}
 
-    public Integer getTypeObjectInteger() {
-        return typeObjectInteger;
-    }
+	public int getTypeInt() {
+		return typeInt;
+	}
 
-    public long getTypeLong() {
-        return typeLong;
-    }
+	public Integer getTypeObjectInteger() {
+		return typeObjectInteger;
+	}
 
-    public Long getTypeObjectLong() {
-        return typeObjectLong;
-    }
+	public long getTypeLong() {
+		return typeLong;
+	}
 
-    public double getTypeDouble() {
-        return typeDouble;
-    }
+	public Long getTypeObjectLong() {
+		return typeObjectLong;
+	}
 
-    public Double getTypeObjectDouble() {
-        return typeObjectDouble;
-    }
+	public double getTypeDouble() {
+		return typeDouble;
+	}
 
-    public float getTypeFloat() {
-        return typeFloat;
-    }
+	public Double getTypeObjectDouble() {
+		return typeObjectDouble;
+	}
 
-    public Float getTypeObjectFloat() {
-        return typeObjectFloat;
-    }
+	public float getTypeFloat() {
+		return typeFloat;
+	}
 
-    public char getTypeChar() {
-        return typeChar;
-    }
+	public Float getTypeObjectFloat() {
+		return typeObjectFloat;
+	}
 
-    public Date getTypeDate() {
-        return typeDate;
-    }
+	public char getTypeChar() {
+		return typeChar;
+	}
 
-    public boolean getTypeBoolean() {
-        return typeBoolean;
-    }
+	public Date getTypeDate() {
+		return typeDate;
+	}
 
-    public Boolean getTypeObjectBoolean() {
-        return typeObjectBoolean;
-    }
+	public boolean getTypeBoolean() {
+		return typeBoolean;
+	}
 
-    public String getTypeString() {
-        return typeString;
-    }
+	public Boolean getTypeObjectBoolean() {
+		return typeObjectBoolean;
+	}
 
-    public List<String> getTypeStringList() {
-        return typeStringList;
-    }
+	public String getTypeString() {
+		return typeString;
+	}
 
-    public Map<String, List<Integer>> getComplexGeneric() {
-        return complexGeneric;
-    }
+	public List<String> getTypeStringList() {
+		return typeStringList;
+	}
+
+	public Map<String, List<Integer>> getComplexGeneric() {
+		return complexGeneric;
+	}
 
 }

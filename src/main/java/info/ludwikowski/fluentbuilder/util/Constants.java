@@ -12,19 +12,21 @@ import java.util.Set;
 
 /**
  * This class provides constants for the FluentBuilderGenerator.
+ * 
  * @author Andrzej Ludwikowski
  */
 public final class Constants {
 
-    public static final List<String> SUPPORTED_VARARGS_COLLECTIONS = new LinkedList<String>();
+	public static final List<String> SUPPORTED_VARARGS_COLLECTIONS = new LinkedList<String>();
 
-    static {
-        SUPPORTED_VARARGS_COLLECTIONS.add(Set.class.getName());
-        SUPPORTED_VARARGS_COLLECTIONS.add(List.class.getName());
-    }
+	static {
+		SUPPORTED_VARARGS_COLLECTIONS.add(Set.class.getName());
+		SUPPORTED_VARARGS_COLLECTIONS.add(List.class.getName());
+	}
 
-    private Constants() {
 
-    }
+	private Constants() {
+
+	}
 
 }

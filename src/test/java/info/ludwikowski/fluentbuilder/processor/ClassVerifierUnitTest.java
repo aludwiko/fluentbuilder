@@ -38,112 +38,113 @@ import com.google.common.collect.Lists;
 @PrepareForTest(ProcessorContext.class)
 public class ClassVerifierUnitTest {
 
-    private ClassVerifier classVerifier;
-    private ProcessorContext context;
+	private ClassVerifier classVerifier;
+	private ProcessorContext context;
 
-    @Test
-    public void shouldReturnTrueForElementAnnotatedWithProcessorAnnotation() {
 
-        // given
-        Element element = mock(Element.class);
-        AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
-        String type = "de.bluecarat.fluentbuilder.annotation.GenerateBuilder";
+	@Test
+	public void shouldReturnTrueForElementAnnotatedWithProcessorAnnotation() {
 
-        List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
-        doReturn(annotationMirrors).when(element).getAnnotationMirrors();
-        given(annotationMirror.getAnnotationType().toString()).willReturn(type);
+		// given
+		Element element = mock(Element.class);
+		AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
+		String type = "de.bluecarat.fluentbuilder.annotation.GenerateBuilder";
 
-        // when
-        boolean result = classVerifier.generateBuilder(element);
+		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
+		doReturn(annotationMirrors).when(element).getAnnotationMirrors();
+		given(annotationMirror.getAnnotationType().toString()).willReturn(type);
 
-        // then
-        assertThat(result).isTrue();
-    }
+		// when
+		boolean result = classVerifier.generateBuilder(element);
 
-    @Test
-    public void shouldReturnTrueForElementAnnotatedWithEmbeddableJPAAnnotation() {
-        // given
-        final String jpaAnnotation = JAVAX_PERSISTENCE_EMBEDDABLE;
-        Element element = mock(Element.class);
-        AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
+		// then
+		assertThat(result).isTrue();
+	}
 
-        List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
-        doReturn(annotationMirrors).when(element).getAnnotationMirrors();
-        given(annotationMirror.getAnnotationType().toString()).willReturn(jpaAnnotation);
+	@Test
+	public void shouldReturnTrueForElementAnnotatedWithEmbeddableJPAAnnotation() {
+		// given
+		final String jpaAnnotation = JAVAX_PERSISTENCE_EMBEDDABLE;
+		Element element = mock(Element.class);
+		AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
 
-        PowerMockito.when(context.isAcceptJavaPersistenceAnnotations()).thenReturn(true);
+		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
+		doReturn(annotationMirrors).when(element).getAnnotationMirrors();
+		given(annotationMirror.getAnnotationType().toString()).willReturn(jpaAnnotation);
 
-        // when
+		PowerMockito.when(context.isAcceptJavaPersistenceAnnotations()).thenReturn(true);
 
-        boolean result = classVerifier.generateBuilder(element);
+		// when
 
-        // then
-        assertThat(result).isTrue();
-    }
+		boolean result = classVerifier.generateBuilder(element);
 
-    @Test
-    public void shouldReturnTrueForElementAnnotatedWithEntityJPAAnnotation() {
-        // given
-        final String jpaAnnotation = JAVAX_PERSISTENCE_ENTITY;
-        Element element = mock(Element.class);
-        AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
+		// then
+		assertThat(result).isTrue();
+	}
 
-        List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
-        doReturn(annotationMirrors).when(element).getAnnotationMirrors();
-        given(annotationMirror.getAnnotationType().toString()).willReturn(jpaAnnotation);
+	@Test
+	public void shouldReturnTrueForElementAnnotatedWithEntityJPAAnnotation() {
+		// given
+		final String jpaAnnotation = JAVAX_PERSISTENCE_ENTITY;
+		Element element = mock(Element.class);
+		AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
 
-        PowerMockito.when(context.isAcceptJavaPersistenceAnnotations()).thenReturn(true);
+		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
+		doReturn(annotationMirrors).when(element).getAnnotationMirrors();
+		given(annotationMirror.getAnnotationType().toString()).willReturn(jpaAnnotation);
 
-        // when
-        boolean result = classVerifier.generateBuilder(element);
+		PowerMockito.when(context.isAcceptJavaPersistenceAnnotations()).thenReturn(true);
 
-        // then
-        assertThat(result).isTrue();
-    }
+		// when
+		boolean result = classVerifier.generateBuilder(element);
 
-    @Test
-    public void shouldReturnTrueForElementAnnotatedWithMappedSuperClassJPAAnnotation() {
-        // given
-        final String jpaAnnotation = JAVAX_PERSISTENCE_MAPPEDSUPERCLASS;
-        Element element = mock(Element.class);
-        AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
+		// then
+		assertThat(result).isTrue();
+	}
 
-        List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
-        doReturn(annotationMirrors).when(element).getAnnotationMirrors();
-        given(annotationMirror.getAnnotationType().toString()).willReturn(jpaAnnotation);
+	@Test
+	public void shouldReturnTrueForElementAnnotatedWithMappedSuperClassJPAAnnotation() {
+		// given
+		final String jpaAnnotation = JAVAX_PERSISTENCE_MAPPEDSUPERCLASS;
+		Element element = mock(Element.class);
+		AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
 
-        PowerMockito.when(context.isAcceptJavaPersistenceAnnotations()).thenReturn(true);
+		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
+		doReturn(annotationMirrors).when(element).getAnnotationMirrors();
+		given(annotationMirror.getAnnotationType().toString()).willReturn(jpaAnnotation);
 
-        // when
-        boolean result = classVerifier.generateBuilder(element);
+		PowerMockito.when(context.isAcceptJavaPersistenceAnnotations()).thenReturn(true);
 
-        // then
-        assertThat(result).isTrue();
-    }
+		// when
+		boolean result = classVerifier.generateBuilder(element);
 
-    @Test
-    public void shouldReturnFalseForOtherAnnotations() {
+		// then
+		assertThat(result).isTrue();
+	}
 
-        // given
-        Element element = mock(Element.class);
-        AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
-        String type = "something.GenerateBuilder";
+	@Test
+	public void shouldReturnFalseForOtherAnnotations() {
 
-        List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
-        doReturn(annotationMirrors).when(element).getAnnotationMirrors();
-        given(annotationMirror.getAnnotationType().toString()).willReturn(type);
+		// given
+		Element element = mock(Element.class);
+		AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
+		String type = "something.GenerateBuilder";
 
-        // when
-        boolean result = classVerifier.generateBuilder(element);
+		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
+		doReturn(annotationMirrors).when(element).getAnnotationMirrors();
+		given(annotationMirror.getAnnotationType().toString()).willReturn(type);
 
-        // then
-        assertThat(result).isFalse();
-    }
+		// when
+		boolean result = classVerifier.generateBuilder(element);
 
-    @Before
-    public void setUp() {
-        context = PowerMockito.mock(ProcessorContext.class);
-        classVerifier = new ClassVerifier(context);
-        MockitoAnnotations.initMocks(this);
-    }
+		// then
+		assertThat(result).isFalse();
+	}
+
+	@Before
+	public void setUp() {
+		context = PowerMockito.mock(ProcessorContext.class);
+		classVerifier = new ClassVerifier(context);
+		MockitoAnnotations.initMocks(this);
+	}
 }

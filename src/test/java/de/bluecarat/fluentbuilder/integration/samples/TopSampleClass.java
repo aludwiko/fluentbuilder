@@ -12,21 +12,22 @@ import de.bluecarat.fluentbuilder.annotation.GenerateBuilder;
 @SuppressWarnings("unused")
 public class TopSampleClass {
 
-    private int duplicatedInSubClasses;
-    private int duplicatedInTopAndSingleInheritanceClass;
-    private int duplicatedInTopAndDoubleInheritanceClass;
-    private int onlyInTopSampleClass;
+	private int duplicatedInSubClasses;
+	private int duplicatedInTopAndSingleInheritanceClass;
+	private int duplicatedInTopAndDoubleInheritanceClass;
+	private int onlyInTopSampleClass;
 
-    public int getOnlyInTopSampleClass() {
-        return onlyInTopSampleClass;
-    }
 
-    public int getTopSampleClassDuplicatedInTopAndSingleInheritanceClass() {
-        return duplicatedInTopAndSingleInheritanceClass;
-    }
+	public int getOnlyInTopSampleClass() {
+		return onlyInTopSampleClass;
+	}
 
-    public int getTopSampleClassDuplicatedInTopAndDoubleInheritanceClass() {
-        return duplicatedInTopAndDoubleInheritanceClass;
-    }
+	public int getTopSampleClassDuplicatedInTopAndSingleInheritanceClass() {
+		return duplicatedInTopAndSingleInheritanceClass;
+	}
+
+	public int getTopSampleClassDuplicatedInTopAndDoubleInheritanceClass() {
+		return duplicatedInTopAndDoubleInheritanceClass;
+	}
 
 }

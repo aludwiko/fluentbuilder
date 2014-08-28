@@ -34,171 +34,174 @@ import de.bluecarat.fluentbuilder.model.ParameterMirror;
 
 /**
  * A visitor for creating MemberMirrors by visiting Java elements.
+ * 
  * @author Andrzej Ludwikowski
  * @author Jan van Esdonk
  */
 public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirror, Element> {
 
-    private static final int CONJUNCTION_LENGTH = 3;
-    private final ProcessorContext context;
+	private static final int CONJUNCTION_LENGTH = 3;
+	private final ProcessorContext context;
 
-    /**
-     * Creates a MemberMirrorGeneratorVisitor with given settings.
-     * @param context - inhabits MirrorCreation settings
-     */
-    public MemberMirrorGeneratorVisitor(final ProcessorContext context) {
-        this.context = context;
-    }
 
-    @Override
-    /**
-     * Creates a simple {@link MemberMirror} for a {@link Element} which is of a {@link PrimitiveType}.
-     * This includes fields which are of a primitive type.
-     * @return MemberMirror representation of the primitive field
-     */
-    public final MemberMirror visitPrimitive(final PrimitiveType primitiveType, final Element element) {
-        return simpleTypes(primitiveType, element);
-    }
+	/**
+	 * Creates a MemberMirrorGeneratorVisitor with given settings.
+	 * 
+	 * @param context - inhabits MirrorCreation settings
+	 */
+	public MemberMirrorGeneratorVisitor(final ProcessorContext context) {
+		this.context = context;
+	}
 
-    @SuppressWarnings("unchecked")
-    private MemberMirror simpleTypes(final TypeMirror primitiveType, final Element element) {
+	@Override
+	/**
+	 * Creates a simple {@link MemberMirror} for a {@link Element} which is of a {@link PrimitiveType}.
+	 * This includes fields which are of a primitive type.
+	 * @return MemberMirror representation of the primitive field
+	 */
+	public final MemberMirror visitPrimitive(final PrimitiveType primitiveType, final Element element) {
+		return simpleTypes(primitiveType, element);
+	}
 
-        final String name = element.toString();
-        final String ownerName = getOwnerName(element);
-        final String simpleType = info.ludwikowski.fluentbuilder.util.NameUtils
-            .removePackageNameFromFullyQualifiedName(primitiveType.toString());
+	@SuppressWarnings("unchecked")
+	private MemberMirror simpleTypes(final TypeMirror primitiveType, final Element element) {
 
-        return MemberMirrorImpl.simpleMirror(name, ownerName, simpleType, Collections.EMPTY_SET);
-    }
+		final String name = element.toString();
+		final String ownerName = getOwnerName(element);
+		final String simpleType = info.ludwikowski.fluentbuilder.util.NameUtils
+																				.removePackageNameFromFullyQualifiedName(primitiveType.toString());
 
-    @Override
-    /**
-     * Creates a simple {@link MemberMirror} for a {@link Element} which is of a {@link ArrayType}.
-     * This include fields which are Arrays.
-     * @return MemberMirror representation of the array field
-     */
-    public final MemberMirror visitArray(final ArrayType t, final Element element) {
-        return simpleTypes(t, element);
-    }
+		return MemberMirrorImpl.simpleMirror(name, ownerName, simpleType, Collections.EMPTY_SET);
+	}
 
-    @Override
-    /**
-     * Creates a {@link MemberMirror} for a {@link Element} which is of a {@link DeclaredType}.
-     * This include fields which are not of a primitive type.
-     * @return MemberMirror representation of the declared field
-     */
-    public final MemberMirror visitDeclared(final DeclaredType declaredType, final Element element) {
+	@Override
+	/**
+	 * Creates a simple {@link MemberMirror} for a {@link Element} which is of a {@link ArrayType}.
+	 * This include fields which are Arrays.
+	 * @return MemberMirror representation of the array field
+	 */
+	public final MemberMirror visitArray(final ArrayType t, final Element element) {
+		return simpleTypes(t, element);
+	}
 
-        final TypeElement returnedElement = (TypeElement) context.getTypeUtils().asElement(declaredType);
+	@Override
+	/**
+	 * Creates a {@link MemberMirror} for a {@link Element} which is of a {@link DeclaredType}.
+	 * This include fields which are not of a primitive type.
+	 * @return MemberMirror representation of the declared field
+	 */
+	public final MemberMirror visitDeclared(final DeclaredType declaredType, final Element element) {
 
-        final String name = element.toString();
-        final String ownerName = getOwnerName(element);
-        final String simpleType = info.ludwikowski.fluentbuilder.util.NameUtils
-            .removePackageNameFromFullyQualifiedName(declaredType.toString());
-        final Set<String> imports = getImports(declaredType, returnedElement, ownerName);
-        final String type = returnedElement.toString();
+		final TypeElement returnedElement = (TypeElement) context.getTypeUtils().asElement(declaredType);
 
-        if (TypeUtils.isListOrSet(type) && isGeneric(declaredType)) {
+		final String name = element.toString();
+		final String ownerName = getOwnerName(element);
+		final String simpleType = info.ludwikowski.fluentbuilder.util.NameUtils
+																				.removePackageNameFromFullyQualifiedName(declaredType.toString());
+		final Set<String> imports = getImports(declaredType, returnedElement, ownerName);
+		final String type = returnedElement.toString();
 
-            return MemberMirrorImpl.collectionMirror(
-                    name,
-                    ownerName,
-                    simpleType,
-                    imports,
-                    type,
-                    collectionElementSimpleName(declaredType));
-        }
+		if (TypeUtils.isListOrSet(type) && isGeneric(declaredType)) {
 
-        return MemberMirrorImpl.simpleMirror(name, ownerName, simpleType, imports);
-    }
+			return MemberMirrorImpl.collectionMirror(
+					name,
+					ownerName,
+					simpleType,
+					imports,
+					type,
+					collectionElementSimpleName(declaredType));
+		}
 
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
-    private String getOwnerName(final Element ownedElement) {
-        try {
-            final Field field = ownedElement.getClass().getField("owner");
-            field.setAccessible(true);
-            final Object truncatedOwner = field.get(ownedElement);
-            return truncatedOwner.toString();
+		return MemberMirrorImpl.simpleMirror(name, ownerName, simpleType, imports);
+	}
+
+	@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
+	private String getOwnerName(final Element ownedElement) {
+		try {
+			final Field field = ownedElement.getClass().getField("owner");
+			field.setAccessible(true);
+			final Object truncatedOwner = field.get(ownedElement);
+			return truncatedOwner.toString();
 		}
 		catch (NoSuchFieldException e) {
 			throw new RuntimeException("No access on owner field possible.", e);
-        }
+		}
 		catch (IllegalArgumentException e) {
 			throw new RuntimeException("No access on owner field possible.", e);
 		}
 		catch (IllegalAccessException e) {
 			throw new RuntimeException("No access on owner field possible.", e);
 		}
-    }
+	}
 
-    private boolean isGeneric(final DeclaredType declaredType) {
-        return !declaredType.getTypeArguments().isEmpty();
-    }
+	private boolean isGeneric(final DeclaredType declaredType) {
+		return !declaredType.getTypeArguments().isEmpty();
+	}
 
-    private String collectionElementSimpleName(final DeclaredType declaredType) {
+	private String collectionElementSimpleName(final DeclaredType declaredType) {
 
-        return info.ludwikowski.fluentbuilder.util.NameUtils.removePackageNameFromFullyQualifiedName(declaredType
-            .getTypeArguments().get(0).toString());
-    }
+		return info.ludwikowski.fluentbuilder.util.NameUtils.removePackageNameFromFullyQualifiedName(declaredType
+																													.getTypeArguments().get(0).toString());
+	}
 
-    private Set<String> getImports(final DeclaredType declaredType, final TypeElement returnedElement,
-                                   final String declaringClassName) {
+	private Set<String> getImports(final DeclaredType declaredType, final TypeElement returnedElement,
+			final String declaringClassName) {
 
-        final Set<String> imports = new TreeSet<String>();
-        final String type = returnedElement.toString();
+		final Set<String> imports = new TreeSet<String>();
+		final String type = returnedElement.toString();
 
-        imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(type, declaringClassName));
+		imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(type, declaringClassName));
 
-        for (final TypeMirror typeMirror : declaredType.getTypeArguments()) {
-            imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(
-                    typeMirror.toString(),
-                    declaringClassName));
-        }
-        return imports;
-    }
+		for (final TypeMirror typeMirror : declaredType.getTypeArguments()) {
+			imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(
+					typeMirror.toString(),
+					declaringClassName));
+		}
+		return imports;
+	}
 
-    @Override
-    /**
-     * Creates a {@link MemberMirror} for a {@link Element} which is of a {@link ExecutableType}.
-     * This includes methods and constructors.
-     * @return MemberMirror representation of the given method or constructor
-     */
-    public final MemberMirror visitExecutable(final ExecutableType executableType, final Element element) {
-        final String ownerName = getOwnerName(element);
-        final List<ParameterMirror> parameterList = getParameterList(executableType, element);
-        final String name = createMethodNameFromParameterNames(parameterList);
-        final Set<String> imports = new TreeSet<String>();
+	@Override
+	/**
+	 * Creates a {@link MemberMirror} for a {@link Element} which is of a {@link ExecutableType}.
+	 * This includes methods and constructors.
+	 * @return MemberMirror representation of the given method or constructor
+	 */
+	public final MemberMirror visitExecutable(final ExecutableType executableType, final Element element) {
+		final String ownerName = getOwnerName(element);
+		final List<ParameterMirror> parameterList = getParameterList(executableType, element);
+		final String name = createMethodNameFromParameterNames(parameterList);
+		final Set<String> imports = new TreeSet<String>();
 
-        for (ParameterMirror parameterMirror : parameterList) {
-            imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(
-                    parameterMirror.getType().toString(),
-                    getOwnerName(element)));
-        }
+		for (ParameterMirror parameterMirror : parameterList) {
+			imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(
+					parameterMirror.getType().toString(),
+					getOwnerName(element)));
+		}
 
-        return new MemberMirrorConstructorImpl(name, ownerName, parameterList, imports);
-    }
+		return new MemberMirrorConstructorImpl(name, ownerName, parameterList, imports);
+	}
 
-    private List<ParameterMirror> getParameterList(final ExecutableType executableType, final Element element) {
-        final List<? extends VariableElement> parameterNames = ((ExecutableElement) element).getParameters();
-        final List<? extends TypeMirror> parameterTypes = executableType.getParameterTypes();
-        final List<ParameterMirror> parameters = new ArrayList<ParameterMirror>();
-        int counter = 0;
-        for (VariableElement parameterName : parameterNames) {
-            parameters.add(new ParameterMirror(parameterTypes.get(counter), parameterName.toString()));
-            counter++;
-        }
-        return parameters;
-    }
+	private List<ParameterMirror> getParameterList(final ExecutableType executableType, final Element element) {
+		final List<? extends VariableElement> parameterNames = ((ExecutableElement) element).getParameters();
+		final List<? extends TypeMirror> parameterTypes = executableType.getParameterTypes();
+		final List<ParameterMirror> parameters = new ArrayList<ParameterMirror>();
+		int counter = 0;
+		for (VariableElement parameterName : parameterNames) {
+			parameters.add(new ParameterMirror(parameterTypes.get(counter), parameterName.toString()));
+			counter++;
+		}
+		return parameters;
+	}
 
-    private String createMethodNameFromParameterNames(final List<ParameterMirror> parameterList) {
-        final StringBuffer methodName = new StringBuffer();
-        for (ParameterMirror parameterMirror : parameterList) {
-            methodName.append(StringUtils.capitalize(parameterMirror.getName()));
-            methodName.append("And");
-        }
-        if (methodName.length() >= CONJUNCTION_LENGTH) {
-            methodName.delete(methodName.length() - CONJUNCTION_LENGTH, methodName.length());
-        }
-        return methodName.toString();
-    }
+	private String createMethodNameFromParameterNames(final List<ParameterMirror> parameterList) {
+		final StringBuffer methodName = new StringBuffer();
+		for (ParameterMirror parameterMirror : parameterList) {
+			methodName.append(StringUtils.capitalize(parameterMirror.getName()));
+			methodName.append("And");
+		}
+		if (methodName.length() >= CONJUNCTION_LENGTH) {
+			methodName.delete(methodName.length() - CONJUNCTION_LENGTH, methodName.length());
+		}
+		return methodName.toString();
+	}
 }

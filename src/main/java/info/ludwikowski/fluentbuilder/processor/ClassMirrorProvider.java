@@ -19,48 +19,52 @@ import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
 /**
  * This class generates ClassMirrors from given class elements for the
  * generator.
+ * 
  * @author Andrzej Ludwikowski
  */
 public class ClassMirrorProvider {
 
-    private final ClassVerifier classVerifier;
-    private final ProcessorContext context;
+	private final ClassVerifier classVerifier;
+	private final ProcessorContext context;
 
-    /**
-     * Default constructor for a ClassMirrorProvider.
-     * @param classVerifier Verifier checks if for the current class a builder
-     *            should be generated.
-     * @param context inhabits settings for the {@link FluentBuilderProcessor}
-     */
-    public ClassMirrorProvider(final ClassVerifier classVerifier, final ProcessorContext context) {
-        this.classVerifier = classVerifier;
-        this.context = context;
-    }
 
-    /**
-     * Checks all elements of a given Set for class Elements and creates for
-     * each found class {@link Element} a ClassMirror.
-     * @param elements Set of Elements which are checked for classes
-     * @return a Collection of ClassMirrors which represent the found classes in
-     *         elements
-     */
-    public final Collection<ClassMirror> prepareMirrors(final Set<? extends Element> elements) {
+	/**
+	 * Default constructor for a ClassMirrorProvider.
+	 * 
+	 * @param classVerifier Verifier checks if for the current class a builder
+	 *            should be generated.
+	 * @param context inhabits settings for the {@link FluentBuilderProcessor}
+	 */
+	public ClassMirrorProvider(final ClassVerifier classVerifier, final ProcessorContext context) {
+		this.classVerifier = classVerifier;
+		this.context = context;
+	}
 
-        final Set<ClassMirror> classMirrors = new HashSet<ClassMirror>();
+	/**
+	 * Checks all elements of a given Set for class Elements and creates for
+	 * each found class {@link Element} a ClassMirror.
+	 * 
+	 * @param elements Set of Elements which are checked for classes
+	 * @return a Collection of ClassMirrors which represent the found classes in
+	 *         elements
+	 */
+	public final Collection<ClassMirror> prepareMirrors(final Set<? extends Element> elements) {
 
-        for (final Element element : elements) {
+		final Set<ClassMirror> classMirrors = new HashSet<ClassMirror>();
 
-            if (!ElementKind.CLASS.equals(element.getKind())) {
-                continue;
-            }
+		for (final Element element : elements) {
 
-            if (classVerifier.generateBuilder(element)) {
+			if (!ElementKind.CLASS.equals(element.getKind())) {
+				continue;
+			}
 
-                classMirrors.add(new ClassMirrorImpl(element, context));
-            }
-        }
+			if (classVerifier.generateBuilder(element)) {
 
-        return classMirrors;
-    }
+				classMirrors.add(new ClassMirrorImpl(element, context));
+			}
+		}
+
+		return classMirrors;
+	}
 
 }

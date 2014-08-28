@@ -11,44 +11,48 @@ import javax.lang.model.element.Element;
 import de.bluecarat.fluentbuilder.annotation.GenerateBuilder;
 
 /**
- * This class looks for {@link GenerateBuilder} Annotations in a given
- * {@link Element} to verify that a Builder should be generated for that
+ * This class looks for {@link GenerateBuilder} Annotations in a given {@link Element} to verify that a Builder should
+ * be generated for that
  * Element.
+ * 
  * @author Andrzej Ludwikowski
  */
 public class ClassVerifier {
 
-    private final ProcessorContext context;
+	private final ProcessorContext context;
 
-    /**
-     * Default constructor for a ClassVerifier.
-     * @param context inhabits the settings for the ClassVerifier
-     */
-    public ClassVerifier(final ProcessorContext context) {
-        this.context = context;
-    }
 
-    /**
-     * Checks if a {@links GenerateBuilder} Annotation is found in the element.
-     * @param element which is checked for a GenerateBuilder Annotation
-     * @return True if the annotation is found, false if not
-     */
-    public final boolean generateBuilder(final Element element) {
+	/**
+	 * Default constructor for a ClassVerifier.
+	 * 
+	 * @param context inhabits the settings for the ClassVerifier
+	 */
+	public ClassVerifier(final ProcessorContext context) {
+		this.context = context;
+	}
 
-        if (info.ludwikowski.fluentbuilder.util.TypeUtils.containsAnnotation(
-                element,
-                GenerateBuilder.class.getCanonicalName())) {
-            return true;
-        }
+	/**
+	 * Checks if a {@links GenerateBuilder} Annotation is found in the element.
+	 * 
+	 * @param element which is checked for a GenerateBuilder Annotation
+	 * @return True if the annotation is found, false if not
+	 */
+	public final boolean generateBuilder(final Element element) {
 
-        if (context.isAcceptJavaPersistenceAnnotations()
-                && info.ludwikowski.fluentbuilder.util.TypeUtils.containsAnnotation(
-                        element,
-                        info.ludwikowski.fluentbuilder.processor.ProcessorContext.JPA_ANNOTATIONS)) {
-            return true;
-        }
+		if (info.ludwikowski.fluentbuilder.util.TypeUtils.containsAnnotation(
+				element,
+				GenerateBuilder.class.getCanonicalName())) {
+			return true;
+		}
 
-        return false;
-    }
+		if (context.isAcceptJavaPersistenceAnnotations()
+				&& info.ludwikowski.fluentbuilder.util.TypeUtils.containsAnnotation(
+						element,
+						info.ludwikowski.fluentbuilder.processor.ProcessorContext.JPA_ANNOTATIONS)) {
+			return true;
+		}
+
+		return false;
+	}
 
 }

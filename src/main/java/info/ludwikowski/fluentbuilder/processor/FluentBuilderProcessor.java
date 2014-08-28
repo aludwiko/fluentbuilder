@@ -23,44 +23,46 @@ import info.ludwikowski.fluentbuilder.model.ClassMirror;
 /**
  * This class contains the main annotation processing logic for the builder
  * generation.
+ * 
  * @author Andrzej Ludwikowski
  */
 @SupportedAnnotationTypes({ info.ludwikowski.fluentbuilder.processor.ProcessorContext.JAVAX_PERSISTENCE_ENTITY,
-        info.ludwikowski.fluentbuilder.processor.ProcessorContext.JAVAX_PERSISTENCE_MAPPEDSUPERCLASS,
-        info.ludwikowski.fluentbuilder.processor.ProcessorContext.JAVAX_PERSISTENCE_EMBEDDABLE,
-        info.ludwikowski.fluentbuilder.processor.ProcessorContext.FLUENT_BUILDER_ANNOTATATION })
+		info.ludwikowski.fluentbuilder.processor.ProcessorContext.JAVAX_PERSISTENCE_MAPPEDSUPERCLASS,
+		info.ludwikowski.fluentbuilder.processor.ProcessorContext.JAVAX_PERSISTENCE_EMBEDDABLE,
+		info.ludwikowski.fluentbuilder.processor.ProcessorContext.FLUENT_BUILDER_ANNOTATATION })
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
 public class FluentBuilderProcessor extends AbstractProcessor {
 
-    private ProcessorContext context;
-    private ClassMirrorProvider classMirrorProvider;
-    private ClassWriter classWriter;
+	private ProcessorContext context;
+	private ClassMirrorProvider classMirrorProvider;
+	private ClassWriter classWriter;
 
-    @Override
-    public final SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
-    }
 
-    @Override
-    public final synchronized void init(final ProcessingEnvironment processingEnv) {
-        super.init(processingEnv);
-        context = new ProcessorContext(processingEnv);
-        final ClassVerifier classVerifier = new ClassVerifier(context);
-        classMirrorProvider = new ClassMirrorProvider(classVerifier, context);
-        classWriter = new ClassWriter(context);
-        context.logConfiguration();
-    }
+	@Override
+	public final SourceVersion getSupportedSourceVersion() {
+		return SourceVersion.latestSupported();
+	}
 
-    @Override
-    public final boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
+	@Override
+	public final synchronized void init(final ProcessingEnvironment processingEnv) {
+		super.init(processingEnv);
+		context = new ProcessorContext(processingEnv);
+		final ClassVerifier classVerifier = new ClassVerifier(context);
+		classMirrorProvider = new ClassMirrorProvider(classVerifier, context);
+		classWriter = new ClassWriter(context);
+		context.logConfiguration();
+	}
 
-        final Set<? extends Element> elements = roundEnv.getRootElements();
+	@Override
+	public final boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
 
-        final Collection<ClassMirror> classMirrors = classMirrorProvider.prepareMirrors(elements);
+		final Set<? extends Element> elements = roundEnv.getRootElements();
 
-        classWriter.write(classMirrors);
+		final Collection<ClassMirror> classMirrors = classMirrorProvider.prepareMirrors(elements);
 
-        return false;
-    }
+		classWriter.write(classMirrors);
+
+		return false;
+	}
 
 }

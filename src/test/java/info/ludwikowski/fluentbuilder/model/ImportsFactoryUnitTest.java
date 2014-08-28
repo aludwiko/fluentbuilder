@@ -15,12 +15,12 @@ import org.junit.Test;
  */
 public class ImportsFactoryUnitTest {
 
-    @Test
-    public void shouldCreateImportForClassInParentPackage() {
-        final String type = "de.bluecarat.gpms.model.Usage";
-        final String className = "de.bluecarat.gpms.model.module.AbstractPermissionModuleBuilder";
-        final Collection<String> testImports = ImportsFactory.createNecessaryImportsForTypeInClass(type, className);
-        assertThat(testImports.toString(), equalTo("[de.bluecarat.gpms.model.Usage]"));
-    }
+	@Test
+	public void shouldCreateImportForClassInParentPackage() {
+		final String type = "de.bluecarat.gpms.model.Usage";
+		final String className = "de.bluecarat.gpms.model.module.AbstractPermissionModuleBuilder";
+		final Collection<String> testImports = ImportsFactory.createNecessaryImportsForTypeInClass(type, className);
+		assertThat(testImports.toString(), equalTo("[de.bluecarat.gpms.model.Usage]"));
+	}
 
 }

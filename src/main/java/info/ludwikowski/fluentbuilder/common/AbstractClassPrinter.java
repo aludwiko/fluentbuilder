@@ -15,201 +15,209 @@ import info.ludwikowski.fluentbuilder.model.ClassMirror;
 import info.ludwikowski.fluentbuilder.util.NameUtils;
 
 /**
- * This class prints a generated {@link AbstractBuilder} class for a given
- * {@link classMirror}. It uses properties which are defined in a
- * {@link Context} object.
+ * This class prints a generated {@link AbstractBuilder} class for a given {@link classMirror}. It uses properties which
+ * are defined in a {@link Context} object.
+ * 
  * @author Andrzej Ludwikowski
  */
 public abstract class AbstractClassPrinter {
 
-    private static final String INDENTATION = "\t";
+	private static final String INDENTATION = "\t";
 
-    private final Context context;
-    private final ClassMirror classMirror;
+	private final Context context;
+	private final ClassMirror classMirror;
 
-    private int indentationLevel = 0;
-    private final StringBuffer abstractBuilderBuffer = new StringBuffer();
+	private int indentationLevel = 0;
+	private final StringBuffer abstractBuilderBuffer = new StringBuffer();
 
-    /**
-     * The default constructor.
-     * @param classMirror representation of the class for which the
-     *            {@link AbstractBuilder} will be printed.
-     * @param context property defining object for the printer.
-     */
-    public AbstractClassPrinter(final ClassMirror classMirror, final Context context) {
-        this.classMirror = classMirror;
-        this.context = context;
-    }
 
-    /**
-     * Returns the full name of the ClassMirror's package.
-     * @return full package name of the referenced {@link ClassMirror}.
-     */
-    public abstract String getPackageName();
+	/**
+	 * The default constructor.
+	 * 
+	 * @param classMirror representation of the class for which the {@link AbstractBuilder} will be printed.
+	 * @param context property defining object for the printer.
+	 */
+	public AbstractClassPrinter(final ClassMirror classMirror, final Context context) {
+		this.classMirror = classMirror;
+		this.context = context;
+	}
 
-    /**
-     * Returns the name which will be used for the generated class.
-     * @return Name of the newly printed class.
-     */
-    public abstract String builderName();
+	/**
+	 * Returns the full name of the ClassMirror's package.
+	 * 
+	 * @return full package name of the referenced {@link ClassMirror}.
+	 */
+	public abstract String getPackageName();
 
-    protected abstract void printClassWithBody();
+	/**
+	 * Returns the name which will be used for the generated class.
+	 * 
+	 * @return Name of the newly printed class.
+	 */
+	public abstract String builderName();
 
-    protected abstract Set<String> getFullClassNamesForImports();
+	protected abstract void printClassWithBody();
 
-    protected abstract void printClassComment();
+	protected abstract Set<String> getFullClassNamesForImports();
 
-    /**
-     * Returns the full name of the class which is represented by the referenced
-     * {@link ClassMirror} .
-     * @return full name of the referenced class.
-     */
-    public abstract String getFullClassName();
+	protected abstract void printClassComment();
 
-    /**
-     * Returns the generated class as a String.
-     * @return the generated class as a String.
-     */
-    public final String printClass() {
+	/**
+	 * Returns the full name of the class which is represented by the referenced {@link ClassMirror} .
+	 * 
+	 * @return full name of the referenced class.
+	 */
+	public abstract String getFullClassName();
 
-        printLine("package #0;", getPackageName());
-        printLine();
-        printImportStatements();
-        printLine();
-        printLine();
-        printClassComment();
-        printClassWithBody();
+	/**
+	 * Returns the generated class as a String.
+	 * 
+	 * @return the generated class as a String.
+	 */
+	public final String printClass() {
 
-        return abstractBuilderBuffer.toString();
-    }
+		printLine("package #0;", getPackageName());
+		printLine();
+		printImportStatements();
+		printLine();
+		printLine();
+		printClassComment();
+		printClassWithBody();
 
-    private void printImportStatements() {
-        if (this instanceof PrinterForAbstractBuilder && classMirror.getFieldMembers().size() > 0) {
-            printLine("import de.bluecarat.fluentbuilder.annotation.ReferencedField;");
-        }
-        for (final String fullClassName : getFullClassNamesForImports()) {
-            printImportStatement(fullClassName);
-        }
-    }
+		return abstractBuilderBuffer.toString();
+	}
 
-    private void printImportStatement(final String classFullName) {
-        printLine("import #0;", classFullName);
-    }
+	private void printImportStatements() {
+		if (this instanceof PrinterForAbstractBuilder && classMirror.getFieldMembers().size() > 0) {
+			printLine("import de.bluecarat.fluentbuilder.annotation.ReferencedField;");
+		}
+		for (final String fullClassName : getFullClassNamesForImports()) {
+			printImportStatement(fullClassName);
+		}
+	}
 
-    protected final void printLine(final String text) {
+	private void printImportStatement(final String classFullName) {
+		printLine("import #0;", classFullName);
+	}
 
-        printIndentation(indentationLevel);
-        appendln(text);
-    }
+	protected final void printLine(final String text) {
 
-    private void appendln(final String text) {
-        abstractBuilderBuffer.append(text);
-        abstractBuilderBuffer.append("\n");
-    }
+		printIndentation(indentationLevel);
+		appendln(text);
+	}
 
-    protected final void printLine(final String text, final String... values) {
+	private void appendln(final String text) {
+		abstractBuilderBuffer.append(text);
+		abstractBuilderBuffer.append("\n");
+	}
 
-        printIndentation(indentationLevel);
-        String replacedText = text;
-        int i = 0;
-        for (final String value : values) {
-            replacedText = replacedText.replaceAll("#" + i, value);
-            i++;
-        }
-        appendln(replacedText);
-    }
+	protected final void printLine(final String text, final String... values) {
 
-    protected final void printIndentation(final int level) {
-        abstractBuilderBuffer.append(StringUtils.repeat(INDENTATION, level));
-    }
+		printIndentation(indentationLevel);
+		String replacedText = text;
+		int i = 0;
+		for (final String value : values) {
+			replacedText = replacedText.replaceAll("#" + i, value);
+			i++;
+		}
+		appendln(replacedText);
+	}
 
-    protected final void printLine() {
-        abstractBuilderBuffer.append("\n");
-    }
+	protected final void printIndentation(final int level) {
+		abstractBuilderBuffer.append(StringUtils.repeat(INDENTATION, level));
+	}
 
-    protected final void decreaseIndentation() {
-        indentationLevel--;
-    }
+	protected final void printLine() {
+		abstractBuilderBuffer.append("\n");
+	}
 
-    protected final void increaseIndentation() {
-        indentationLevel++;
-    }
+	protected final void decreaseIndentation() {
+		indentationLevel--;
+	}
 
-    protected final void printCreateMethod() {
+	protected final void increaseIndentation() {
+		indentationLevel++;
+	}
 
-        if (!context.isStaticCreate()) {
-            return;
-        }
+	protected final void printCreateMethod() {
 
-        increaseIndentation();
-        printLine();
-        printLine("public static #0 #1(){", builderName(), createBuilderMethodName());
-        increaseIndentation();
-        printLine("return AbstractBuilderFactory.createImplementation(#0.class);", builderName());
-        decreaseIndentation();
-        printLine("}");
-        decreaseIndentation();
-    }
+		if (!context.isStaticCreate()) {
+			return;
+		}
 
-    private String createBuilderMethodName() {
+		increaseIndentation();
+		printLine();
+		printLine("public static #0 #1(){", builderName(), createBuilderMethodName());
+		increaseIndentation();
+		printLine("return AbstractBuilderFactory.createImplementation(#0.class);", builderName());
+		decreaseIndentation();
+		printLine("}");
+		decreaseIndentation();
+	}
 
-        if (StringUtils.isNotBlank(context.getStaticCreateMethodName())) {
-            return context.getStaticCreateMethodName();
-        }
+	private String createBuilderMethodName() {
 
-        String className = classMirror.getSimpleName();
+		if (StringUtils.isNotBlank(context.getStaticCreateMethodName())) {
+			return context.getStaticCreateMethodName();
+		}
 
-        if (StringUtils.isNotBlank(context.getIgnoredClassPrefix())) {
-            className = removeClassPrefix(className);
-        }
+		String className = classMirror.getSimpleName();
 
-        if (context.isUseIndefiniteArticles()) {
-            className = NameUtils.addIndefiniteArticleInFront(className);
-        }
+		if (StringUtils.isNotBlank(context.getIgnoredClassPrefix())) {
+			className = removeClassPrefix(className);
+		}
 
-        return org.apache.commons.lang.StringUtils.uncapitalize(className);
-    }
+		if (context.isUseIndefiniteArticles()) {
+			className = NameUtils.addIndefiniteArticleInFront(className);
+		}
 
-    private String removeClassPrefix(final String className) {
+		return org.apache.commons.lang.StringUtils.uncapitalize(className);
+	}
 
-        final String ignoredClassPrefix = context.getIgnoredClassPrefix();
+	private String removeClassPrefix(final String className) {
 
-        if (className.startsWith(ignoredClassPrefix)) {
-            return className.replaceFirst(ignoredClassPrefix, NameUtils.EMPTY);
-        }
+		final String ignoredClassPrefix = context.getIgnoredClassPrefix();
 
-        return className;
-    }
+		if (className.startsWith(ignoredClassPrefix)) {
+			return className.replaceFirst(ignoredClassPrefix, NameUtils.EMPTY);
+		}
 
-    /**
-     * Returns the class name of the processed class.
-     * @return short class name
-     */
-    public final String getClassName() {
-        return classMirror.getSimpleName();
-    }
+		return className;
+	}
 
-    /**
-     * Returns the abstractBuilderBuffer for tests.
-     * @return the content of the printed class
-     */
-    public final String getBufferAsString() {
-        return abstractBuilderBuffer.toString();
-    }
+	/**
+	 * Returns the class name of the processed class.
+	 * 
+	 * @return short class name
+	 */
+	public final String getClassName() {
+		return classMirror.getSimpleName();
+	}
 
-    /**
-     * Returns the current context object.
-     * @return the context object
-     */
-    public final Context getContext() {
-        return context;
-    }
+	/**
+	 * Returns the abstractBuilderBuffer for tests.
+	 * 
+	 * @return the content of the printed class
+	 */
+	public final String getBufferAsString() {
+		return abstractBuilderBuffer.toString();
+	}
 
-    /**
-     * Returns the current ClassMirror.
-     * @return the ClassMirror object
-     */
-    public final ClassMirror getClassMirror() {
-        return classMirror;
-    }
+	/**
+	 * Returns the current context object.
+	 * 
+	 * @return the context object
+	 */
+	public final Context getContext() {
+		return context;
+	}
+
+	/**
+	 * Returns the current ClassMirror.
+	 * 
+	 * @return the ClassMirror object
+	 */
+	public final ClassMirror getClassMirror() {
+		return classMirror;
+	}
 }

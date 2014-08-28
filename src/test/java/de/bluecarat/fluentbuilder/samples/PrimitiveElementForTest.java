@@ -23,61 +23,62 @@ import javax.lang.model.type.TypeMirror;
  */
 public class PrimitiveElementForTest implements Element {
 
-    public Element owner;
+	public Element owner;
 
-    public PrimitiveElementForTest() {
-        owner = mock(Element.class);
-        when(owner.toString()).thenReturn("java.Object");
-    }
 
-    @Override
-    public TypeMirror asType() {
-        return null;
-    }
+	public PrimitiveElementForTest() {
+		owner = mock(Element.class);
+		when(owner.toString()).thenReturn("java.Object");
+	}
 
-    @Override
-    public ElementKind getKind() {
-        return null;
-    }
+	@Override
+	public TypeMirror asType() {
+		return null;
+	}
 
-    @Override
-    public List<? extends AnnotationMirror> getAnnotationMirrors() {
-        return null;
-    }
+	@Override
+	public ElementKind getKind() {
+		return null;
+	}
 
-    @Override
-    public <A extends Annotation> A getAnnotation(Class<A> annotationType) {
-        return null;
-    }
+	@Override
+	public List<? extends AnnotationMirror> getAnnotationMirrors() {
+		return null;
+	}
 
-    @Override
-    public Set<Modifier> getModifiers() {
-        return null;
-    }
+	@Override
+	public <A extends Annotation> A getAnnotation(Class<A> annotationType) {
+		return null;
+	}
 
-    @Override
-    public Name getSimpleName() {
-        return null;
-    }
+	@Override
+	public Set<Modifier> getModifiers() {
+		return null;
+	}
 
-    @Override
-    public Element getEnclosingElement() {
-        return null;
-    }
+	@Override
+	public Name getSimpleName() {
+		return null;
+	}
 
-    @Override
-    public List<? extends Element> getEnclosedElements() {
-        return null;
-    }
+	@Override
+	public Element getEnclosingElement() {
+		return null;
+	}
 
-    @Override
-    public <R, P> R accept(ElementVisitor<R, P> v, P p) {
-        return null;
-    }
+	@Override
+	public List<? extends Element> getEnclosedElements() {
+		return null;
+	}
 
-    @Override
-    public String toString() {
-        return "intField";
-    }
+	@Override
+	public <R, P> R accept(ElementVisitor<R, P> v, P p) {
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "intField";
+	}
 
 }

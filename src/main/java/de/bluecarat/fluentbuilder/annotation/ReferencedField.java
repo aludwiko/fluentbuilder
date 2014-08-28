@@ -14,14 +14,16 @@ import java.lang.annotation.Target;
  * Builder set-method to guarantee that the correct field is selected and no
  * conflicts with hidden fields occur. It is created for every member field when
  * generating a AbstractBuilder class.
+ * 
  * @author Jan van Esdonk
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ReferencedField {
-    /**
-     * The full field name of the field which will be set by the annotated
-     * setter method.
-     */
-    String value();
+
+	/**
+	 * The full field name of the field which will be set by the annotated
+	 * setter method.
+	 */
+	String value();
 }

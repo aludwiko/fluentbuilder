@@ -26,22 +26,23 @@ import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
  */
 public class BuilderPrinterTest {
 
-    private ProcessingEnvironment processingEnv = mock(ProcessingEnvironment.class);
-    private ProcessorContext processorContext = new ProcessorContext(processingEnv);
+	private ProcessingEnvironment processingEnv = mock(ProcessingEnvironment.class);
+	private ProcessorContext processorContext = new ProcessorContext(processingEnv);
 
-    @Test
-    public void shouldPrintBuilderFromClass() {
 
-        // given
-        ClassMirror mirror = new ClassMirrorImpl(DataTypeSampleClass.class, new Context());
-        BuilderPrinter builderPrinter = new BuilderPrinter(mirror, processorContext);
+	@Test
+	public void shouldPrintBuilderFromClass() {
 
-        // when
-        builderPrinter.printClass();
+		// given
+		ClassMirror mirror = new ClassMirrorImpl(DataTypeSampleClass.class, new Context());
+		BuilderPrinter builderPrinter = new BuilderPrinter(mirror, processorContext);
 
-        // then
-        assertThat(
-                builderPrinter.getBufferAsString(),
-                containsString("public abstract class DataTypeSampleClassBuilder extends AbstractDataTypeSampleClassBuilder<DataTypeSampleClassBuilder>"));
-    }
+		// when
+		builderPrinter.printClass();
+
+		// then
+		assertThat(
+				builderPrinter.getBufferAsString(),
+				containsString("public abstract class DataTypeSampleClassBuilder extends AbstractDataTypeSampleClassBuilder<DataTypeSampleClassBuilder>"));
+	}
 }

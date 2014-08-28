@@ -32,88 +32,89 @@ import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
 @PrepareForTest(ProcessorContext.class)
 public class MemberMirrorGeneratorVisitorUnitTest {
 
-    MemberMirrorGeneratorVisitor testVisitor = null;
-    @Mock
-    ProcessorContext mockedContext;
-    @Mock
-    private PrimitiveType mockedPrimitiveType;
-    @Mock
-    private DeclaredType mockedDeclaredType;
-    @Mock
-    private Types mockedType;
-    @Mock
-    private TypeElement mockedTypeElement;
+	MemberMirrorGeneratorVisitor testVisitor = null;
+	@Mock
+	ProcessorContext mockedContext;
+	@Mock
+	private PrimitiveType mockedPrimitiveType;
+	@Mock
+	private DeclaredType mockedDeclaredType;
+	@Mock
+	private Types mockedType;
+	@Mock
+	private TypeElement mockedTypeElement;
 
-    @Before
-    public void setUp() throws Exception {
-        testVisitor = new MemberMirrorGeneratorVisitor(mockedContext);
-    }
 
-    @Test
-    public void shouldCreateMemberMirrorWithNameFromPrimitiveElement() {
-        // given
-        final Element primitiveElement = new PrimitiveElementForTest();
-        // when
-        final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
-        // then
-        assertThat(testMember.getName(), containsString("intField"));
-    }
+	@Before
+	public void setUp() throws Exception {
+		testVisitor = new MemberMirrorGeneratorVisitor(mockedContext);
+	}
 
-    @Test
-    public void shouldCreateMemberMirrorWithOwnerNameFromPrimitiveElement() {
-        // given
-        final Element primitiveElement = new PrimitiveElementForTest();
-        // when
-        final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
-        // then
-        assertThat(testMember.getOwnerName(), containsString("java.Object"));
-    }
+	@Test
+	public void shouldCreateMemberMirrorWithNameFromPrimitiveElement() {
+		// given
+		final Element primitiveElement = new PrimitiveElementForTest();
+		// when
+		final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
+		// then
+		assertThat(testMember.getName(), containsString("intField"));
+	}
 
-    @Test
-    public void shouldCreateMemberMirrorWithSimpleTypeFromPrimitiveElement() {
-        // given
-        when(mockedPrimitiveType.toString()).thenReturn("int");
-        final Element primitiveElement = new PrimitiveElementForTest();
-        // when
-        final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
-        // then
-        assertThat(testMember.getSimpleType(), containsString("int"));
-    }
+	@Test
+	public void shouldCreateMemberMirrorWithOwnerNameFromPrimitiveElement() {
+		// given
+		final Element primitiveElement = new PrimitiveElementForTest();
+		// when
+		final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
+		// then
+		assertThat(testMember.getOwnerName(), containsString("java.Object"));
+	}
 
-    @Test
-    public void shouldCreateMemberMirrorWithNameFromDeclaredElement() {
-        // given
-        final Element element = new DeclaredElementForTest();
-        when(mockedContext.getTypeUtils()).thenReturn(mockedType);
-        when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
-        // when
-        final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);
-        // then
-        assertThat(testMember.getName(), containsString("declaredField"));
-    }
+	@Test
+	public void shouldCreateMemberMirrorWithSimpleTypeFromPrimitiveElement() {
+		// given
+		when(mockedPrimitiveType.toString()).thenReturn("int");
+		final Element primitiveElement = new PrimitiveElementForTest();
+		// when
+		final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
+		// then
+		assertThat(testMember.getSimpleType(), containsString("int"));
+	}
 
-    @Test
-    public void shouldCreateMemberMirrorWithOwnerNameFromDeclaredElement() {
-        // given
-        final Element element = new DeclaredElementForTest();
-        when(mockedContext.getTypeUtils()).thenReturn(mockedType);
-        when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
-        // when
-        final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);
-        // then
-        assertThat(testMember.getOwnerName(), containsString("java.Object"));
-    }
+	@Test
+	public void shouldCreateMemberMirrorWithNameFromDeclaredElement() {
+		// given
+		final Element element = new DeclaredElementForTest();
+		when(mockedContext.getTypeUtils()).thenReturn(mockedType);
+		when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
+		// when
+		final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);
+		// then
+		assertThat(testMember.getName(), containsString("declaredField"));
+	}
 
-    @Test
-    public void shouldCreateMemberMirrorWithSimpleTypeFromDeclaredElement() {
-        // given
-        final Element element = new DeclaredElementForTest();
-        when(mockedContext.getTypeUtils()).thenReturn(mockedType);
-        when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
-        when(mockedDeclaredType.toString()).thenReturn("String");
-        // when
-        final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);
-        // then
-        assertThat(testMember.getSimpleType(), containsString("String"));
-    }
+	@Test
+	public void shouldCreateMemberMirrorWithOwnerNameFromDeclaredElement() {
+		// given
+		final Element element = new DeclaredElementForTest();
+		when(mockedContext.getTypeUtils()).thenReturn(mockedType);
+		when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
+		// when
+		final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);
+		// then
+		assertThat(testMember.getOwnerName(), containsString("java.Object"));
+	}
+
+	@Test
+	public void shouldCreateMemberMirrorWithSimpleTypeFromDeclaredElement() {
+		// given
+		final Element element = new DeclaredElementForTest();
+		when(mockedContext.getTypeUtils()).thenReturn(mockedType);
+		when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
+		when(mockedDeclaredType.toString()).thenReturn("String");
+		// when
+		final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);
+		// then
+		assertThat(testMember.getSimpleType(), containsString("String"));
+	}
 }

@@ -7,76 +7,78 @@ package de.bluecarat.fluentbuilder.samples;
  * @author Jan van Esdonk
  */
 public class BaseTestObject {
-    private int intField;
-    private String stringField;
-    private char charField;
-    private int sameField;
-    private int uniqueBaseField;
-    private int duplicateInSuperSuperAndBase;
-    private int duplicateInSuperSuperAndSuper;
-    private int BaseTestObjectNameConflict;
-    private int NameConflict;
-    private int BaseTestObjectNameConflict_;
 
-    public BaseTestObject(int intField, String stringField, char charField, int sameField, int uniqueBaseField) {
-        super();
-        this.intField = intField;
-        this.stringField = stringField;
-        this.charField = charField;
-        this.sameField = sameField;
-        this.uniqueBaseField = uniqueBaseField;
-    }
+	private int intField;
+	private String stringField;
+	private char charField;
+	private int sameField;
+	private int uniqueBaseField;
+	private int duplicateInSuperSuperAndBase;
+	private int duplicateInSuperSuperAndSuper;
+	private int BaseTestObjectNameConflict;
+	private int NameConflict;
+	private int BaseTestObjectNameConflict_;
 
-    public int getUniqueBaseField() {
-        return uniqueBaseField;
-    }
 
-    public int getDuplicatedFieldfromBase() {
-        return sameField;
-    }
+	public BaseTestObject(int intField, String stringField, char charField, int sameField, int uniqueBaseField) {
+		super();
+		this.intField = intField;
+		this.stringField = stringField;
+		this.charField = charField;
+		this.sameField = sameField;
+		this.uniqueBaseField = uniqueBaseField;
+	}
 
-    public int getIntField() {
-        return intField;
-    }
+	public int getUniqueBaseField() {
+		return uniqueBaseField;
+	}
 
-    public String getStringField() {
-        return stringField;
-    }
+	public int getDuplicatedFieldfromBase() {
+		return sameField;
+	}
 
-    public int getDuplicatedInSuperSuperAndBaseFromSuperSuper() {
-        return duplicateInSuperSuperAndBase;
-    }
+	public int getIntField() {
+		return intField;
+	}
 
-    public int getDuplicatedInSuperSuperAndSuperFromSuperSuper() {
-        return duplicateInSuperSuperAndSuper;
-    }
+	public String getStringField() {
+		return stringField;
+	}
 
-    public int getBaseTestObjectNameConflictFromSuper() {
-        return BaseTestObjectNameConflict;
-    }
+	public int getDuplicatedInSuperSuperAndBaseFromSuperSuper() {
+		return duplicateInSuperSuperAndBase;
+	}
 
-    public char getCharField() {
-        return charField;
-    }
+	public int getDuplicatedInSuperSuperAndSuperFromSuperSuper() {
+		return duplicateInSuperSuperAndSuper;
+	}
 
-    public void setCharField(char charField) {
-        this.charField = charField;
-    }
+	public int getBaseTestObjectNameConflictFromSuper() {
+		return BaseTestObjectNameConflict;
+	}
 
-    public int getNameConflict() {
-        return NameConflict;
-    }
+	public char getCharField() {
+		return charField;
+	}
 
-    public void setNameConflict(int nameConflict) {
-        NameConflict = nameConflict;
-    }
+	public void setCharField(char charField) {
+		this.charField = charField;
+	}
 
-    public int getBaseTestObjectNameConflict_() {
-        return BaseTestObjectNameConflict_;
-    }
+	public int getNameConflict() {
+		return NameConflict;
+	}
 
-    public void setBaseTestObjectNameConflict_(int baseTestObjectNameConflict_) {
-        BaseTestObjectNameConflict_ = baseTestObjectNameConflict_;
-    }
+	public void setNameConflict(int nameConflict) {
+		NameConflict = nameConflict;
+	}
+
+	public int getBaseTestObjectNameConflict_() {
+		return BaseTestObjectNameConflict_;
+	}
+
+	public void setBaseTestObjectNameConflict_(int baseTestObjectNameConflict_) {
+		BaseTestObjectNameConflict_ = baseTestObjectNameConflict_;
+	}
 
 }

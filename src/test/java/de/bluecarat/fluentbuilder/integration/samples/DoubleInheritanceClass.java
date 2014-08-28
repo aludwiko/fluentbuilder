@@ -12,9 +12,9 @@ import de.bluecarat.fluentbuilder.annotation.GenerateBuilder;
 @SuppressWarnings("unused")
 public class DoubleInheritanceClass extends SingleInheritanceClass {
 
-    private int duplicatedInSubClasses;
-    private int duplicatedInTopAndDoubleInheritanceClass;
-    private int duplicatedInSingleAndDoubleInheritanceClass;
-    private int onlyInDoubleInheritanceClass;
+	private int duplicatedInSubClasses;
+	private int duplicatedInTopAndDoubleInheritanceClass;
+	private int duplicatedInSingleAndDoubleInheritanceClass;
+	private int onlyInDoubleInheritanceClass;
 
 }

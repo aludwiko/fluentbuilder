@@ -23,251 +23,256 @@ import info.ludwikowski.fluentbuilder.model.MemberMirrorImpl;
 import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 /**
- * This class generates the source code of an abstract builder class from a
- * {@link ClassMirror}.
+ * This class generates the source code of an abstract builder class from a {@link ClassMirror}.
+ * 
  * @author Andrzej Ludwikowski
  * @author Jan van Esdonk
  */
 public class PrinterForAbstractBuilder extends AbstractClassPrinter {
 
-    private static final String SYMBOL_FOR_BUILDER_GENERIC = "B";
-    private final List<String> usedMembers;
+	private static final String SYMBOL_FOR_BUILDER_GENERIC = "B";
+	private final List<String> usedMembers;
 
-    /**
-     * Constructor for an AbstractBuilderPrinter.
-     * @param classMirror - stores information about the class for which the
-     *            builder is generated
-     * @param context - stores the settings for the generated sources
-     */
-    public PrinterForAbstractBuilder(final ClassMirror classMirror, final Context context) {
-        super(classMirror, context);
-        usedMembers = new ArrayList<String>();
-    }
 
-    private String abstractBuilderClassName() {
-        return getClassMirror().getSimpleName() + getContext().getBuilderClassPostfix();
-    }
+	/**
+	 * Constructor for an AbstractBuilderPrinter.
+	 * 
+	 * @param classMirror - stores information about the class for which the
+	 *            builder is generated
+	 * @param context - stores the settings for the generated sources
+	 */
+	public PrinterForAbstractBuilder(final ClassMirror classMirror, final Context context) {
+		super(classMirror, context);
+		usedMembers = new ArrayList<String>();
+	}
 
-    @Override
-    protected final void printClassWithBody() {
-        printBuilderBegin();
-        printBuilderMethodPrefixGetter();
-        printBuilderBuildMethod();
-        printBuilderBody();
-        printBuilderEnd();
-    }
+	private String abstractBuilderClassName() {
+		return getClassMirror().getSimpleName() + getContext().getBuilderClassPostfix();
+	}
 
-    protected final void printBuilderBuildMethod() {
-        if (getContext().getBuildMethodName() != null) {
-            printLine();
-            increaseIndentation();
-            printLine("public #0 #1(){", getClassMirror().getSimpleName(), getContext().getBuildMethodName());
-            increaseIndentation();
-            printLine("return build();");
-            decreaseIndentation();
-            printBuilderEnd();
-            decreaseIndentation();
-        }
-    }
+	@Override
+	protected final void printClassWithBody() {
+		printBuilderBegin();
+		printBuilderMethodPrefixGetter();
+		printBuilderBuildMethod();
+		printBuilderBody();
+		printBuilderEnd();
+	}
 
-    protected final void printBuilderMethodPrefixGetter() {
-        if (!AbstractBuilder.BUILDER_METHOD_PREFIX.equals(getContext().getMethodPrefix())) {
-            printLine();
-            increaseIndentation();
-            printLine("public static final String getPrefix() {");
-            increaseIndentation();
-            printLine("return \"#0\";", getContext().getMethodPrefix());
-            decreaseIndentation();
-            printBuilderEnd();
-            decreaseIndentation();
-        }
-    }
+	protected final void printBuilderBuildMethod() {
+		if (getContext().getBuildMethodName() != null) {
+			printLine();
+			increaseIndentation();
+			printLine("public #0 #1(){", getClassMirror().getSimpleName(), getContext().getBuildMethodName());
+			increaseIndentation();
+			printLine("return build();");
+			decreaseIndentation();
+			printBuilderEnd();
+			decreaseIndentation();
+		}
+	}
 
-    protected final void printBuilderBody() {
+	protected final void printBuilderMethodPrefixGetter() {
+		if (!AbstractBuilder.BUILDER_METHOD_PREFIX.equals(getContext().getMethodPrefix())) {
+			printLine();
+			increaseIndentation();
+			printLine("public static final String getPrefix() {");
+			increaseIndentation();
+			printLine("return \"#0\";", getContext().getMethodPrefix());
+			decreaseIndentation();
+			printBuilderEnd();
+			decreaseIndentation();
+		}
+	}
 
-        increaseIndentation();
-        printLine();
+	protected final void printBuilderBody() {
 
-        final List<MemberMirror> mirrors = getClassMirror().getMembers();
+		increaseIndentation();
+		printLine();
 
-        printAbstractMethods(mirrors);
+		final List<MemberMirror> mirrors = getClassMirror().getMembers();
 
-        decreaseIndentation();
-    }
+		printAbstractMethods(mirrors);
 
-    private void printAbstractMethods(final List<MemberMirror> mirrors) {
-        for (final MemberMirror memberMirror : mirrors) {
-            if (memberMirror instanceof MemberMirrorImpl) {
-                printAbstractMethodForMemberField(memberMirror);
-            } else if (memberMirror instanceof MemberMirrorConstructorImpl) {
-                printAbstractMethodForConstructor((MemberMirrorConstructorImpl) memberMirror);
-            }
-        }
-    }
+		decreaseIndentation();
+	}
 
-    private void printAbstractMethodForConstructor(final MemberMirrorConstructorImpl memberMirror) {
-        final String parameterSignature = createSignatureForParameters(memberMirror);
-        printLine("public abstract #0 #1#2(#3);", abstractBuilderReturnName(), getContext()
-            .getConstructorMethodPrefix(), memberMirror.getName(), parameterSignature);
-    }
+	private void printAbstractMethods(final List<MemberMirror> mirrors) {
+		for (final MemberMirror memberMirror : mirrors) {
+			if (memberMirror instanceof MemberMirrorImpl) {
+				printAbstractMethodForMemberField(memberMirror);
+			}
+			else if (memberMirror instanceof MemberMirrorConstructorImpl) {
+				printAbstractMethodForConstructor((MemberMirrorConstructorImpl) memberMirror);
+			}
+		}
+	}
 
-    private String createSignatureForParameters(final MemberMirrorConstructorImpl memberMirror) {
-        final List<ParameterMirror> parameters = memberMirror.getParameters();
-        final StringBuffer parameterSignature = new StringBuffer();
-        for (ParameterMirror parameterMirror : parameters) {
-            parameterSignature.append(info.ludwikowski.fluentbuilder.util.NameUtils
-                .removePackageNameFromFullyQualifiedName(parameterMirror.getType().toString()));
-            parameterSignature.append(" ");
-            parameterSignature.append(parameterMirror.getName());
-            parameterSignature.append(", ");
-        }
-        if (parameterSignature.length() >= 1) {
-            parameterSignature.delete(parameterSignature.length() - 2, parameterSignature.length());
-        }
-        return parameterSignature.toString();
-    }
+	private void printAbstractMethodForConstructor(final MemberMirrorConstructorImpl memberMirror) {
+		final String parameterSignature = createSignatureForParameters(memberMirror);
+		printLine("public abstract #0 #1#2(#3);", abstractBuilderReturnName(), getContext()
+																							.getConstructorMethodPrefix(), memberMirror.getName(), parameterSignature);
+	}
 
-    private void printAbstractMethodForMemberField(final MemberMirror mirror) {
-        final String fieldName = mirror.getName();
-        final String uniqueName = getUniqueName(mirror);
-        final String annotationValue = mirror.getOwnerName() + "." + fieldName;
-        printReferencedFieldAnnotation(annotationValue);
-        printLine(
-                "public abstract #0 #1#2(#3 #4);",
-                abstractBuilderReturnName(),
-                getContext().getMethodPrefix(),
-                StringUtils.capitalize(uniqueName),
-                mirror.getSimpleType(),
-                fieldName);
-        if (mirror.getCollectionType() != null) {
-            printVarargsSetter(mirror, uniqueName);
-        }
-        usedMembers.add(uniqueName);
-    }
+	private String createSignatureForParameters(final MemberMirrorConstructorImpl memberMirror) {
+		final List<ParameterMirror> parameters = memberMirror.getParameters();
+		final StringBuffer parameterSignature = new StringBuffer();
+		for (ParameterMirror parameterMirror : parameters) {
+			parameterSignature.append(info.ludwikowski.fluentbuilder.util.NameUtils
+																					.removePackageNameFromFullyQualifiedName(parameterMirror.getType().toString()));
+			parameterSignature.append(" ");
+			parameterSignature.append(parameterMirror.getName());
+			parameterSignature.append(", ");
+		}
+		if (parameterSignature.length() >= 1) {
+			parameterSignature.delete(parameterSignature.length() - 2, parameterSignature.length());
+		}
+		return parameterSignature.toString();
+	}
 
-    private void printVarargsSetter(final MemberMirror mirror, final String uniqueName) {
-        final String annotationValue = mirror.getOwnerName() + "." + mirror.getName();
-        printReferencedFieldAnnotation(annotationValue);
-        printLine(
-                "public #0 #1#2(#3... #4){",
-                abstractBuilderReturnName(),
-                getContext().getMethodPrefix(),
-                StringUtils.capitalize(uniqueName),
-                mirror.getCollectionElementSimpleName(),
-                mirror.getName());
-        increaseIndentation();
-        printCollectionCreation(mirror, uniqueName);
-        decreaseIndentation();
-        printBuilderEnd();
-    }
+	private void printAbstractMethodForMemberField(final MemberMirror mirror) {
+		final String fieldName = mirror.getName();
+		final String uniqueName = getUniqueName(mirror);
+		final String annotationValue = mirror.getOwnerName() + "." + fieldName;
+		printReferencedFieldAnnotation(annotationValue);
+		printLine(
+				"public abstract #0 #1#2(#3 #4);",
+				abstractBuilderReturnName(),
+				getContext().getMethodPrefix(),
+				StringUtils.capitalize(uniqueName),
+				mirror.getSimpleType(),
+				fieldName);
+		if (mirror.getCollectionType() != null) {
+			printVarargsSetter(mirror, uniqueName);
+		}
+		usedMembers.add(uniqueName);
+	}
 
-    @Override
-    public final String getFullClassName() {
-        return getPackageName() + "." + builderName();
-    }
+	private void printVarargsSetter(final MemberMirror mirror, final String uniqueName) {
+		final String annotationValue = mirror.getOwnerName() + "." + mirror.getName();
+		printReferencedFieldAnnotation(annotationValue);
+		printLine(
+				"public #0 #1#2(#3... #4){",
+				abstractBuilderReturnName(),
+				getContext().getMethodPrefix(),
+				StringUtils.capitalize(uniqueName),
+				mirror.getCollectionElementSimpleName(),
+				mirror.getName());
+		increaseIndentation();
+		printCollectionCreation(mirror, uniqueName);
+		decreaseIndentation();
+		printBuilderEnd();
+	}
 
-    private void printCollectionCreation(final MemberMirror memberMirror, final String suffixedName) {
+	@Override
+	public final String getFullClassName() {
+		return getPackageName() + "." + builderName();
+	}
 
-        if (TypeUtils.isList(memberMirror.getCollectionType())) {
-            printLine(
-                    "return #0#1(new ArrayList<#2>(Arrays.asList(#3)));",
-                    getContext().getMethodPrefix(),
-                    StringUtils.capitalize(suffixedName),
-                    memberMirror.getCollectionElementSimpleName(),
-                    memberMirror.getName());
-        } else if (TypeUtils.isSet(memberMirror.getCollectionType())) {
-            printLine(
-                    "return #0#1(new HashSet<#2>(Arrays.asList(#3)));",
-                    getContext().getMethodPrefix(),
-                    StringUtils.capitalize(suffixedName),
-                    memberMirror.getCollectionElementSimpleName(),
-                    memberMirror.getName());
-        }
-    }
+	private void printCollectionCreation(final MemberMirror memberMirror, final String suffixedName) {
 
-    private String getUniqueName(final MemberMirror mirror) {
-        final String nameWithPrefix = getSuperPrefix(mirror) + StringUtils.capitalize(mirror.getName());
-        return addSuffix(nameWithPrefix);
-    }
+		if (TypeUtils.isList(memberMirror.getCollectionType())) {
+			printLine(
+					"return #0#1(new ArrayList<#2>(Arrays.asList(#3)));",
+					getContext().getMethodPrefix(),
+					StringUtils.capitalize(suffixedName),
+					memberMirror.getCollectionElementSimpleName(),
+					memberMirror.getName());
+		}
+		else if (TypeUtils.isSet(memberMirror.getCollectionType())) {
+			printLine(
+					"return #0#1(new HashSet<#2>(Arrays.asList(#3)));",
+					getContext().getMethodPrefix(),
+					StringUtils.capitalize(suffixedName),
+					memberMirror.getCollectionElementSimpleName(),
+					memberMirror.getName());
+		}
+	}
 
-    private String getSuperPrefix(final MemberMirror mirror) {
-        final String fieldName = mirror.getName();
-        if (!mirror.getSimpleOwnerName().equals(getClassMirror().getSimpleName())
-                && usedMembers.contains(StringUtils.capitalize(fieldName))) {
-            return mirror.getSimpleOwnerName();
-        }
-        return "";
-    }
+	private String getUniqueName(final MemberMirror mirror) {
+		final String nameWithPrefix = getSuperPrefix(mirror) + StringUtils.capitalize(mirror.getName());
+		return addSuffix(nameWithPrefix);
+	}
 
-    private String addSuffix(final String memberNameWithPrefix) {
-        final String fieldName = memberNameWithPrefix;
-        if (usedMembers.contains(fieldName)) {
-            final String fieldNameWithSuffix = fieldName + "_";
-            if (usedMembers.contains(fieldNameWithSuffix)) {
-                addSuffix(fieldNameWithSuffix);
-            } else {
-                return fieldNameWithSuffix;
-            }
-        }
-        return memberNameWithPrefix;
-    }
+	private String getSuperPrefix(final MemberMirror mirror) {
+		final String fieldName = mirror.getName();
+		if (!mirror.getSimpleOwnerName().equals(getClassMirror().getSimpleName())
+				&& usedMembers.contains(StringUtils.capitalize(fieldName))) {
+			return mirror.getSimpleOwnerName();
+		}
+		return "";
+	}
 
-    private void printReferencedFieldAnnotation(final String annotationValue) {
-        if (annotationValue != null) {
-            printLine("@ReferencedField(\"#0\")", annotationValue);
-        }
-    }
+	private String addSuffix(final String memberNameWithPrefix) {
+		final String fieldName = memberNameWithPrefix;
+		if (usedMembers.contains(fieldName)) {
+			final String fieldNameWithSuffix = fieldName + "_";
+			if (usedMembers.contains(fieldNameWithSuffix)) {
+				addSuffix(fieldNameWithSuffix);
+			}
+			else {
+				return fieldNameWithSuffix;
+			}
+		}
+		return memberNameWithPrefix;
+	}
 
-    protected final void printBuilderEnd() {
-        printLine("}");
-    }
+	private void printReferencedFieldAnnotation(final String annotationValue) {
+		if (annotationValue != null) {
+			printLine("@ReferencedField(\"#0\")", annotationValue);
+		}
+	}
 
-    protected final void printBuilderBegin() {
-        printLine(
-                "public abstract class #0 extends AbstractBuilder<#1, #2> {",
-                abstractBuilderFullClassName(),
-                getClassMirror().getSimpleName(),
-                SYMBOL_FOR_BUILDER_GENERIC);
-    }
+	protected final void printBuilderEnd() {
+		printLine("}");
+	}
 
-    private String abstractBuilderFullClassName() {
-        return getContext().getAbstractBuilderClassPrefix() + abstractBuilderClassName() + "<B>";
-    }
+	protected final void printBuilderBegin() {
+		printLine(
+				"public abstract class #0 extends AbstractBuilder<#1, #2> {",
+				abstractBuilderFullClassName(),
+				getClassMirror().getSimpleName(),
+				SYMBOL_FOR_BUILDER_GENERIC);
+	}
 
-    protected final String abstractBuilderReturnName() {
-        return SYMBOL_FOR_BUILDER_GENERIC;
-    }
+	private String abstractBuilderFullClassName() {
+		return getContext().getAbstractBuilderClassPrefix() + abstractBuilderClassName() + "<B>";
+	}
 
-    @Override
-    public final String builderName() {
-        return getContext().getAbstractBuilderClassPrefix() + abstractBuilderClassName();
-    }
+	protected final String abstractBuilderReturnName() {
+		return SYMBOL_FOR_BUILDER_GENERIC;
+	}
 
-    @Override
-    protected final Set<String> getFullClassNamesForImports() {
+	@Override
+	public final String builderName() {
+		return getContext().getAbstractBuilderClassPrefix() + abstractBuilderClassName();
+	}
 
-        final Set<String> imports = new TreeSet<String>();
+	@Override
+	protected final Set<String> getFullClassNamesForImports() {
 
-        imports.add(AbstractBuilder.class.getCanonicalName());
-        imports.addAll(getClassMirror().getImports());
+		final Set<String> imports = new TreeSet<String>();
 
-        return imports;
-    }
+		imports.add(AbstractBuilder.class.getCanonicalName());
+		imports.addAll(getClassMirror().getImports());
 
-    @Override
-    public final String getPackageName() {
-        return getClassMirror().getPackageName();
-    }
+		return imports;
+	}
 
-    @Override
-    protected final void printClassComment() {
-        printLine("/** ");
-        printLine(" * Abstract builder for #0. ", getClassMirror().getSimpleName());
-        printLine(
-                " * After changes in #0 this class will be overridden, so don't put any changes here, use #1 instead.",
-                getClassMirror().getSimpleName(),
-                abstractBuilderClassName());
-        printLine(" */");
-    }
+	@Override
+	public final String getPackageName() {
+		return getClassMirror().getPackageName();
+	}
+
+	@Override
+	protected final void printClassComment() {
+		printLine("/** ");
+		printLine(" * Abstract builder for #0. ", getClassMirror().getSimpleName());
+		printLine(
+				" * After changes in #0 this class will be overridden, so don't put any changes here, use #1 instead.",
+				getClassMirror().getSimpleName(),
+				abstractBuilderClassName());
+		printLine(" */");
+	}
 
 }
