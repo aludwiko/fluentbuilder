@@ -12,7 +12,6 @@ import java.lang.reflect.Method;
 
 import org.junit.Test;
 
-import de.bluecarat.fluentbuilder.common.FactoryMethodInterceptor;
 import de.bluecarat.fluentbuilder.samples.AbstractDoubleExtendsTestObjectBuilder;
 import de.bluecarat.fluentbuilder.samples.AbstractExtendsTestObjectBuilder;
 import de.bluecarat.fluentbuilder.samples.BaseTestObject;

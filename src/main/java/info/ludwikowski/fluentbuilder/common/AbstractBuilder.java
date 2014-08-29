@@ -24,24 +24,20 @@ public abstract class AbstractBuilder<T, B> {
 
 
 	/**
-	 * return target object for further modification, useful for invoking domain
+	 * Returns target object for further modification, useful for invoking domain
 	 * methods.
 	 * 
-	 * @return T the current target object in its current state
+	 * @return T the current target object in its current state.
 	 */
 	protected abstract T targetObject();
 
 	/**
-	 * Returns the current builder object.
-	 * 
 	 * @return B the current builder object.
 	 */
 	protected abstract B builder();
 
 	/**
-	 * build target object.
-	 * 
-	 * @return T the created bean
+	 * @return T the created target object.
 	 */
 	public abstract T build();
 }

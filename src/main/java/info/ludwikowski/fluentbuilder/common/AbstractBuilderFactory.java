@@ -12,13 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.springframework.core.GenericTypeResolver;
-
-import de.bluecarat.fluentbuilder.common.FactoryMethodInterceptor;
-
-import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
-
 import net.sf.cglib.proxy.Enhancer;
+
+import org.springframework.core.GenericTypeResolver;
 
 /**
  * This class offers static methods for creating bean objects from builder
@@ -30,12 +26,11 @@ import net.sf.cglib.proxy.Enhancer;
 public final class AbstractBuilderFactory {
 
 	private static final int MAX_ARGUMENTS = 100;
-	private static final Logger LOGGER = Logger.getLogger(ClassMirrorImpl.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(AbstractBuilderFactory.class.getName());
 
 
-	private AbstractBuilderFactory() {
+	private AbstractBuilderFactory() {}
 
-	}
 
 	/**
 	 * Create proxy implementation for {@link AbstractBuilder} using custom
@@ -81,6 +76,12 @@ public final class AbstractBuilderFactory {
 		return createImplementation(abstractBuilderClass, targetObject);
 	}
 
+	/**
+	 * FIXME remove shortest constructor because it might be dagerous to use.
+	 * 
+	 * @param targetObjectClass
+	 * @return
+	 */
 	// CHECKSTYLE IGNORE CyclomaticComplexity FOR NEXT 1 LINES
 	@SuppressWarnings("rawtypes")
 	private static Object createShortestInstance(final Class targetObjectClass) {
