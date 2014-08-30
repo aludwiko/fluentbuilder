@@ -30,7 +30,7 @@ public class Imports {
 	}
 
 	/**
-	 * Adds imports from a Set to the managed imports.
+	 * Adds imports from a Set to the managed imports. If import starts with "java.lang" then it is ommited.
 	 * 
 	 * @param imports a Set of imports which is added to the managed imports.
 	 */

@@ -17,14 +17,14 @@ import java.util.regex.Pattern;
  */
 public final class NameUtils {
 
-	public static final String EMPTY = "";
-	public static final List<Character> VOWELS = new ArrayList<Character>();
+
 	private static final String INDEFINITE_ARTICLE_BEFORE_CONSONANT = "a";
 	private static final String INDEFINITE_ARTICLE_BEFORE_VOWEL = "an";
 	private static final String TYPE_PART_REGEXP = "(\\.[a-zA-Z0-9]*)$";
 	private static final String PACKAGE_PART_REGEXP = "([a-zA-Z0-9]*\\.)";
 	private static final String IMPORT_STATEMENT_REGEXP = "([a-zA-Z_]{1}[a-zA-Z0-9_]*(\\.[a-zA-Z_]{1}[a-zA-Z0-9_]*)*)";
-	// CHECKSTYLE IGNORE DeclarationOrderCheck FOR NEXT 1 LINES
+	public static final String EMPTY = "";
+	public static final List<Character> VOWELS = new ArrayList<Character>();
 	public static final Pattern IMPORT_STATEMENT_PATTERN = Pattern.compile(IMPORT_STATEMENT_REGEXP);
 
 	static {
@@ -36,9 +36,7 @@ public final class NameUtils {
 	}
 
 
-	private NameUtils() {
-
-	}
+	private NameUtils() {}
 
 	/**
 	 * Removes the package name of a fully qualified name.
