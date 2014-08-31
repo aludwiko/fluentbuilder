@@ -3,7 +3,7 @@
  */
 package info.ludwikowski.fluentbuilder.common;
 
-import info.ludwikowski.fluentbuilder.util.NameUtils;
+import static info.ludwikowski.fluentbuilder.util.StringUtils.uncapitalize;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -12,7 +12,6 @@ import java.lang.reflect.Method;
 
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import de.bluecarat.fluentbuilder.annotation.ReferencedField;
 
 /**
  * This class implements a MethodInterceptor. It is used to intercept method
@@ -74,13 +73,23 @@ public class FactoryMethodInterceptor<X> implements MethodInterceptor {
 		}
 	}
 
+	// FIXME
 	private void invokeSetter(final Method method, final Object[] args) throws Exception {
-		final ReferencedField referencedFieldAnnotation = method.getAnnotation(ReferencedField.class);
-		final String annotationValue = referencedFieldAnnotation.value();
-		final String fieldName = NameUtils.removePackageNameFromFullyQualifiedName(annotationValue);
-		final Class<?> fieldClass = Class.forName(NameUtils.getPackageNameFromFullyQualifiedName(annotationValue));
 
-		setField(targetObject, args, fieldName, fieldClass);
+
+		String methodName = method.getName();
+
+		final Field field = targetObject.getClass().getDeclaredField(uncapitalize(methodName.substring(prefixForProxy(abstractClass).length())));
+
+		field.setAccessible(true);
+
+		field.set(targetObject, field.getType() == String.class ? (String) args[0] : args[0]);
+//		final ReferencedField referencedFieldAnnotation = method.getAnnotation(ReferencedField.class);
+//		final String annotationValue = referencedFieldAnnotation.value();
+//		final String fieldName = NameUtils.removePackageNameFromFullyQualifiedName(annotationValue);
+//		final Class<?> fieldClass = Class.forName(NameUtils.getPackageNameFromFullyQualifiedName(annotationValue));
+//
+//		setField(targetObject, args, fieldName, fieldClass);
 
 	}
 

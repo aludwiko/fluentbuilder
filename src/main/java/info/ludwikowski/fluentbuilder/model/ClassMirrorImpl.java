@@ -21,7 +21,7 @@ import javax.lang.model.util.ElementFilter;
 
 import info.ludwikowski.fluentbuilder.common.Context;
 import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
-import info.ludwikowski.fluentbuilder.util.NameUtils;
+import info.ludwikowski.fluentbuilder.util.StringUtils;
 import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 /**
@@ -50,7 +50,7 @@ public class ClassMirrorImpl implements ClassMirror {
 	public ClassMirrorImpl(final Element element, final ProcessorContext context) {
 		final TypeElement typeElement = (TypeElement) element;
 		simpleName = typeElement.getSimpleName().toString();
-		packageName = typeElement.getQualifiedName().toString().replace("." + simpleName, NameUtils.EMPTY);
+		packageName = typeElement.getQualifiedName().toString().replace("." + simpleName, StringUtils.EMPTY);
 		fillMemberMirrors(element, context);
 	}
 
@@ -63,7 +63,7 @@ public class ClassMirrorImpl implements ClassMirror {
 	public ClassMirrorImpl(final Class<?> clazz, final Context context) {
 
 		simpleName = clazz.getSimpleName();
-		packageName = clazz.getCanonicalName().replace("." + simpleName, NameUtils.EMPTY);
+		packageName = clazz.getCanonicalName().replace("." + simpleName, StringUtils.EMPTY);
 		fillMemberMirrors(clazz, context);
 	}
 

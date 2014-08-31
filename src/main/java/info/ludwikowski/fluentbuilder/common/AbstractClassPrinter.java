@@ -15,7 +15,7 @@ import info.ludwikowski.fluentbuilder.model.ClassMirror;
 import info.ludwikowski.fluentbuilder.util.NameUtils;
 
 /**
- * This class prints a generated {@link AbstractBuilder} class for a given {@link classMirror}. It uses properties which
+ * This class prints a generated {@link AbstractBuilder} class for a given {@link ClassMirror}. It uses properties which
  * are defined in a {@link Context} object.
  * 
  * @author Andrzej Ludwikowski
@@ -179,7 +179,7 @@ public abstract class AbstractClassPrinter {
 		final String ignoredClassPrefix = context.getIgnoredClassPrefix();
 
 		if (className.startsWith(ignoredClassPrefix)) {
-			return className.replaceFirst(ignoredClassPrefix, NameUtils.EMPTY);
+			return className.replaceFirst(ignoredClassPrefix, info.ludwikowski.fluentbuilder.util.StringUtils.EMPTY);
 		}
 
 		return className;

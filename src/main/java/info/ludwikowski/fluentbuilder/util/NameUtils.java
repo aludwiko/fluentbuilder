@@ -23,7 +23,6 @@ public final class NameUtils {
 	private static final String TYPE_PART_REGEXP = "(\\.[a-zA-Z0-9]*)$";
 	private static final String PACKAGE_PART_REGEXP = "([a-zA-Z0-9]*\\.)";
 	private static final String IMPORT_STATEMENT_REGEXP = "([a-zA-Z_]{1}[a-zA-Z0-9_]*(\\.[a-zA-Z_]{1}[a-zA-Z0-9_]*)*)";
-	public static final String EMPTY = "";
 	public static final List<Character> VOWELS = new ArrayList<Character>();
 	public static final Pattern IMPORT_STATEMENT_PATTERN = Pattern.compile(IMPORT_STATEMENT_REGEXP);
 
@@ -56,23 +55,6 @@ public final class NameUtils {
 	 */
 	public static String getPackageNameFromFullyQualifiedName(final String fullyQualifiedName) {
 		return fullyQualifiedName.replaceAll(TYPE_PART_REGEXP, "");
-	}
-
-	/**
-	 * Concatenates a String n-Times with itself.
-	 * 
-	 * @param string String to repeat
-	 * @param howManyTimes number of repetitions
-	 * @return the concatenated String
-	 */
-	public static String repeat(final String string, final int howManyTimes) {
-		final StringBuilder stringBuilder = new StringBuilder();
-
-		for (int i = 0; i < howManyTimes; i++) {
-			stringBuilder.append(string);
-		}
-
-		return stringBuilder.toString();
 	}
 
 	/**
