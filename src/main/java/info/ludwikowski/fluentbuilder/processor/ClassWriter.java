@@ -6,6 +6,10 @@
  */
 package info.ludwikowski.fluentbuilder.processor;
 
+import info.ludwikowski.fluentbuilder.common.BuilderPrinter;
+import info.ludwikowski.fluentbuilder.common.PrinterForAbstractBuilder;
+import info.ludwikowski.fluentbuilder.model.ClassMirror;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -17,11 +21,6 @@ import javax.annotation.processing.Filer;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
 
-import info.ludwikowski.fluentbuilder.common.BuilderPrinter;
-import info.ludwikowski.fluentbuilder.common.PrinterForAbstractBuilder;
-import info.ludwikowski.fluentbuilder.model.ClassMirror;
-import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
-
 /**
  * This class is responsible for writing out of ClassMirror generated builder
  * code to files.
@@ -31,7 +30,7 @@ import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
 public class ClassWriter {
 
 	private static final String CHARSET = "UTF-8";
-	private static final Logger LOGGER = Logger.getLogger(ClassMirrorImpl.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ClassWriter.class.getName());
 
 	private final ProcessorContext context;
 
