@@ -9,14 +9,18 @@ import info.ludwikowski.fluentbuilder.common.OldBuilderPrinter;
 import info.ludwikowski.fluentbuilder.model.ClassMirror;
 import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
 
+import java.io.PrintStream;
+
 public class AbstractBuilderGenerator {
 
 	private Class<?> clazz;
 	private Context context = new Context();
+	private PrintStream printStream;
 
 
-	private AbstractBuilderGenerator(Class<?> clazz) {
+	private AbstractBuilderGenerator(Class<?> clazz, PrintStream printStream) {
 		this.clazz = clazz;
+		this.printStream = printStream;
 	}
 
 	/**
@@ -25,7 +29,16 @@ public class AbstractBuilderGenerator {
 	 * @return
 	 */
 	public static AbstractBuilderGenerator forClass(Class<?> clazz) {
-		return new AbstractBuilderGenerator(clazz);
+		return new AbstractBuilderGenerator(clazz, new PrintStream(System.out));
+	}
+
+	/**
+	 * 
+	 * @param clazz - class for builder generation
+	 * @return
+	 */
+	public static AbstractBuilderGenerator forClassWithWriter(Class<?> clazz, PrintStream printStream) {
+		return new AbstractBuilderGenerator(clazz, printStream);
 	}
 
 	/**
@@ -130,9 +143,9 @@ public class AbstractBuilderGenerator {
 		AbstractBuilderPrinter abstractBuilderPrinter = new AbstractBuilderPrinter(classMirror, context);
 		OldBuilderPrinter builderPrinter = new OldBuilderPrinter(classMirror, context);
 
-		System.out.println(abstractBuilderPrinter.printClass());
-		System.out.println("/////////////////////////////////////");
-		System.out.println(builderPrinter.printClass());
+		printStream.println(abstractBuilderPrinter.printClass());
+		printStream.println("/////////////////////////////////////");
+		printStream.println(builderPrinter.printClass());
 	}
 
 	/**

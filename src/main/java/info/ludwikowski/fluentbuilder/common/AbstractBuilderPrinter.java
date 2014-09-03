@@ -180,8 +180,8 @@ public class AbstractBuilderPrinter extends ClassPrinter {
 
 	@Override
 	protected void printClassComment() {
-		println("/** ");
-		println(" * Abstract builder for #0. ", classMirror.getSimpleName());
+		println("/**");
+		println(" * Abstract builder for #0.", classMirror.getSimpleName());
 		println(" * After changes in #0 this class will be overridden, so don't put any changes here, use #1 instead.", classMirror.getSimpleName(), abstractBuilderClassName());
 		println(" */");
 	}

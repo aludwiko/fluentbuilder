@@ -16,6 +16,7 @@ import java.util.Set;
 
 public abstract class ClassPrinter {
 
+	private static final String END_OF_LINE = System.getProperty("line.separator");
 	private static String INDENTATION = "\t";
 	private int indentationLevel = 0;
 	private StringBuffer stringBuffer = new StringBuffer();
@@ -74,9 +75,19 @@ public abstract class ClassPrinter {
 		appendln(text);
 	}
 
+	protected void print(String text) {
+
+		printIndentation(indentationLevel);
+		append(text);
+	}
+
 	private void appendln(String text) {
 		stringBuffer.append(text);
-		stringBuffer.append("\n");
+		println();
+	}
+
+	private void append(String text) {
+		stringBuffer.append(text);
 	}
 
 	protected void println(String text, String... values) {
@@ -97,7 +108,7 @@ public abstract class ClassPrinter {
 	}
 
 	protected void println() {
-		stringBuffer.append("\n");
+		stringBuffer.append(END_OF_LINE);
 	}
 
 	protected void decreaseIndentation() {

@@ -50,9 +50,9 @@ public class OldBuilderPrinter extends ClassPrinter {
 
 	@Override
 	protected void printClassComment() {
-		println("/** ");
+		println("/**");
 		println(" * Fluent builder for #0.", classMirror.getSimpleName());
-		println(" * Don't hesitate to put your custom methods here. ");
+		println(" * Don't hesitate to put your custom methods here.");
 		println(" */");
 	}
 
