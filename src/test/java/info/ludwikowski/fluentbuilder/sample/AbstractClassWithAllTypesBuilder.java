@@ -52,6 +52,7 @@ public abstract class AbstractClassWithAllTypesBuilder<B> extends AbstractBuilde
 
 	public abstract B withTypeStringList(List<String> typeStringList);
 
+	@SuppressWarnings("rawtypes")
 	public abstract B withTypeStringListWitoutGenerics(List typeStringListWitoutGenerics);
 
 	public abstract B withComplexGeneric(Map<String, List<Integer>> complexGeneric);

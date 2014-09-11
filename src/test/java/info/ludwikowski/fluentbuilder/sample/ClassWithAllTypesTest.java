@@ -21,7 +21,7 @@ import com.google.common.collect.Maps;
 
 public class ClassWithAllTypesTest {
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void shouldCreateObjectByBuilder() {
 

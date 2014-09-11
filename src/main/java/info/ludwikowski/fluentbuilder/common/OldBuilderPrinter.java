@@ -4,7 +4,12 @@
 
 package info.ludwikowski.fluentbuilder.common;
 
+import static info.ludwikowski.fluentbuilder.util.NameUtils.addIndefiniteArticleInFront;
+import static info.ludwikowski.fluentbuilder.util.StringUtils.EMPTY;
+import static info.ludwikowski.fluentbuilder.util.StringUtils.hasText;
+import static info.ludwikowski.fluentbuilder.util.StringUtils.uncapitalize;
 import info.ludwikowski.fluentbuilder.model.ClassMirror;
+import info.ludwikowski.fluentbuilder.model.Constructor;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -30,7 +35,7 @@ public class OldBuilderPrinter extends ClassPrinter {
 				builderName(),
 				context.getAbstractBuilderClassPrefix());
 
-		printCreateMethod();
+		printCreateMethods();
 		println("}");
 	}
 
@@ -59,6 +64,63 @@ public class OldBuilderPrinter extends ClassPrinter {
 	@Override
 	public String builderName() {
 		return classMirror.getSimpleName() + context.getBuilderClassPostfix();
+	}
+
+	protected void printCreateMethods() {
+
+		if (!context.isStaticCreate()) {
+			return;
+		}
+
+		for (Constructor constructor : classMirror.getConstructors()) {
+			printCreateMethod(constructor);
+		}
+	}
+
+	private void printCreateMethod(Constructor constructor) {
+		increaseIndentation();
+		println();
+		println("public static #0 #1(#2){", builderName(), createBuilderMethodName(), constructor.printParamsWithTypes());
+		increaseIndentation();
+		if (constructor.isDefault()) {
+			println("return AbstractBuilderFactory.createImplementation(#0.class);", builderName());
+		}
+		else {
+			println("return AbstractBuilderFactory.createImplementation(#0.class, #1);", builderName(), constructor.printParamsNames());
+		}
+		decreaseIndentation();
+		println("}");
+		decreaseIndentation();
+	}
+
+	private String createBuilderMethodName() {
+
+		if (hasText(context.getStaticCreateMethodName())) {
+			return context.getStaticCreateMethodName();
+		}
+
+		String className = classMirror.getSimpleName();
+
+		if (hasText(context.getIgnoredClassPrefix())) {
+			className = removeClassPrefix(className);
+		}
+
+		if (context.isUseIndefiniteArticles()) {
+			className = addIndefiniteArticleInFront(className);
+		}
+
+		return uncapitalize(className);
+	}
+
+	private String removeClassPrefix(String className) {
+
+		String ignoredClassPrefix = context.getIgnoredClassPrefix();
+
+		if (className.startsWith(ignoredClassPrefix)) {
+			return className.replaceFirst(ignoredClassPrefix, EMPTY);
+		}
+
+		return className;
 	}
 
 }

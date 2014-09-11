@@ -7,6 +7,11 @@
 
 package info.ludwikowski.fluentbuilder.model;
 
+import info.ludwikowski.fluentbuilder.common.Context;
+import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
+import info.ludwikowski.fluentbuilder.util.StringUtils;
+import info.ludwikowski.fluentbuilder.util.TypeUtils;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -18,11 +23,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.ElementFilter;
-
-import info.ludwikowski.fluentbuilder.common.Context;
-import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
-import info.ludwikowski.fluentbuilder.util.StringUtils;
-import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 /**
  * Implements the ClassMirror interface. A ClassMirror represents a given class
@@ -38,6 +38,7 @@ public class ClassMirrorImpl implements ClassMirror {
 	private final String simpleName;
 	private final String packageName;
 	private final List<MemberMirror> members = new LinkedList<MemberMirror>();
+	private final List<Constructor> constructors = new LinkedList<Constructor>();
 
 
 	/**
@@ -65,6 +66,13 @@ public class ClassMirrorImpl implements ClassMirror {
 		simpleName = clazz.getSimpleName();
 		packageName = clazz.getCanonicalName().replace("." + simpleName, StringUtils.EMPTY);
 		fillMemberMirrors(clazz, context);
+		fillConstructors(clazz);
+	}
+
+	private void fillConstructors(Class<?> clazz) {
+		for (java.lang.reflect.Constructor<?> constructor : clazz.getConstructors()) {
+			constructors.add(Constructor.create(constructor));
+		}
 	}
 
 	private void fillMemberMirrors(final Class<?> clazz, final Context context) {
@@ -147,11 +155,17 @@ public class ClassMirrorImpl implements ClassMirror {
 		return members;
 	}
 
+	@Override
+	public final List<Constructor> getConstructors() {
+		return constructors;
+	}
+
 	/**
 	 * This method returns all MemberMirrors which represent a class field.
 	 * 
 	 * @return all class fields as a list of MemberMirrorImpl
 	 */
+	@Override
 	public final List<MemberMirrorImpl> getFieldMembers() {
 		final List<MemberMirrorImpl> fieldMembers = new ArrayList<MemberMirrorImpl>();
 		for (MemberMirror memberMirror : members) {

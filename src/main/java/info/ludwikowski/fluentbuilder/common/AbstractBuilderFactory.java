@@ -8,8 +8,7 @@ package info.ludwikowski.fluentbuilder.common;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import net.sf.cglib.proxy.Enhancer;
@@ -54,9 +53,7 @@ public final class AbstractBuilderFactory {
 	}
 
 	/**
-	 * Create proxy implementation for {@link AbstractBuilder}. If the target
-	 * object has no default constructor, the constructor with the least
-	 * arguments is used and invoked with default values.
+	 * Create proxy implementation for {@link AbstractBuilder}. Method required default constructor in <T>
 	 * 
 	 * @param abstractBuilderClass AbstractBuilder class of the targeted class
 	 * @param <X> AbstractBuilder type
@@ -67,100 +64,105 @@ public final class AbstractBuilderFactory {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static <X extends AbstractBuilder<T, B>, T, B> X createImplementation(final Class<X> abstractBuilderClass) {
 
+		return createImplementation(abstractBuilderClass, new Object[] {});
+	}
+
+	/**
+	 * Create proxy implementation for {@link AbstractBuilder}.
+	 * 
+	 * @param abstractBuilderClass AbstractBuilder class of the targeted class
+	 * @param constructorParams - params for invoking not default constructor
+	 * @param <X> AbstractBuilder type
+	 * @param <T> targetObject type
+	 * @param <B> builder object type
+	 * @return Returns a builder object for the targeted class
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static <X extends AbstractBuilder<T, B>, T, B> X createImplementation(final Class<X> abstractBuilderClass, Object... constructorParams) {
+
 		final Class[] resolveTypeArguments = GenericTypeResolver.resolveTypeArguments(
 				abstractBuilderClass,
 				AbstractBuilder.class);
 
 		final Class<T> targetObjectClass = resolveTypeArguments[0];
-		final T targetObject = (T) createShortestInstance(targetObjectClass);
+		final T targetObject = createInstance(targetObjectClass, constructorParams);
 		return createImplementation(abstractBuilderClass, targetObject);
 	}
+
 
 	/**
 	 * FIXME remove shortest constructor because it might be dagerous to use.
 	 * 
+	 * @param <T>
+	 * 
 	 * @param targetObjectClass
+	 * @param costructorParams
 	 * @return
 	 */
 	// CHECKSTYLE IGNORE CyclomaticComplexity FOR NEXT 1 LINES
-	@SuppressWarnings("rawtypes")
-	private static Object createShortestInstance(final Class targetObjectClass) {
-		final Constructor shortestConstructor = selectShortestConstructor(targetObjectClass);
-		final Class[] parameterTypes = shortestConstructor.getParameterTypes();
-		final List<Object> emptyParameters = createEmptyParametersFromTypes(parameterTypes);
-		final Object[] constructorParameters = emptyParameters.toArray();
-		shortestConstructor.setAccessible(true);
+	private static <T> T createInstance(final Class<T> targetObjectClass, Object... constructorParams) {
+
 		try {
-			return shortestConstructor.newInstance(constructorParameters);
+			Constructor<T> constructor = findProperConstructor(targetObjectClass, constructorParams);
+			constructor.setAccessible(true);
+			return constructor.newInstance(constructorParams);
 		}
 		catch (InstantiationException e) {
-			LOGGER.severe("Could not create new instance of " + targetObjectClass.getName() + "!");
+			LOGGER.severe("Could not create new instance of " + targetObjectClass.getName() + "! " + e.getMessage());
 			return null;
 		}
 		catch (IllegalAccessException e) {
-			LOGGER.severe("Constructor of " + targetObjectClass.getName() + " not accessible!");
+			LOGGER.severe("Constructor of " + targetObjectClass.getName() + " not accessible! " + e.getMessage());
 			return null;
 		}
 		catch (IllegalArgumentException e) {
-			LOGGER.severe("Illegal argument for constructor found!");
+			LOGGER.severe("Illegal argument for constructor found! " + e.getMessage());
 			return null;
 		}
 		catch (InvocationTargetException e) {
-			LOGGER.severe("Could not invoke constructor of " + targetObjectClass.getName());
+			LOGGER.severe("Could not invoke constructor of " + targetObjectClass.getName() + " " + e.getMessage());
+			return null;
+		}
+		catch (SecurityException e) {
+			LOGGER.severe("Could not find proper construcotr of " + targetObjectClass.getName() + " " + e.getMessage());
+			return null;
+		}
+		catch (NoSuchMethodException e) {
+			LOGGER.severe("Could not find proper construcotr of " + targetObjectClass.getName() + " " + e.getMessage());
+			return null;
+		}
+		catch (IllegalStateException e) {
+			LOGGER.severe("Could not find proper construcotr of " + targetObjectClass.getName() + " " + e.getMessage());
 			return null;
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	private static Constructor selectShortestConstructor(final Class targetObjectClass) {
-		final Constructor[] constructors = targetObjectClass.getConstructors();
-		Constructor shortestConstructor = null;
-		int minParameter = MAX_ARGUMENTS;
-		for (Constructor constructor : constructors) {
-			final int parameterCount = constructor.getParameterTypes().length;
-			if (parameterCount < minParameter) {
-				shortestConstructor = constructor;
-				minParameter = parameterCount;
+
+	@SuppressWarnings("unchecked")
+	private static <T> Constructor<T> findProperConstructor(final Class<T> targetObjectClass, Object... constructorParams) throws SecurityException, NoSuchMethodException {
+		if (constructorParams.length == 0) {
+			return targetObjectClass.getDeclaredConstructor();
+		}
+
+		for (Constructor<?> constructor : targetObjectClass.getConstructors()) {
+			if (paramsMatch(constructor.getParameterTypes(), constructorParams)) {
+				return (Constructor<T>) constructor;
 			}
 		}
-		return shortestConstructor;
+		throw new IllegalStateException("No constructor found for " + targetObjectClass + " with params " + Arrays.toString(constructorParams));
 	}
 
-	@SuppressWarnings("rawtypes")
-	private static List<Object> createEmptyParametersFromTypes(final Class[] parameterTypes) {
-		final List<Object> parameters = new ArrayList<Object>();
-		for (Class parameterClass : parameterTypes) {
-			parameters.add(getDefaultValueOfClass(parameterClass));
-		}
-		return parameters;
-	}
+	private static boolean paramsMatch(Class<?>[] parameterTypes, Object[] constructorParams) {
 
-	private static Object getDefaultValueOfClass(final Class<?> className) {
-		if (className.isPrimitive()) {
-			return getDefaultValueOfPrimitiveType(className);
-		}
-		else {
-			return null;
-		}
-	}
-
-	// CHECKSTYLE IGNORE CyclomaticComplexity FOR NEXT 1 LINES
-	private static Object getDefaultValueOfPrimitiveType(final Class<?> className) {
-		if ("boolean".equals(className.getName())) {
+		if (parameterTypes.length != constructorParams.length) {
 			return false;
 		}
-		else if ("char".equals(className.getName())) {
-			return '\u0000';
-		}
-		else if ("byte".equals(className.getName())) {
-			return Byte.valueOf((byte) 0);
-		}
-		else if ("short".equals(className.getName())) {
-			return Short.valueOf((short) 0);
-		}
-		else {
-			return 0;
-		}
-	}
+		for (int i = 0; i < parameterTypes.length; i++) {
+			if (!constructorParams[i].getClass().isAssignableFrom(parameterTypes[i])) {
+				return false;
+			}
 
+		}
+		return true;
+	}
 }

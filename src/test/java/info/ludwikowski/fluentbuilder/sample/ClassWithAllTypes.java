@@ -28,6 +28,7 @@ public class ClassWithAllTypes {
 	private Boolean typeObjectBoolean;
 	private String typeString;
 	private List<String> typeStringList;
+	@SuppressWarnings("rawtypes")
 	private List typeStringListWitoutGenerics;
 	private Map<String, List<Integer>> complexGeneric;
 
@@ -185,10 +186,12 @@ public class ClassWithAllTypes {
 		this.typeStringList = typeStringList;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public List getTypeStringListWitoutGenerics() {
 		return typeStringListWitoutGenerics;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void setTypeStringListWitoutGenerics(List typeStringListWitoutGenerics) {
 		this.typeStringListWitoutGenerics = typeStringListWitoutGenerics;
 	}

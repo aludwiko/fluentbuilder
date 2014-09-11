@@ -32,8 +32,7 @@ public interface ClassMirror {
 	String getPackageName();
 
 	/**
-	 * Returns the members of the class which includes (inherited) fields and
-	 * constructors.
+	 * Returns the members of the class which includes.
 	 * 
 	 * @return all members of the represented class as a list
 	 */
@@ -61,4 +60,13 @@ public interface ClassMirror {
 	 *         as a list
 	 */
 	List<MemberMirror> getVarArgsMembers();
+
+	/**
+	 * Returns the constructors of the class.
+	 * VarArg setters.
+	 * 
+	 * @return all members of the represented class which are collection fields
+	 *         as a list
+	 */
+	List<Constructor> getConstructors();
 }
