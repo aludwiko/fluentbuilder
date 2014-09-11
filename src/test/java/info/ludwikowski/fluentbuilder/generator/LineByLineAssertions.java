@@ -1,15 +1,17 @@
 /*
- * Created on 1 wrz 2014 21:49:37 by Andrzej
+ * Created on 1 wrz 2014 21:49:37 by Andrzej Ludwikowski
  */
 
 package info.ludwikowski.fluentbuilder.generator;
 
 import org.fest.assertions.api.AbstractAssert;
 
+import com.google.common.base.Joiner;
+
 /**
  * Custom assertion for testing generated builder/builders
  * 
- * @author Andrzej
+ * @author Andrzej Ludwikowski
  * 
  */
 public class LineByLineAssertions extends AbstractAssert<LineByLineAssertions, String> {
@@ -29,10 +31,18 @@ public class LineByLineAssertions extends AbstractAssert<LineByLineAssertions, S
 		for (int i = 0; i < expectedLines.length; i++) {
 			String expetedLine = expectedLines[i];
 			String actualLine = actualLines[i];
-			assertThat(actualLine).isEqualTo(expetedLine);
+			assertThat(actualLine).overridingErrorMessage("line <%s> excepted:\n <%s> \n but was:\n <%s>", i, lines(expectedLines, i), lines(actualLines, i))
+									.isEqualTo(expetedLine);
 		}
 
 		return this;
+	}
+
+	private String lines(String[] lines, int i) {
+		if (i == 0 || i == lines.length - 1) {
+			return lines[i];
+		}
+		return Joiner.on("\n").join(lines[i - 1], lines[i], lines[i + 1]);
 	}
 
 	private String[] splitLines(String expected) {

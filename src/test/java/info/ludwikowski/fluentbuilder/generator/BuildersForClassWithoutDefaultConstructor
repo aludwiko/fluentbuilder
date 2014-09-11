@@ -1,0 +1,40 @@
+package info.ludwikowski.fluentbuilder.sample;
+
+import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
+
+
+/**
+ * Abstract builder for ClassWithoutDefaultConstructor.
+ * After changes in ClassWithoutDefaultConstructor this class will be overridden, so don't put any changes here, use ClassWithoutDefaultConstructorBuilder instead.
+ */
+public abstract class AbstractClassWithoutDefaultConstructorBuilder<B> extends AbstractBuilder<ClassWithoutDefaultConstructor, B> {
+
+	public abstract B withNumber(Integer number);
+	public abstract B withSomeString(String someString);
+
+}
+
+/////////////////////////////////////
+package info.ludwikowski.fluentbuilder.sample;
+
+import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
+
+
+/**
+ * Fluent builder for ClassWithoutDefaultConstructor.
+ * Don't hesitate to put your custom methods here.
+ */
+public abstract class ClassWithoutDefaultConstructorBuilder extends AbstractClassWithoutDefaultConstructorBuilder<ClassWithoutDefaultConstructorBuilder> {
+
+	public static ClassWithoutDefaultConstructorBuilder aClassWithoutDefaultConstructor(Integer arg0){
+		return AbstractBuilderFactory.createImplementation(ClassWithoutDefaultConstructorBuilder.class, arg0);
+	}
+
+	public static ClassWithoutDefaultConstructorBuilder aClassWithoutDefaultConstructor(String arg0){
+		return AbstractBuilderFactory.createImplementation(ClassWithoutDefaultConstructorBuilder.class, arg0);
+	}
+
+	public static ClassWithoutDefaultConstructorBuilder aClassWithoutDefaultConstructor(Integer arg0, String arg1){
+		return AbstractBuilderFactory.createImplementation(ClassWithoutDefaultConstructorBuilder.class, arg0, arg1);
+	}
+}

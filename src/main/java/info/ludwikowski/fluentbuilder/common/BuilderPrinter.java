@@ -7,10 +7,10 @@
 
 package info.ludwikowski.fluentbuilder.common;
 
+import info.ludwikowski.fluentbuilder.model.ClassMirror;
+
 import java.util.Set;
 import java.util.TreeSet;
-
-import info.ludwikowski.fluentbuilder.model.ClassMirror;
 
 /**
  * The BuilderPrinter class can print out generated (non-abstract-)Builders.
@@ -62,9 +62,9 @@ public class BuilderPrinter extends AbstractClassPrinter {
 
 	@Override
 	protected final void printClassComment() {
-		printLine("/** ");
+		printLine("/**");
 		printLine(" * Fluent builder for #0.", getClassMirror().getSimpleName());
-		printLine(" * Don't hesitate to put your custom methods here. ");
+		printLine(" * Don't hesitate to put your custom methods here.");
 		printLine(" */");
 	}
 

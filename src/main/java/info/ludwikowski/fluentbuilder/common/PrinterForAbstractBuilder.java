@@ -7,6 +7,11 @@
 
 package info.ludwikowski.fluentbuilder.common;
 
+import info.ludwikowski.fluentbuilder.model.ClassMirror;
+import info.ludwikowski.fluentbuilder.model.MemberMirror;
+import info.ludwikowski.fluentbuilder.model.MemberMirrorImpl;
+import info.ludwikowski.fluentbuilder.util.TypeUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,11 +21,6 @@ import org.apache.commons.lang.StringUtils;
 
 import de.bluecarat.fluentbuilder.model.MemberMirrorConstructorImpl;
 import de.bluecarat.fluentbuilder.model.ParameterMirror;
-
-import info.ludwikowski.fluentbuilder.model.ClassMirror;
-import info.ludwikowski.fluentbuilder.model.MemberMirror;
-import info.ludwikowski.fluentbuilder.model.MemberMirrorImpl;
-import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 /**
  * This class generates the source code of an abstract builder class from a {@link ClassMirror}.
@@ -266,7 +266,7 @@ public class PrinterForAbstractBuilder extends AbstractClassPrinter {
 
 	@Override
 	protected final void printClassComment() {
-		printLine("/** ");
+		printLine("/**");
 		printLine(" * Abstract builder for #0. ", getClassMirror().getSimpleName());
 		printLine(
 				" * After changes in #0 this class will be overridden, so don't put any changes here, use #1 instead.",

@@ -4,11 +4,7 @@
 
 package info.ludwikowski.fluentbuilder.common;
 
-import static info.ludwikowski.fluentbuilder.util.NameUtils.addIndefiniteArticleInFront;
-import static info.ludwikowski.fluentbuilder.util.StringUtils.EMPTY;
-import static info.ludwikowski.fluentbuilder.util.StringUtils.hasText;
 import static info.ludwikowski.fluentbuilder.util.StringUtils.repeat;
-import static info.ludwikowski.fluentbuilder.util.StringUtils.uncapitalize;
 import info.ludwikowski.fluentbuilder.model.ClassMirror;
 
 import java.util.Set;
@@ -117,51 +113,5 @@ public abstract class ClassPrinter {
 
 	protected void increaseIndentation() {
 		indentationLevel++;
-	}
-
-	protected void printCreateMethod() {
-
-		if (!context.isStaticCreate()) {
-			return;
-		}
-
-		increaseIndentation();
-		println();
-		println("public static #0 #1(){", builderName(), createBuilderMethodName());
-		increaseIndentation();
-		println("return AbstractBuilderFactory.createImplementation(#0.class);", builderName());
-		decreaseIndentation();
-		println("}");
-		decreaseIndentation();
-	}
-
-	private String createBuilderMethodName() {
-
-		if (hasText(context.getStaticCreateMethodName())) {
-			return context.getStaticCreateMethodName();
-		}
-
-		String className = classMirror.getSimpleName();
-
-		if (hasText(context.getIgnoredClassPrefix())) {
-			className = removeClassPrefix(className);
-		}
-
-		if (context.isUseIndefiniteArticles()) {
-			className = addIndefiniteArticleInFront(className);
-		}
-
-		return uncapitalize(className);
-	}
-
-	private String removeClassPrefix(String className) {
-
-		String ignoredClassPrefix = context.getIgnoredClassPrefix();
-
-		if (className.startsWith(ignoredClassPrefix)) {
-			return className.replaceFirst(ignoredClassPrefix, EMPTY);
-		}
-
-		return className;
 	}
 }

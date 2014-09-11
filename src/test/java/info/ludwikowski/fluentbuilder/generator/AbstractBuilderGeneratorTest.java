@@ -5,6 +5,7 @@
 package info.ludwikowski.fluentbuilder.generator;
 
 import info.ludwikowski.fluentbuilder.sample.ClassWithAllTypes;
+import info.ludwikowski.fluentbuilder.sample.ClassWithoutDefaultConstructor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -18,6 +19,8 @@ public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 
 	@FileContent("BuildersForClassWithAllTypes")
 	private String buildersForClassWithAllTypes;
+	@FileContent("BuildersForClassWithoutDefaultConstructor")
+	private String buildersForClassWithoutDefaultConstrutor;
 	private ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	private PrintStream printStream = new PrintStream(baos);
 
@@ -31,5 +34,16 @@ public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 
 		// then
 		LineByLineAssertions.assertThat(result).isEqualsLineByLine(buildersForClassWithAllTypes);
+	}
+
+	@Test
+	public void shouldGenerateAbstractBuilderAndBuilderForClassWithoutDefaultConstrutor() {
+
+		// when
+		AbstractBuilderGenerator.forClassWithWriter(ClassWithoutDefaultConstructor.class, printStream).printBuilders();
+		String result = baos.toString();
+
+		// then
+		LineByLineAssertions.assertThat(result).isEqualsLineByLine(buildersForClassWithoutDefaultConstrutor);
 	}
 }
