@@ -77,5 +77,4 @@ public class Constructor {
 
 		return removeLastComma(paramsNames.toString());
 	}
-
 }

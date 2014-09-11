@@ -45,6 +45,7 @@ public class OldBuilderPrinter extends ClassPrinter {
 		if (context.isStaticCreate()) {
 			fullClassNames.add(AbstractBuilderFactory.class.getCanonicalName());
 		}
+		fullClassNames.addAll(classMirror.getOnlyConstructorsImports());
 		return fullClassNames;
 	}
 

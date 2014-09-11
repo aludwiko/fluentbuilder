@@ -61,7 +61,6 @@ public final class AbstractBuilderFactory {
 	 * @param <B> builder object type
 	 * @return Returns a builder object for the targeted class
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static <X extends AbstractBuilder<T, B>, T, B> X createImplementation(final Class<X> abstractBuilderClass) {
 
 		return createImplementation(abstractBuilderClass, new Object[] {});
@@ -144,7 +143,7 @@ public final class AbstractBuilderFactory {
 			return targetObjectClass.getDeclaredConstructor();
 		}
 
-		for (Constructor<?> constructor : targetObjectClass.getConstructors()) {
+		for (Constructor<?> constructor : targetObjectClass.getDeclaredConstructors()) {
 			if (paramsMatch(constructor.getParameterTypes(), constructorParams)) {
 				return (Constructor<T>) constructor;
 			}

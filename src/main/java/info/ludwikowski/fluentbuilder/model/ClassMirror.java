@@ -53,6 +53,13 @@ public interface ClassMirror {
 	Set<String> getImports();
 
 	/**
+	 * Returns the the necessary imports only for constructors in the class.
+	 * 
+	 * @return all necessary imports as a set.
+	 */
+	Set<String> getOnlyConstructorsImports();
+
+	/**
 	 * Returns the members of the class which are collections and therefore need
 	 * VarArg setters.
 	 * 

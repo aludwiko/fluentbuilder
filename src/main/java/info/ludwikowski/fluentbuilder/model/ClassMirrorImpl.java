@@ -70,7 +70,8 @@ public class ClassMirrorImpl implements ClassMirror {
 	}
 
 	private void fillConstructors(Class<?> clazz) {
-		for (java.lang.reflect.Constructor<?> constructor : clazz.getConstructors()) {
+
+		for (java.lang.reflect.Constructor<?> constructor : clazz.getDeclaredConstructors()) {
 			constructors.add(Constructor.create(constructor));
 		}
 	}
@@ -188,6 +189,18 @@ public class ClassMirrorImpl implements ClassMirror {
 
 		for (final MemberMirror member : members) {
 			imports.addAll(member.getImports());
+		}
+
+		return imports.asSet();
+	}
+
+	@Override
+	public final Set<String> getOnlyConstructorsImports() {
+
+		final Imports imports = new Imports();
+
+		for (final Constructor constructor : constructors) {
+			imports.addAll(constructor.getParamsTypes());
 		}
 
 		return imports.asSet();

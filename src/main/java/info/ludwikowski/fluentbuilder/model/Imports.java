@@ -3,6 +3,7 @@
  */
 package info.ludwikowski.fluentbuilder.model;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -34,7 +35,7 @@ public class Imports {
 	 * 
 	 * @param imports a Set of imports which is added to the managed imports.
 	 */
-	public final void addAll(final Set<String> imports) {
+	public final void addAll(final Collection<String> imports) {
 
 		for (final String importString : imports) {
 
