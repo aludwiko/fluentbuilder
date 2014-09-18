@@ -91,7 +91,7 @@ public class ClassMirrorImpl implements ClassMirror {
 	}
 
 	private boolean isNotObjectClass(final Class<?> superClass) {
-		return !superClass.isAssignableFrom(Object.class);
+		return superClass != null && !superClass.isAssignableFrom(Object.class);
 	}
 
 	private List<Field> properFields(final Class<?> clazz) {
