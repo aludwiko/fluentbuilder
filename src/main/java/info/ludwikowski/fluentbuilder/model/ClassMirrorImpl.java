@@ -77,11 +77,21 @@ public class ClassMirrorImpl implements ClassMirror {
 	}
 
 	private void fillMemberMirrors(final Class<?> clazz, final Context context) {
+
 		final List<Field> properFields = properFields(clazz);
 		for (final Field field : properFields) {
 			members.add(MemberMirrorCreator.create(field, context));
 		}
-		fillSuperMemberMirrors(clazz, context);
+
+		final Class<?> superClass = clazz.getSuperclass();
+		if (isNotObjectClass(superClass)) {
+			// filling inheritted fields
+			fillMemberMirrors(superClass, context);
+		}
+	}
+
+	private boolean isNotObjectClass(final Class<?> superClass) {
+		return !superClass.isAssignableFrom(Object.class);
 	}
 
 	private List<Field> properFields(final Class<?> clazz) {

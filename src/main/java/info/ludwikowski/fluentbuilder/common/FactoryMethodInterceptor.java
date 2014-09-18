@@ -76,14 +76,12 @@ public class FactoryMethodInterceptor<X> implements MethodInterceptor {
 	// FIXME
 	private void invokeSetter(final Method method, final Object[] args) throws Exception {
 
-
 		String methodName = method.getName();
-
-		final Field field = targetObject.getClass().getDeclaredField(uncapitalize(methodName.substring(prefixForProxy(abstractClass).length())));
-
+		final Field field = findField(targetObject.getClass(), methodName);
 		field.setAccessible(true);
-
 		field.set(targetObject, field.getType() == String.class ? (String) args[0] : args[0]);
+
+
 //		final ReferencedField referencedFieldAnnotation = method.getAnnotation(ReferencedField.class);
 //		final String annotationValue = referencedFieldAnnotation.value();
 //		final String fieldName = NameUtils.removePackageNameFromFullyQualifiedName(annotationValue);
@@ -91,6 +89,18 @@ public class FactoryMethodInterceptor<X> implements MethodInterceptor {
 //
 //		setField(targetObject, args, fieldName, fieldClass);
 
+	}
+
+	private Field findField(Class<?> targetObjectClass, String methodName) throws NoSuchFieldException {
+		try {
+			return targetObjectClass.getDeclaredField(uncapitalize(methodName.substring(prefixForProxy(abstractClass).length())));
+		}
+		catch (NoSuchFieldException e) {
+			if (targetObjectClass.getSuperclass().isAssignableFrom(Object.class)) {
+				throw e;
+			}
+			return findField(targetObjectClass.getSuperclass(), methodName);
+		}
 	}
 
 	// Checkstyle ignore rule for the indentation in the method signature which
