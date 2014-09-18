@@ -2,7 +2,7 @@
  * Created on 3 wrz 2014 21:00:39 by Andrzej
  */
 
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
 
 
 public class ClassWithoutDefaultConstructor {

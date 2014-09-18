@@ -1,4 +1,4 @@
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withdefaultcontructor;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
 import java.math.BigDecimal;
@@ -16,7 +16,7 @@ public abstract class AbstractClassWithDefaultConstructorBuilder<B> extends Abst
 }
 
 /////////////////////////////////////
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withdefaultcontructor;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
 import java.math.BigDecimal;

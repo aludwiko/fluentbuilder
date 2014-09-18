@@ -2,7 +2,7 @@
  * Created on 11 wrz 2014 19:56:31 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
 

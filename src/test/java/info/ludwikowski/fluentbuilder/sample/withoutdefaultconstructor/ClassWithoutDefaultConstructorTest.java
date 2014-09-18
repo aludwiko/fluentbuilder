@@ -2,9 +2,9 @@
  * Created on 11 wrz 2014 20:32:59 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
 
-import static info.ludwikowski.fluentbuilder.sample.ClassWithoutDefaultConstructorBuilder.aClassWithoutDefaultConstructor;
+import static info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor.ClassWithoutDefaultConstructorBuilder.aClassWithoutDefaultConstructor;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import org.junit.Test;

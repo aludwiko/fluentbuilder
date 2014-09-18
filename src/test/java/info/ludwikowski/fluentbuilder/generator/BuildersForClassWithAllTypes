@@ -1,4 +1,4 @@
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withalltypes;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public abstract class AbstractClassWithAllTypesBuilder<B> extends AbstractBuilde
 }
 
 /////////////////////////////////////
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withalltypes;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
 

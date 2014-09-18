@@ -1,4 +1,4 @@
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withalltypes;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
 

@@ -2,7 +2,7 @@
  * Created on 31 sie 2014 21:48:35 by Andrzej
  */
 
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withalltypes;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
 

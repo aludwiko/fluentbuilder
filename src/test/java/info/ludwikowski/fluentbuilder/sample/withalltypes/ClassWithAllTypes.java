@@ -1,7 +1,7 @@
 /*
  * Created on 02-12-2012 17:52:55 by Andrzej Ludwikowski
  */
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withalltypes;
 
 import java.util.Date;
 import java.util.List;

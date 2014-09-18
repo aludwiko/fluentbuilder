@@ -1,4 +1,4 @@
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
 
@@ -15,7 +15,7 @@ public abstract class AbstractClassWithoutDefaultConstructorBuilder<B> extends A
 }
 
 /////////////////////////////////////
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
 

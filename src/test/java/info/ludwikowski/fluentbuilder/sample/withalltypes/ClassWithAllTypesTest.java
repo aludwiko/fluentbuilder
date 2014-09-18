@@ -2,7 +2,7 @@
  * Created on 22-12-2012 09:35:44 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withalltypes;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

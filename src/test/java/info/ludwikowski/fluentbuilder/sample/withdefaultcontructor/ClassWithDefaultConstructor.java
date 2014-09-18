@@ -2,7 +2,7 @@
  * Created on 11 wrz 2014 20:45:39 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.fluentbuilder.sample;
+package info.ludwikowski.fluentbuilder.sample.withdefaultcontructor;
 
 import java.math.BigDecimal;
 
