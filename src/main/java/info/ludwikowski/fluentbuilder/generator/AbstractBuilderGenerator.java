@@ -3,6 +3,7 @@
  */
 package info.ludwikowski.fluentbuilder.generator;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderPrinter;
 import info.ludwikowski.fluentbuilder.common.Context;
 import info.ludwikowski.fluentbuilder.common.OldBuilderPrinter;
@@ -10,6 +11,7 @@ import info.ludwikowski.fluentbuilder.model.ClassMirror;
 import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
 
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 
 public class AbstractBuilderGenerator {
 
@@ -27,9 +29,10 @@ public class AbstractBuilderGenerator {
 	 * 
 	 * @param clazz - class for builder generation
 	 * @return
+	 * @throws UnsupportedEncodingException
 	 */
-	public static AbstractBuilderGenerator forClass(Class<?> clazz) {
-		return new AbstractBuilderGenerator(clazz, new PrintStream(System.out));
+	public static AbstractBuilderGenerator forClass(Class<?> clazz) throws UnsupportedEncodingException {
+		return new AbstractBuilderGenerator(clazz, new PrintStream(System.out, false, UTF_8.name()));
 	}
 
 	/**
