@@ -6,6 +6,8 @@
  */
 package info.ludwikowski.fluentbuilder.processor;
 
+import info.ludwikowski.fluentbuilder.common.Context;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,8 +19,6 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
 
 import org.apache.commons.lang.StringUtils;
-
-import info.ludwikowski.fluentbuilder.common.Context;
 
 /**
  * This class provides settings for the annotation processor and builder
@@ -109,7 +109,7 @@ public class ProcessorContext extends Context {
 	 * 
 	 * @return type utilities
 	 */
-	public final Types getTypeUtils() {
+	public Types getTypeUtils() {
 		return processingEnv.getTypeUtils();
 	}
 
@@ -159,7 +159,7 @@ public class ProcessorContext extends Context {
 	 * 
 	 * @return True if Java Persistence Annotations are accepted, false if not.
 	 */
-	public final boolean isAcceptJavaPersistenceAnnotations() {
+	public boolean isAcceptJavaPersistenceAnnotations() {
 		return acceptJavaPersistenceAnnotations;
 	}
 

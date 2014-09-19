@@ -1,7 +1,7 @@
 /*
  * Created by Jan van Esdonk for BLUECARAT AG
  */
-package de.bluecarat.fluentbuilder.samples;
+package info.ludwikowski.fluentbuilder.common;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
 

@@ -1,7 +1,7 @@
 /*
  * Created by Jan van Esdonk for BLUECARAT AG
  */
-package de.bluecarat.fluentbuilder.samples;
+package info.ludwikowski.fluentbuilder.model;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,12 +21,12 @@ import javax.lang.model.type.TypeMirror;
 /**
  * @author Jan van Esdonk
  */
-public class DeclaredElementForTest implements Element {
+public class PrimitiveElementMock implements Element {
 
 	public Element owner;
 
 
-	public DeclaredElementForTest() {
+	public PrimitiveElementMock() {
 		owner = mock(Element.class);
 		when(owner.toString()).thenReturn("java.Object");
 	}
@@ -78,7 +78,7 @@ public class DeclaredElementForTest implements Element {
 
 	@Override
 	public String toString() {
-		return "declaredField";
+		return "intField";
 	}
 
 }

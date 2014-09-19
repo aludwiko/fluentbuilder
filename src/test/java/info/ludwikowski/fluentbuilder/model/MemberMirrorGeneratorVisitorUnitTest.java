@@ -6,6 +6,7 @@ package info.ludwikowski.fluentbuilder.model;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 import static org.mockito.Mockito.when;
+import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -17,24 +18,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
-import de.bluecarat.fluentbuilder.samples.DeclaredElementForTest;
-import de.bluecarat.fluentbuilder.samples.PrimitiveElementForTest;
-
-import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Jan van Esdonk
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(ProcessorContext.class)
+@RunWith(MockitoJUnitRunner.class)
 public class MemberMirrorGeneratorVisitorUnitTest {
 
-	MemberMirrorGeneratorVisitor testVisitor = null;
-	@Mock
-	ProcessorContext mockedContext;
+	private MemberMirrorGeneratorVisitor testVisitor = null;
+	private ProcessorContext mockedContext;
 	@Mock
 	private PrimitiveType mockedPrimitiveType;
 	@Mock
@@ -47,13 +41,14 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 
 	@Before
 	public void setUp() throws Exception {
+		mockedContext = Mockito.mock(ProcessorContext.class);
 		testVisitor = new MemberMirrorGeneratorVisitor(mockedContext);
 	}
 
 	@Test
 	public void shouldCreateMemberMirrorWithNameFromPrimitiveElement() {
 		// given
-		final Element primitiveElement = new PrimitiveElementForTest();
+		final Element primitiveElement = new PrimitiveElementMock();
 		// when
 		final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
 		// then
@@ -63,7 +58,7 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 	@Test
 	public void shouldCreateMemberMirrorWithOwnerNameFromPrimitiveElement() {
 		// given
-		final Element primitiveElement = new PrimitiveElementForTest();
+		final Element primitiveElement = new PrimitiveElementMock();
 		// when
 		final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
 		// then
@@ -74,7 +69,7 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 	public void shouldCreateMemberMirrorWithSimpleTypeFromPrimitiveElement() {
 		// given
 		when(mockedPrimitiveType.toString()).thenReturn("int");
-		final Element primitiveElement = new PrimitiveElementForTest();
+		final Element primitiveElement = new PrimitiveElementMock();
 		// when
 		final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
 		// then
@@ -84,7 +79,7 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 	@Test
 	public void shouldCreateMemberMirrorWithNameFromDeclaredElement() {
 		// given
-		final Element element = new DeclaredElementForTest();
+		final Element element = new DeclaredElementMock();
 		when(mockedContext.getTypeUtils()).thenReturn(mockedType);
 		when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
 		// when
@@ -96,7 +91,7 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 	@Test
 	public void shouldCreateMemberMirrorWithOwnerNameFromDeclaredElement() {
 		// given
-		final Element element = new DeclaredElementForTest();
+		final Element element = new DeclaredElementMock();
 		when(mockedContext.getTypeUtils()).thenReturn(mockedType);
 		when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
 		// when
@@ -108,7 +103,7 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 	@Test
 	public void shouldCreateMemberMirrorWithSimpleTypeFromDeclaredElement() {
 		// given
-		final Element element = new DeclaredElementForTest();
+		final Element element = new DeclaredElementMock();
 		when(mockedContext.getTypeUtils()).thenReturn(mockedType);
 		when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
 		when(mockedDeclaredType.toString()).thenReturn("String");

@@ -1,4 +1,4 @@
-/* 
+/*
  * Created on 18-03-2013 18:37:00 by Andrzej Ludwikowski
  */
 /*
@@ -21,12 +21,7 @@ import javax.lang.model.element.Element;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.google.common.collect.Lists;
 
@@ -34,13 +29,18 @@ import com.google.common.collect.Lists;
  * @author Andrzej Ludwikowski
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(ProcessorContext.class)
 public class ClassVerifierUnitTest {
 
 	private ClassVerifier classVerifier;
 	private ProcessorContext context;
 
+
+	@Before
+	public void setUp() {
+
+		context = mock(ProcessorContext.class);
+		classVerifier = new ClassVerifier(context);
+	}
 
 	@Test
 	public void shouldReturnTrueForElementAnnotatedWithProcessorAnnotation() {
@@ -71,11 +71,9 @@ public class ClassVerifierUnitTest {
 		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
 		doReturn(annotationMirrors).when(element).getAnnotationMirrors();
 		given(annotationMirror.getAnnotationType().toString()).willReturn(jpaAnnotation);
-
-		PowerMockito.when(context.isAcceptJavaPersistenceAnnotations()).thenReturn(true);
+		given(context.isAcceptJavaPersistenceAnnotations()).willReturn(true);
 
 		// when
-
 		boolean result = classVerifier.generateBuilder(element);
 
 		// then
@@ -92,8 +90,7 @@ public class ClassVerifierUnitTest {
 		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
 		doReturn(annotationMirrors).when(element).getAnnotationMirrors();
 		given(annotationMirror.getAnnotationType().toString()).willReturn(jpaAnnotation);
-
-		PowerMockito.when(context.isAcceptJavaPersistenceAnnotations()).thenReturn(true);
+		given(context.isAcceptJavaPersistenceAnnotations()).willReturn(true);
 
 		// when
 		boolean result = classVerifier.generateBuilder(element);
@@ -112,8 +109,7 @@ public class ClassVerifierUnitTest {
 		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
 		doReturn(annotationMirrors).when(element).getAnnotationMirrors();
 		given(annotationMirror.getAnnotationType().toString()).willReturn(jpaAnnotation);
-
-		PowerMockito.when(context.isAcceptJavaPersistenceAnnotations()).thenReturn(true);
+		given(context.isAcceptJavaPersistenceAnnotations()).willReturn(true);
 
 		// when
 		boolean result = classVerifier.generateBuilder(element);
@@ -139,12 +135,5 @@ public class ClassVerifierUnitTest {
 
 		// then
 		assertThat(result).isFalse();
-	}
-
-	@Before
-	public void setUp() {
-		context = PowerMockito.mock(ProcessorContext.class);
-		classVerifier = new ClassVerifier(context);
-		MockitoAnnotations.initMocks(this);
 	}
 }
