@@ -5,6 +5,7 @@
 package info.ludwikowski.fluentbuilder.model;
 
 import static info.ludwikowski.fluentbuilder.util.NameUtils.removePackageNameFromFullyQualifiedName;
+import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author Andrzej Ludwikowski
  * 
  */
-public class Constructor {
+public class Constructor implements Comparable<Constructor> {
 
 	private static final String PARAM_SEPARATOR = ", ";
 	private static final String PARAM_NAME_PREFIX = "arg";
@@ -37,8 +38,12 @@ public class Constructor {
 		return constr;
 	}
 
+	private int howManyParams() {
+		return paramsTypes.size();
+	}
+
 	public List<String> getParamsTypes() {
-		return paramsTypes;
+		return unmodifiableList(paramsTypes);
 	}
 
 	public boolean isDefault() {
@@ -76,5 +81,22 @@ public class Constructor {
 		}
 
 		return removeLastComma(paramsNames.toString());
+	}
+
+	@Override
+	public int compareTo(Constructor o) {
+		int result = howManyParams() - o.howManyParams();
+
+		if (result == 0){
+			for (int i = 0; i < paramsTypes.size(); i++) {
+
+				int paramComparison = paramsTypes.get(i).compareTo(o.paramsTypes.get(i));
+
+				if (paramComparison != 0) {
+					return paramComparison;
+				}
+			}
+		}
+		return result;
 	}
 }

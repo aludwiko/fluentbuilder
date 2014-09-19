@@ -6,9 +6,9 @@
  */
 package info.ludwikowski.fluentbuilder.processor;
 
-import javax.lang.model.element.Element;
+import info.ludwikowski.fluentbuilder.annotation.GenerateBuilder;
 
-import de.bluecarat.fluentbuilder.annotation.GenerateBuilder;
+import javax.lang.model.element.Element;
 
 /**
  * This class looks for {@link GenerateBuilder} Annotations in a given {@link Element} to verify that a Builder should

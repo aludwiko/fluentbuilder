@@ -157,31 +157,31 @@
 			        <artifactId>build-helper-maven-plugin</artifactId>
 			        <version>1.9</version>
 			        <executions>
-			          <execution>
-			            <id>add-test-source</id>
-			            <phase>generate-test-sources</phase>
-			            <goals>
-			              <goal>add-test-source</goal>
-			            </goals>
-			            <configuration>
-			              <sources>
-			                <source>target/test/generated</source>
-			              </sources>
-			            </configuration>
-			          </execution>
+<!-- 			          <execution> -->
+<!-- 			            <id>add-test-source</id> -->
+<!-- 			            <phase>generate-test-sources</phase> -->
+<!-- 			            <goals> -->
+<!-- 			              <goal>add-test-source</goal> -->
+<!-- 			            </goals> -->
+<!-- 			            <configuration> -->
+<!-- 			              <sources> -->
+<!-- 			                <source>target/generated-test-sources</source> -->
+<!-- 			              </sources> -->
+<!-- 			            </configuration> -->
+<!-- 			          </execution> -->
 			          <!-- FIXME -->
-			          <execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>src/test/java/de/bluecarat/fluentbuilder/integration/samples</source>
-							</sources>
-						</configuration>
-					</execution>
+<!-- 			          <execution> -->
+<!-- 						<id>add-source</id> -->
+<!-- 						<phase>generate-sources</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>add-source</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 							<sources> -->
+<!-- 								<source>src/test/java/de/bluecarat/fluentbuilder/integration/test</source> -->
+<!-- 							</sources> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
 			        </executions>
 			</plugin>
 			<plugin>
@@ -212,13 +212,13 @@
 						<configuration>
 							<compilerArguments>
 								<!-- additional generator params -->
-								-Adebug=true -AuseIndefineArticles=true -encoding ${project.build.sourceEncoding}
+								-Adebug=true -AuseIndefineArticles=true
 							</compilerArguments>
 							<processors>
 								<processor>info.ludwikowski.fluentbuilder.processor.FluentBuilderProcessor</processor>
 							</processors>
-							<sourceDirectory>src/test/java/de/bluecarat/fluentbuilder/integration/samples</sourceDirectory>
-							<outputDirectory>target/test/generated</outputDirectory>
+							<sourceDirectory>src/test/java/info/ludwikowski/fluentbuilder/test</sourceDirectory>
+							<outputDirectory>target/generated-test-sources2</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>

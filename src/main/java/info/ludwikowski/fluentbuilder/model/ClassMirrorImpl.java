@@ -14,6 +14,7 @@ import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -67,6 +68,7 @@ public class ClassMirrorImpl implements ClassMirror {
 		packageName = clazz.getCanonicalName().replace("." + simpleName, StringUtils.EMPTY);
 		fillMemberMirrors(clazz, context);
 		fillConstructors(clazz);
+		Collections.sort(constructors);
 	}
 
 	private void fillConstructors(Class<?> clazz) {

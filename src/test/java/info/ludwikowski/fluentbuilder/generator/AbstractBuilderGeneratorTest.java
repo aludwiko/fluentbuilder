@@ -31,6 +31,7 @@ public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 	private PrintStream printStream = new PrintStream(baos);
 
 
+
 	@Test
 	public void shouldGenerateAbstractBuilderAndBuilderForClassWithAllTypes() {
 
@@ -42,12 +43,14 @@ public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 		LineByLineAssertions.assertThat(result).isEqualsLineByLine(buildersForClassWithAllTypes);
 	}
 
+
 	@Test
 	public void shouldGenerateAbstractBuilderAndBuilderForClassWithoutDefaultConstrutor() {
 
 		// when
 		AbstractBuilderGenerator.forClassWithWriter(ClassWithoutDefaultConstructor.class, printStream).printBuilders();
 		String result = baos.toString();
+		System.out.println(result);
 
 		// then
 		LineByLineAssertions.assertThat(result).isEqualsLineByLine(buildersForClassWithoutDefaultConstrutor);

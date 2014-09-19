@@ -4,7 +4,7 @@
 /*
  * Modified by Jan van Esdonk for BLUECARAT AG
  */
-package de.bluecarat.fluentbuilder.annotation;
+package info.ludwikowski.fluentbuilder.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

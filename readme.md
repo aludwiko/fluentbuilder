@@ -50,7 +50,7 @@ Now add a @GenerateBuilder annotation (and its import) to every class for
 which you want to generate a builder.
 
 ```java
-import de.bluecarat.fluentbuilder.annotation.GenerateBuilder;
+import info.ludwikowski.fluentbuilder.annotation.GenerateBuilder;
 
 @GenerateBuilder
 public class SampleClass {

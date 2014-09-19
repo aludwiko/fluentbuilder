@@ -13,6 +13,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import info.ludwikowski.fluentbuilder.annotation.GenerateBuilder;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class ClassVerifierUnitTest {
 		// given
 		Element element = mock(Element.class);
 		AnnotationMirror annotationMirror = mock(AnnotationMirror.class, Mockito.RETURNS_DEEP_STUBS);
-		String type = "de.bluecarat.fluentbuilder.annotation.GenerateBuilder";
+		String type = GenerateBuilder.class.getCanonicalName();
 
 		List<AnnotationMirror> annotationMirrors = Lists.newArrayList(annotationMirror);
 		doReturn(annotationMirrors).when(element).getAnnotationMirrors();
