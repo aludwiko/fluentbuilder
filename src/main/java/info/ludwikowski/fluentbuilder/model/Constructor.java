@@ -16,7 +16,7 @@ import java.util.List;
  * @author Andrzej Ludwikowski
  * 
  */
-public class Constructor implements Comparable<Constructor> {
+public final class Constructor implements Comparable<Constructor> {
 
 	private static final String PARAM_SEPARATOR = ", ";
 	private static final String PARAM_NAME_PREFIX = "arg";
