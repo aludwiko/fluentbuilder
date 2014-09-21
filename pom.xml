@@ -317,9 +317,10 @@
         <executions>
           <execution>
 
-                    <phase>package</phase>
+                    <phase>test</phase>
                     <goals>
                         <goal>cobertura</goal>
+                        <goal>check</goal>
                     </goals>
                 </execution>
 
