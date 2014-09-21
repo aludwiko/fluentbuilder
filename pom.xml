@@ -323,13 +323,10 @@
 					</execution>
 				</executions>
 				<configuration>
-<!-- 					<minimumPriority>1</minimumPriority> -->
-<!-- 					<minimumTokens>100</minimumTokens> -->
-<!-- 					<sourceEncoding>UTF-8</sourceEncoding> -->
-<!-- 					<outputEncoding>UTF-8</outputEncoding> -->
-<!-- 					<rulesets> -->
-<!-- 						<ruleset>${basedir}/tools/config/pmd-ruleset.xml</ruleset> -->
-<!-- 					</rulesets> -->
+					<minimumPriority>1</minimumPriority>
+					<rulesets>
+						<ruleset>${basedir}/tools/config/pmd-ruleset.xml</ruleset>
+					</rulesets>
 					<failOnViolation>false</failOnViolation>
 				</configuration>
 			</plugin>
