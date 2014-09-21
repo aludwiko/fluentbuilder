@@ -301,11 +301,11 @@
 					</execution>
 				</executions>
 				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
+<!-- 					<encoding>${project.build.sourceEncoding}</encoding> -->
 					<failOnViolation>false</failOnViolation>
-					<includeTestSourceDirectory>false</includeTestSourceDirectory>
-					<configLocation>${basedir}/tools/config/checkstyle.xml</configLocation>
-					<suppressionsLocation>${basedir}/tools/config/checkstyle-suppressions.xml</suppressionsLocation>
+<!-- 					<includeTestSourceDirectory>false</includeTestSourceDirectory> -->
+<!-- 					<configLocation>${basedir}/tools/config/checkstyle.xml</configLocation> -->
+<!-- 					<suppressionsLocation>${basedir}/tools/config/checkstyle-suppressions.xml</suppressionsLocation> -->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -323,13 +323,13 @@
 					</execution>
 				</executions>
 				<configuration>
-					<minimumPriority>1</minimumPriority>
-					<minimumTokens>100</minimumTokens>
-					<sourceEncoding>UTF-8</sourceEncoding>
-					<outputEncoding>UTF-8</outputEncoding>
-					<rulesets>
-						<ruleset>${basedir}/tools/config/pmd-ruleset.xml</ruleset>
-					</rulesets>
+<!-- 					<minimumPriority>1</minimumPriority> -->
+<!-- 					<minimumTokens>100</minimumTokens> -->
+<!-- 					<sourceEncoding>UTF-8</sourceEncoding> -->
+<!-- 					<outputEncoding>UTF-8</outputEncoding> -->
+<!-- 					<rulesets> -->
+<!-- 						<ruleset>${basedir}/tools/config/pmd-ruleset.xml</ruleset> -->
+<!-- 					</rulesets> -->
 					<failOnViolation>false</failOnViolation>
 				</configuration>
 			</plugin>
@@ -347,8 +347,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<excludeFilterFile>${basedir}/tools/config/findbugs-exclude.xml</excludeFilterFile>
-					<encoding>${project.build.sourceEncoding}</encoding>
 					<failOnError>false</failOnError>
 				</configuration>
 			</plugin>

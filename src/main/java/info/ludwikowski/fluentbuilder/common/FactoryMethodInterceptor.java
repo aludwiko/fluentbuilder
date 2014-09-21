@@ -102,31 +102,7 @@ public class FactoryMethodInterceptor<X> implements MethodInterceptor {
 			return findField(targetObjectClass.getSuperclass(), methodName);
 		}
 	}
-
-	// Checkstyle ignore rule for the indentation in the method signature which
-	// is needed for proper
-	// argument alignment.
-	// CHECKSTYLE IGNORE indentation FOR NEXT 2 LINES
-	private <N> void setField(final N targetObject, final Object[] args, final String fieldName,
-			final Class<?>... superClass) throws NoSuchFieldException, IllegalAccessException {
-		Field field = null;
-		if (superClass.length == 0) {
-			field = targetObject.getClass().getDeclaredField(fieldName);
-		}
-		else {
-			field = superClass[0].getDeclaredField(fieldName);
-		}
-		Object value = null;
-		if (field.getType() == String.class) {
-			value = args[0];
-		}
-		else {
-			value = args[0];
-		}
-		field.setAccessible(true);
-		field.set(targetObject, value);
-	}
-
+	
 	@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
 	private String prefixForProxy(final Class<X> abstractClass) {
 		try {
