@@ -301,11 +301,9 @@
 					</execution>
 				</executions>
 				<configuration>
-<!-- 					<encoding>${project.build.sourceEncoding}</encoding> -->
 					<failOnViolation>false</failOnViolation>
-<!-- 					<includeTestSourceDirectory>false</includeTestSourceDirectory> -->
-<!-- 					<configLocation>${basedir}/tools/config/checkstyle.xml</configLocation> -->
-<!-- 					<suppressionsLocation>${basedir}/tools/config/checkstyle-suppressions.xml</suppressionsLocation> -->
+					<configLocation>${basedir}/tools/config/checkstyle.xml</configLocation>
+					<suppressionsLocation>${basedir}/tools/config/checkstyle-suppressions.xml</suppressionsLocation>
 				</configuration>
 			</plugin>
 			<plugin>
