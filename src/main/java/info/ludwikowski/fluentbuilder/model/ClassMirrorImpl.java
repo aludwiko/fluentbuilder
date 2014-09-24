@@ -155,14 +155,10 @@ public class ClassMirrorImpl implements ClassMirror {
 		}
 	}
 
-	private void visitConstructorList(final List<? extends ExecutableElement> constructorsOfClass,
-			final ProcessorContext context) {
-		for (ExecutableElement constructor : constructorsOfClass) {
-			final MemberMirrorGeneratorVisitor visitor = new MemberMirrorGeneratorVisitor(context);
-			final MemberMirror member = constructor.asType().accept(visitor, constructor);
-			if (member != null) {
-				members.add(member);
-			}
+	private void visitConstructorList(final List<ExecutableElement> constructorsOfClass, final ProcessorContext context) {
+		for (ExecutableElement constructorOfClass : constructorsOfClass) {
+			final ConstructorGeneratorVisitor visitor = new ConstructorGeneratorVisitor();
+			constructors.add(constructorOfClass.asType().accept(visitor, constructorOfClass));
 		}
 	}
 
