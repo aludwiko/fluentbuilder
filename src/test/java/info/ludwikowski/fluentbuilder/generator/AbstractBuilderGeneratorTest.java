@@ -50,7 +50,7 @@ public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 		// when
 		AbstractBuilderGenerator.forClassWithWriter(ClassWithoutDefaultConstructor.class, printStream).printBuilders();
 		String result = baos.toString();
-		System.out.println(result);
+		// System.out.println(result);
 
 		// then
 		LineByLineAssertions.assertThat(result).isEqualsLineByLine(buildersForClassWithoutDefaultConstrutor);
@@ -73,7 +73,7 @@ public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 		// when
 		AbstractBuilderGenerator.forClassWithWriter(Child.class, printStream).printBuilders();
 		String result = baos.toString();
-		System.out.println(result);
+		// System.out.println(result);
 
 		// then
 		LineByLineAssertions.assertThat(result).isEqualsLineByLine(buildersForClassWithInheritatedFields);

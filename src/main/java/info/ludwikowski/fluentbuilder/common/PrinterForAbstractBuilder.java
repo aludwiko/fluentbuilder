@@ -133,8 +133,8 @@ public class PrinterForAbstractBuilder extends AbstractClassPrinter {
 	private void printAbstractMethodForMemberField(final MemberMirror mirror) {
 		final String fieldName = mirror.getName();
 		final String uniqueName = getUniqueName(mirror);
-		final String annotationValue = mirror.getOwnerName() + "." + fieldName;
-		printReferencedFieldAnnotation(annotationValue);
+		// final String annotationValue = mirror.getOwnerName() + "." + fieldName;
+		// printReferencedFieldAnnotation(annotationValue);
 		printLine(
 				"public abstract #0 #1#2(#3 #4);",
 				abstractBuilderReturnName(),
@@ -149,8 +149,8 @@ public class PrinterForAbstractBuilder extends AbstractClassPrinter {
 	}
 
 	private void printVarargsSetter(final MemberMirror mirror, final String uniqueName) {
-		final String annotationValue = mirror.getOwnerName() + "." + mirror.getName();
-		printReferencedFieldAnnotation(annotationValue);
+		// final String annotationValue = mirror.getOwnerName() + "." + mirror.getName();
+		// printReferencedFieldAnnotation(annotationValue);
 		printLine(
 				"public #0 #1#2(#3... #4){",
 				abstractBuilderReturnName(),
@@ -196,10 +196,10 @@ public class PrinterForAbstractBuilder extends AbstractClassPrinter {
 
 	private String getSuperPrefix(final MemberMirror mirror) {
 		final String fieldName = mirror.getName();
-		if (!mirror.getSimpleOwnerName().equals(getClassMirror().getSimpleName())
-				&& usedMembers.contains(StringUtils.capitalize(fieldName))) {
-			return mirror.getSimpleOwnerName();
-		}
+		// if (!mirror.getSimpleOwnerName().equals(getClassMirror().getSimpleName())
+		// && usedMembers.contains(StringUtils.capitalize(fieldName))) {
+		// return mirror.getSimpleOwnerName();
+		// }
 		return "";
 	}
 

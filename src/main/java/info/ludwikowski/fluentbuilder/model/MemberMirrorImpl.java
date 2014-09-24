@@ -6,10 +6,9 @@
  */
 package info.ludwikowski.fluentbuilder.model;
 
-import java.util.Set;
-
 import info.ludwikowski.fluentbuilder.util.Constants;
-import info.ludwikowski.fluentbuilder.util.NameUtils;
+
+import java.util.Set;
 
 /**
  * This class implement the MemberMirror interface. A MemberMirrorImpl has the
@@ -21,19 +20,15 @@ public final class MemberMirrorImpl implements MemberMirror {
 
 	private final String simpleType;
 	private final String name;
-	private final String ownerName;
-	private final String simpleOwnerName;
 	private final Imports imports = new Imports();
 	private final String collectionType;
 	private final String collectionElementSimpleName;
 
 
-	private MemberMirrorImpl(final String name, final String ownerName, final String simpleType,
+	private MemberMirrorImpl(final String name, final String simpleType,
 			final Set<String> imports, final String collectionType,
 			final String collectionElementSimpleName) {
 		this.name = name;
-		this.ownerName = ownerName;
-		this.simpleOwnerName = NameUtils.removePackageNameFromFullyQualifiedName(ownerName);
 		this.collectionType = collectionType;
 		this.simpleType = simpleType;
 		this.collectionElementSimpleName = collectionElementSimpleName;
@@ -51,10 +46,10 @@ public final class MemberMirrorImpl implements MemberMirror {
 	 * @param collectionElementSimpleName - simple collection name
 	 * @return MemberMirror instance
 	 */
-	public static MemberMirror collectionMirror(final String name, final String ownerName, final String simpleType,
+	public static MemberMirror collectionMirror(final String name, final String simpleType,
 			final Set<String> imports, final String collectionType,
 			final String collectionElementSimpleName) {
-		return new MemberMirrorImpl(name, ownerName, simpleType, imports, collectionType, collectionElementSimpleName);
+		return new MemberMirrorImpl(name, simpleType, imports, collectionType, collectionElementSimpleName);
 	}
 
 	/**
@@ -66,9 +61,9 @@ public final class MemberMirrorImpl implements MemberMirror {
 	 * @param imports - necessary imports
 	 * @return MemberMirror instance
 	 */
-	public static MemberMirror simpleMirror(final String name, final String ownerName, final String simpleType,
+	public static MemberMirror simpleMirror(final String name, final String simpleType,
 			final Set<String> imports) {
-		return new MemberMirrorImpl(name, ownerName, simpleType, imports, null, null);
+		return new MemberMirrorImpl(name, simpleType, imports, null, null);
 	}
 
 	@Override
@@ -178,15 +173,5 @@ public final class MemberMirrorImpl implements MemberMirror {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String getOwnerName() {
-		return ownerName;
-	}
-
-	@Override
-	public String getSimpleOwnerName() {
-		return simpleOwnerName;
 	}
 }

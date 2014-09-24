@@ -3,15 +3,17 @@
  */
 package info.ludwikowski.fluentbuilder.model;
 
+import static info.ludwikowski.fluentbuilder.model.ImportsFactory.createNecessaryImportsForTypeInClass;
+import static info.ludwikowski.fluentbuilder.util.TypeUtils.isGeneric;
+import info.ludwikowski.fluentbuilder.common.Context;
+import info.ludwikowski.fluentbuilder.util.NameUtils;
+import info.ludwikowski.fluentbuilder.util.TypeUtils;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Set;
 import java.util.TreeSet;
-
-import info.ludwikowski.fluentbuilder.common.Context;
-import info.ludwikowski.fluentbuilder.util.NameUtils;
-import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 /**
  * This class creates MemberMirrors by given fields.
@@ -37,7 +39,6 @@ public final class MemberMirrorCreator {
 		final Class<?> type = field.getType();
 
 		final String name = field.getName();
-		final String ownerName = field.getDeclaringClass().getName();
 		final String simpleType = simpleType(field);
 		final Set<String> imports = getImports(field);
 
@@ -47,13 +48,12 @@ public final class MemberMirrorCreator {
 			final String collectionElementSimpleName = collectionElementSimpleName(field);
 			return MemberMirrorImpl.collectionMirror(
 					name,
-					ownerName,
 					simpleType,
 					imports,
 					collectionType,
 					collectionElementSimpleName);
 		}
-		return MemberMirrorImpl.simpleMirror(name, ownerName, simpleType, imports);
+		return MemberMirrorImpl.simpleMirror(name, simpleType, imports);
 	}
 
 	private static String simpleType(final Field field) {
@@ -67,18 +67,13 @@ public final class MemberMirrorCreator {
 	private static Set<String> getImports(final Field field) {
 
 		final Set<String> imports = new TreeSet<String>();
-		final String declaringClassName = field.getDeclaringClass().getName();
 		if (!field.getType().isPrimitive()) {
 
-			imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(
-					field.getType().getName(),
-					declaringClassName));
+			imports.addAll(createNecessaryImportsForTypeInClass(field.getType().getName()));
 		}
 
-		if (TypeUtils.isGeneric(field)) {
-			final String genericType = NameUtils.getOnlyGenericTypeFromGenericDeclaration(field.getGenericType()
-																								.toString());
-			imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(genericType, declaringClassName));
+		if (isGeneric(field)) {
+			imports.addAll(ImportsFactory.onlyImports(field.getGenericType().toString()));
 		}
 
 		return imports;

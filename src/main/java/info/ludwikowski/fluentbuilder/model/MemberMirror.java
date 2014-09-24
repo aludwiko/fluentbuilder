@@ -59,19 +59,4 @@ public interface MemberMirror {
 	 * @return collections element simple name like: Client.
 	 */
 	String getCollectionElementSimpleName();
-
-	/**
-	 * Returns the fully qualified name of the class which owns the represented
-	 * member.
-	 * 
-	 * @return the fully qualified name of the owner
-	 */
-	String getOwnerName();
-
-	/**
-	 * Returns the simple name of the class which owns the represented member.
-	 * 
-	 * @return the simple name of the owner
-	 */
-	String getSimpleOwnerName();
 }

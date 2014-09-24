@@ -3,13 +3,13 @@
  */
 package info.ludwikowski.fluentbuilder.model;
 
+import info.ludwikowski.fluentbuilder.util.NameUtils;
+import info.ludwikowski.fluentbuilder.util.TypeUtils;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
-
-import info.ludwikowski.fluentbuilder.util.NameUtils;
-import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 /**
  * This class determines the necessary imports for the generated abstract
@@ -25,26 +25,18 @@ public final class ImportsFactory {
 	}
 
 	/**
-	 * Creates the necessary imports for a type based on the class in which the
-	 * given type is declared.
+	 * Creates the necessary imports for a type.
 	 * 
 	 * @param type the fully qualified name of the type
-	 * @param className fully qualified class name of the class for which the
-	 *            import is checked.
 	 * @return a collection of fully qualified class names as Strings.
 	 */
-	public static Collection<String> createNecessaryImportsForTypeInClass(final String type, final String className) {
+	public static Collection<String> createNecessaryImportsForTypeInClass(final String type) {
 
 		final Set<String> imports = new HashSet<String>();
-		final String typePackageName = NameUtils.getPackageNameFromFullyQualifiedName(type);
-		final String classPackageName = NameUtils.getPackageNameFromFullyQualifiedName(className);
 		if (TypeUtils.isListOrSet(type)) {
 			addCollectionImports(type, imports);
 		}
 		else {
-			if (typePackageName.equals(classPackageName)) {
-				return imports;
-			}
 			if (!TypeUtils.isPrimitiveType(type)) {
 				imports.add(type);
 			}

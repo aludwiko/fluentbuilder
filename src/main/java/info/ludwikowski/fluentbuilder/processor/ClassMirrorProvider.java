@@ -6,15 +6,15 @@
  */
 package info.ludwikowski.fluentbuilder.processor;
 
+import info.ludwikowski.fluentbuilder.model.ClassMirror;
+import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
-
-import info.ludwikowski.fluentbuilder.model.ClassMirror;
-import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
 
 /**
  * This class generates ClassMirrors from given class elements for the

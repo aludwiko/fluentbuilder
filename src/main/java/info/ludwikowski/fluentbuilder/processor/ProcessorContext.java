@@ -43,7 +43,7 @@ public class ProcessorContext extends Context {
 	public static final String JAVAX_PERSISTENCE_ENTITY = "javax.persistence.Entity";
 	public static final String JAVAX_PERSISTENCE_MAPPEDSUPERCLASS = "javax.persistence.MappedSuperclass";
 	public static final String JAVAX_PERSISTENCE_EMBEDDABLE = "javax.persistence.Embeddable";
-	public static final String FLUENT_BUILDER_ANNOTATATION = "de.bluecarat.fluentbuilder.annotation.GenerateBuilder";
+	public static final String FLUENT_BUILDER_ANNOTATATION = "info.ludwikowski.fluentbuilder.annotation.GenerateBuilder";
 
 	public static final List<String> JPA_ANNOTATIONS;
 

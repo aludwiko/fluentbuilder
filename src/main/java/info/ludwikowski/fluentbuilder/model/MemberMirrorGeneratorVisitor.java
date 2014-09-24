@@ -6,10 +6,11 @@
  */
 package info.ludwikowski.fluentbuilder.model;
 
+import static info.ludwikowski.fluentbuilder.model.ImportsFactory.createNecessaryImportsForTypeInClass;
 import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
+import info.ludwikowski.fluentbuilder.util.NameUtils;
 import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,6 @@ import javax.lang.model.util.SimpleTypeVisitor6;
 
 import org.apache.commons.lang.StringUtils;
 
-import de.bluecarat.fluentbuilder.model.MemberMirrorConstructorImpl;
 import de.bluecarat.fluentbuilder.model.ParameterMirror;
 
 /**
@@ -67,11 +67,8 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 	private MemberMirror simpleTypes(final TypeMirror primitiveType, final Element element) {
 
 		final String name = element.toString();
-		final String ownerName = getOwnerName(element);
-		final String simpleType = info.ludwikowski.fluentbuilder.util.NameUtils
-																				.removePackageNameFromFullyQualifiedName(primitiveType.toString());
-
-		return MemberMirrorImpl.simpleMirror(name, ownerName, simpleType, Collections.EMPTY_SET);
+		final String simpleType = NameUtils.removePackageNameFromFullyQualifiedName(primitiveType.toString());
+		return MemberMirrorImpl.simpleMirror(name, simpleType, Collections.EMPTY_SET);
 	}
 
 	@Override
@@ -95,43 +92,21 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 		final TypeElement returnedElement = (TypeElement) context.getTypeUtils().asElement(declaredType);
 
 		final String name = element.toString();
-		final String ownerName = getOwnerName(element);
-		final String simpleType = info.ludwikowski.fluentbuilder.util.NameUtils
-																				.removePackageNameFromFullyQualifiedName(declaredType.toString());
-		final Set<String> imports = getImports(declaredType, returnedElement, ownerName);
+		final String simpleType = NameUtils.removePackageNameFromFullyQualifiedName(declaredType.toString());
+		final Set<String> imports = getImports(declaredType, returnedElement);
 		final String type = returnedElement.toString();
 
 		if (TypeUtils.isListOrSet(type) && isGeneric(declaredType)) {
 
 			return MemberMirrorImpl.collectionMirror(
 					name,
-					ownerName,
 					simpleType,
 					imports,
 					type,
 					collectionElementSimpleName(declaredType));
 		}
 
-		return MemberMirrorImpl.simpleMirror(name, ownerName, simpleType, imports);
-	}
-
-	@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
-	private String getOwnerName(final Element ownedElement) {
-		try {
-			final Field field = ownedElement.getClass().getField("owner");
-			field.setAccessible(true);
-			final Object truncatedOwner = field.get(ownedElement);
-			return truncatedOwner.toString();
-		}
-		catch (NoSuchFieldException e) {
-			throw new RuntimeException("No access on owner field possible.", e);
-		}
-		catch (IllegalArgumentException e) {
-			throw new RuntimeException("No access on owner field possible.", e);
-		}
-		catch (IllegalAccessException e) {
-			throw new RuntimeException("No access on owner field possible.", e);
-		}
+		return MemberMirrorImpl.simpleMirror(name, simpleType, imports);
 	}
 
 	private boolean isGeneric(final DeclaredType declaredType) {
@@ -139,23 +114,18 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 	}
 
 	private String collectionElementSimpleName(final DeclaredType declaredType) {
-
-		return info.ludwikowski.fluentbuilder.util.NameUtils.removePackageNameFromFullyQualifiedName(declaredType
-																													.getTypeArguments().get(0).toString());
+		return NameUtils.removePackageNameFromFullyQualifiedName(declaredType.getTypeArguments().get(0).toString());
 	}
 
-	private Set<String> getImports(final DeclaredType declaredType, final TypeElement returnedElement,
-			final String declaringClassName) {
+	private Set<String> getImports(final DeclaredType declaredType, final TypeElement returnedElement) {
 
 		final Set<String> imports = new TreeSet<String>();
 		final String type = returnedElement.toString();
 
-		imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(type, declaringClassName));
+		imports.addAll(createNecessaryImportsForTypeInClass(type));
 
 		for (final TypeMirror typeMirror : declaredType.getTypeArguments()) {
-			imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(
-					typeMirror.toString(),
-					declaringClassName));
+			imports.addAll(ImportsFactory.onlyImports(typeMirror.toString()));
 		}
 		return imports;
 	}
@@ -167,18 +137,17 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 	 * @return MemberMirror representation of the given method or constructor
 	 */
 	public final MemberMirror visitExecutable(final ExecutableType executableType, final Element element) {
-		final String ownerName = getOwnerName(element);
 		final List<ParameterMirror> parameterList = getParameterList(executableType, element);
 		final String name = createMethodNameFromParameterNames(parameterList);
 		final Set<String> imports = new TreeSet<String>();
 
-		for (ParameterMirror parameterMirror : parameterList) {
-			imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(
-					parameterMirror.getType().toString(),
-					getOwnerName(element)));
-		}
+//		for (ParameterMirror parameterMirror : parameterList) {
+//			imports.addAll(ImportsFactory.createNecessaryImportsForTypeInClass(
+//					parameterMirror.getType().toString()));
+//		}
 
-		return new MemberMirrorConstructorImpl(name, ownerName, parameterList, imports);
+//		return new MemberMirrorConstructorImpl(name, ownerName, parameterList, imports);
+		return null;
 	}
 
 	private List<ParameterMirror> getParameterList(final ExecutableType executableType, final Element element) {

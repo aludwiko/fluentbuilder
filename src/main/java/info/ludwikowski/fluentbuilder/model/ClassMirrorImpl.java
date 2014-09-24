@@ -23,12 +23,14 @@ import java.util.logging.Logger;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementFilter;
 
 /**
  * Implements the ClassMirror interface. A ClassMirror represents a given class
  * and its member fields.
- * 
+ *
  * @author Andrzej Ludwikowski
  * @author Jan van Esdonk
  */
@@ -45,7 +47,7 @@ public class ClassMirrorImpl implements ClassMirror {
 	/**
 	 * Creates a ClassMirrorImpl from a given element which represents a class.
 	 * This is needed because the APT processes classes as elements.
-	 * 
+	 *
 	 * @param element - a class which is parsed to an element by the APT
 	 * @param context - configuration for mirror creation and code generation
 	 */
@@ -58,7 +60,7 @@ public class ClassMirrorImpl implements ClassMirror {
 
 	/**
 	 * Creates a ClassMirrorImpl from a given class with a given configuration.
-	 * 
+	 *
 	 * @param clazz - class which will be mirrored
 	 * @param context - configuration for mirror creation and code generation
 	 */
@@ -113,10 +115,18 @@ public class ClassMirrorImpl implements ClassMirror {
 	private void fillMemberMirrors(final Element element, final ProcessorContext context) {
 
 		final List<? extends Element> fieldsOfClass = ElementFilter.fieldsIn(element.getEnclosedElements());
+
+		final TypeElement el = (TypeElement) element;
+		TypeMirror parent = el.getSuperclass();
+
+
 		visitFieldsList(fieldsOfClass, context);
 
-		final List<? extends ExecutableElement> constructorsOfClass = ElementFilter.constructorsIn(element
-																											.getEnclosedElements());
+		final DeclaredType parentType = (DeclaredType) parent;
+		context.logInfo("<<<" + parentType);
+
+		final List<ExecutableElement> constructorsOfClass = ElementFilter.constructorsIn(element.getEnclosedElements());
+
 		visitConstructorList(constructorsOfClass, context);
 
 		try {
@@ -175,7 +185,7 @@ public class ClassMirrorImpl implements ClassMirror {
 
 	/**
 	 * This method returns all MemberMirrors which represent a class field.
-	 * 
+	 *
 	 * @return all class fields as a list of MemberMirrorImpl
 	 */
 	@Override

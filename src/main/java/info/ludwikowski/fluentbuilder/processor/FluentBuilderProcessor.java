@@ -6,6 +6,9 @@
  */
 package info.ludwikowski.fluentbuilder.processor;
 
+import info.ludwikowski.fluentbuilder.model.ClassMirror;
+
+import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.Set;
 
@@ -17,8 +20,6 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-
-import info.ludwikowski.fluentbuilder.model.ClassMirror;
 
 /**
  * This class contains the main annotation processing logic for the builder
@@ -56,9 +57,16 @@ public class FluentBuilderProcessor extends AbstractProcessor {
 	@Override
 	public final boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
 
+		Annotation annotation = FluentBuilderProcessor.class.getDeclaredAnnotations()[0];
+		context.logInfo("Searching for class with annotations:" + annotation);
+
 		final Set<? extends Element> elements = roundEnv.getRootElements();
 
+		context.logInfo("Found " + elements.size() + " classes with annotations.");
+
 		final Collection<ClassMirror> classMirrors = classMirrorProvider.prepareMirrors(elements);
+
+		context.logInfo("Selected " + classMirrors.size() + " classes for builders generation.");
 
 		classWriter.write(classMirrors);
 

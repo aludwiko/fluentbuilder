@@ -3,12 +3,11 @@
  */
 package de.bluecarat.fluentbuilder.model;
 
-import java.util.List;
-import java.util.Set;
-
 import info.ludwikowski.fluentbuilder.model.Imports;
 import info.ludwikowski.fluentbuilder.model.MemberMirror;
-import info.ludwikowski.fluentbuilder.util.NameUtils;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * This class defines a MemberMirror which represents a constructor of a class.
@@ -67,16 +66,6 @@ public class MemberMirrorConstructorImpl implements MemberMirror {
 	@Override
 	public final String getCollectionElementSimpleName() {
 		return null;
-	}
-
-	@Override
-	public final String getOwnerName() {
-		return ownerName;
-	}
-
-	@Override
-	public final String getSimpleOwnerName() {
-		return NameUtils.removePackageNameFromFullyQualifiedName(ownerName);
 	}
 
 	/**
