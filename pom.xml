@@ -301,17 +301,35 @@
 					</execution>
 				</executions>
 				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
 					<failOnViolation>false</failOnViolation>
-					<includeTestSourceDirectory>false</includeTestSourceDirectory>
 					<configLocation>${basedir}/tools/config/checkstyle.xml</configLocation>
 					<suppressionsLocation>${basedir}/tools/config/checkstyle-suppressions.xml</suppressionsLocation>
 				</configuration>
 			</plugin>
 			<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+  <format>xml</format>
+  
+        </configuration>
+        <executions>
+          <execution>
+
+                    <phase>test</phase>
+                    <goals>
+                        <goal>cobertura</goal>
+                        <goal>check</goal>
+                    </goals>
+                </execution>
+
+        </executions>
+      </plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.2</version>
 				<executions>
 					<execution>
 						<id>pmd</id>
@@ -324,9 +342,6 @@
 				</executions>
 				<configuration>
 					<minimumPriority>1</minimumPriority>
-					<minimumTokens>100</minimumTokens>
-					<sourceEncoding>UTF-8</sourceEncoding>
-					<outputEncoding>UTF-8</outputEncoding>
 					<rulesets>
 						<ruleset>${basedir}/tools/config/pmd-ruleset.xml</ruleset>
 					</rulesets>
@@ -347,8 +362,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<excludeFilterFile>${basedir}/tools/config/findbugs-exclude.xml</excludeFilterFile>
-					<encoding>${project.build.sourceEncoding}</encoding>
 					<failOnError>false</failOnError>
 				</configuration>
 			</plugin>

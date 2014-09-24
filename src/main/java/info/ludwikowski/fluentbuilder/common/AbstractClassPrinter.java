@@ -7,6 +7,8 @@
 
 package info.ludwikowski.fluentbuilder.common;
 
+import static info.ludwikowski.fluentbuilder.util.StringUtils.EMPTY;
+
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -171,7 +173,7 @@ public abstract class AbstractClassPrinter {
 			className = NameUtils.addIndefiniteArticleInFront(className);
 		}
 
-		return org.apache.commons.lang.StringUtils.uncapitalize(className);
+		return StringUtils.uncapitalize(className);
 	}
 
 	private String removeClassPrefix(final String className) {
@@ -179,7 +181,7 @@ public abstract class AbstractClassPrinter {
 		final String ignoredClassPrefix = context.getIgnoredClassPrefix();
 
 		if (className.startsWith(ignoredClassPrefix)) {
-			return className.replaceFirst(ignoredClassPrefix, info.ludwikowski.fluentbuilder.util.StringUtils.EMPTY);
+			return className.replaceFirst(ignoredClassPrefix, EMPTY);
 		}
 
 		return className;

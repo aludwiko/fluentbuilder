@@ -24,7 +24,6 @@ import org.springframework.core.GenericTypeResolver;
  */
 public final class AbstractBuilderFactory {
 
-	private static final int MAX_ARGUMENTS = 100;
 	private static final Logger LOGGER = Logger.getLogger(AbstractBuilderFactory.class.getName());
 
 

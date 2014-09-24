@@ -12,7 +12,7 @@ import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
-public class AbstractBuilderGenerator {
+public final class AbstractBuilderGenerator {
 
 	private static final String ENCODING = "UTF_8";
 	private Class<?> clazz;
@@ -155,8 +155,10 @@ public class AbstractBuilderGenerator {
 	 * Print single builder. Combine methods from two separate builder.
 	 */
 	public void printSingleBuilder() {
+		
+		//FIXME
 
-		ClassMirror classMirror = new ClassMirrorImpl(clazz, context);
+//		ClassMirror classMirror = new ClassMirrorImpl(clazz, context);
 		// System.out.println(new SingleBuilderPrinter(classMirror, context).printClass());
 	}
 }
