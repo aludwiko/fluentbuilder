@@ -4,9 +4,13 @@
 package info.ludwikowski.fluentbuilder.model;
 
 import static info.ludwikowski.fluentbuilder.model.ImportsFactory.createNecessaryImportsForTypeInClass;
+import static info.ludwikowski.fluentbuilder.model.ImportsFactory.onlyImports;
+import static info.ludwikowski.fluentbuilder.model.MemberMirrorImpl.collectionMirror;
+import static info.ludwikowski.fluentbuilder.model.MemberMirrorImpl.simpleMirror;
+import static info.ludwikowski.fluentbuilder.util.NameUtils.removePackageNameFromFullyQualifiedName;
 import static info.ludwikowski.fluentbuilder.util.TypeUtils.isGeneric;
+import static info.ludwikowski.fluentbuilder.util.TypeUtils.isListOrSet;
 import info.ludwikowski.fluentbuilder.common.Context;
-import info.ludwikowski.fluentbuilder.util.NameUtils;
 import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 import java.lang.reflect.Field;
@@ -42,38 +46,37 @@ public final class MemberMirrorCreator {
 		final String simpleType = simpleType(field);
 		final Set<String> imports = getImports(field);
 
-		if (TypeUtils.isListOrSet(type.getName()) && TypeUtils.isGeneric(field)) {
+		if (isListOrSet(type.getName()) && isGeneric(field)) {
 
 			final String collectionType = type.getName();
 			final String collectionElementSimpleName = collectionElementSimpleName(field);
-			return MemberMirrorImpl.collectionMirror(
+			return collectionMirror(
 					name,
 					simpleType,
 					imports,
 					collectionType,
 					collectionElementSimpleName);
 		}
-		return MemberMirrorImpl.simpleMirror(name, simpleType, imports);
+		return simpleMirror(name, simpleType, imports);
 	}
 
 	private static String simpleType(final Field field) {
 
 		if (TypeUtils.isGeneric(field)) {
-			return NameUtils.removePackageNameFromFullyQualifiedName(field.getGenericType().toString());
+			return removePackageNameFromFullyQualifiedName(field.getGenericType().toString());
 		}
-		return NameUtils.removePackageNameFromFullyQualifiedName(field.getType().getName());
+		return removePackageNameFromFullyQualifiedName(field.getType().getName());
 	}
 
 	private static Set<String> getImports(final Field field) {
 
 		final Set<String> imports = new TreeSet<String>();
 		if (!field.getType().isPrimitive()) {
-
 			imports.addAll(createNecessaryImportsForTypeInClass(field.getType().getName()));
 		}
 
 		if (isGeneric(field)) {
-			imports.addAll(ImportsFactory.onlyImports(field.getGenericType().toString()));
+			imports.addAll(onlyImports(field.getGenericType().toString()));
 		}
 
 		return imports;
@@ -83,7 +86,7 @@ public final class MemberMirrorCreator {
 		final Type genericType = field.getGenericType();
 		final ParameterizedType parameterizedType = (ParameterizedType) genericType;
 		final Class<?> type = (Class<?>) parameterizedType.getActualTypeArguments()[0];
-		return NameUtils.removePackageNameFromFullyQualifiedName(type.getName());
+		return removePackageNameFromFullyQualifiedName(type.getName());
 	}
 
 }
