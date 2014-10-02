@@ -56,16 +56,6 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 	}
 
 	@Test
-	public void shouldCreateMemberMirrorWithOwnerNameFromPrimitiveElement() {
-		// given
-		final Element primitiveElement = new PrimitiveElementMock();
-		// when
-		final MemberMirror testMember = testVisitor.visitPrimitive(mockedPrimitiveType, primitiveElement);
-		// then
-		assertThat(testMember.getOwnerName(), containsString("java.Object"));
-	}
-
-	@Test
 	public void shouldCreateMemberMirrorWithSimpleTypeFromPrimitiveElement() {
 		// given
 		when(mockedPrimitiveType.toString()).thenReturn("int");
@@ -86,18 +76,6 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 		final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);
 		// then
 		assertThat(testMember.getName(), containsString("declaredField"));
-	}
-
-	@Test
-	public void shouldCreateMemberMirrorWithOwnerNameFromDeclaredElement() {
-		// given
-		final Element element = new DeclaredElementMock();
-		when(mockedContext.getTypeUtils()).thenReturn(mockedType);
-		when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
-		// when
-		final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);
-		// then
-		assertThat(testMember.getOwnerName(), containsString("java.Object"));
 	}
 
 	@Test

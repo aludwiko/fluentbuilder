@@ -33,7 +33,6 @@ import javax.lang.model.util.SimpleTypeVisitor6;
  */
 public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirror, Element> {
 
-	private static final int CONJUNCTION_LENGTH = 3;
 	private final ProcessorContext context;
 
 

@@ -8,13 +8,12 @@
 package info.ludwikowski.fluentbuilder.common;
 
 import static info.ludwikowski.fluentbuilder.util.StringUtils.EMPTY;
+import info.ludwikowski.fluentbuilder.model.ClassMirror;
+import info.ludwikowski.fluentbuilder.util.NameUtils;
 
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-
-import info.ludwikowski.fluentbuilder.model.ClassMirror;
-import info.ludwikowski.fluentbuilder.util.NameUtils;
 
 /**
  * This class prints a generated {@link AbstractBuilder} class for a given {@link ClassMirror}. It uses properties which
@@ -90,9 +89,6 @@ public abstract class AbstractClassPrinter {
 	}
 
 	private void printImportStatements() {
-		if (this instanceof PrinterForAbstractBuilder && classMirror.getFieldMembers().size() > 0) {
-			printLine("import de.bluecarat.fluentbuilder.annotation.ReferencedField;");
-		}
 		for (final String fullClassName : getFullClassNamesForImports()) {
 			printImportStatement(fullClassName);
 		}
