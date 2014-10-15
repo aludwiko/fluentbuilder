@@ -4,7 +4,9 @@
 
 package info.ludwikowski.fluentbuilder.sample.inheritance;
 
+import info.ludwikowski.fluentbuilder.annotation.GenerateBuilder;
 
+@GenerateBuilder
 public class Child extends Parent {
 
 	private String childField;

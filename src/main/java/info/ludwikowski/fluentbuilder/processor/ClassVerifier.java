@@ -39,8 +39,6 @@ public class ClassVerifier {
 	 */
 	public final boolean generateBuilder(final Element element) {
 
-		context.logInfo("Analizuje: " + element);
-
 		if (info.ludwikowski.fluentbuilder.util.TypeUtils.containsAnnotation(
 				element,
 				GenerateBuilder.class.getCanonicalName())) {

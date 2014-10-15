@@ -2,10 +2,11 @@
  * Created on 18 wrz 2014 18:38:59 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.fluentbuilder.sample.withdefaultcontructor;
+package info.ludwikowski.fluentbuilder.sampletest.withdefaultconstructor;
 
 import static info.ludwikowski.fluentbuilder.sample.withdefaultcontructor.ClassWithDefaultConstructorBuilder.aClassWithDefaultConstructor;
 import static org.fest.assertions.api.Assertions.assertThat;
+import info.ludwikowski.fluentbuilder.sample.withdefaultcontructor.ClassWithDefaultConstructor;
 
 import java.math.BigDecimal;
 

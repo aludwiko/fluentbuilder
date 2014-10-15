@@ -3,11 +3,13 @@
  */
 package info.ludwikowski.fluentbuilder.sample.withalltypes;
 
+import info.ludwikowski.fluentbuilder.annotation.GenerateBuilder;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
+@GenerateBuilder
 public class ClassWithAllTypes {
 
 	private byte typeByte;

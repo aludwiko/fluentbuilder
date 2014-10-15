@@ -2,9 +2,11 @@
  * Created on 22-12-2012 09:35:44 by Andrzej Ludwikowski
  */
 
-package info.ludwikowski.fluentbuilder.sample.withalltypes;
+package info.ludwikowski.fluentbuilder.sampletest.withalltypes;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import info.ludwikowski.fluentbuilder.sample.withalltypes.ClassWithAllTypes;
+import info.ludwikowski.fluentbuilder.sample.withalltypes.ClassWithAllTypesBuilder;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -49,26 +51,26 @@ public class ClassWithAllTypesTest {
 
 		// when
 		ClassWithAllTypes classWithAllTypes = ClassWithAllTypesBuilder.aClassWithAllTypes().withComplexGeneric(complexGeneric)
-								.withTypeBoolean(typeBoolean)
-								.withTypeByte(typeByte)
-								.withTypeChar(typeChar)
-								.withTypeDate(typeDate)
-								.withTypeDouble(typeDouble)
-								.withTypeFloat(typeFloat)
-								.withTypeInt(typeInt)
-								.withTypeLong(typeLong)
-								.withTypeShort(typeShort)
-								.withTypeObjectBoolean(typeObjectBoolean)
-								.withTypeObjectByte(typeObjectByte)
-								.withTypeObjectDouble(typeObjectDouble)
-								.withTypeObjectFloat(typeObjectFloat)
-								.withTypeObjectInteger(typeObjectInteger)
-								.withTypeObjectLong(typeObjectLong)
-								.withTypeObjectShort(typeObjectShort)
-								.withTypeString(typeString)
-																	.withTypeStringList(typeStringList)
-																	.withTypeStringListWitoutGenerics(typeStringListWitoutGenerics)
-																	.build();
+																		.withTypeBoolean(typeBoolean)
+																		.withTypeByte(typeByte)
+																		.withTypeChar(typeChar)
+																		.withTypeDate(typeDate)
+																		.withTypeDouble(typeDouble)
+																		.withTypeFloat(typeFloat)
+																		.withTypeInt(typeInt)
+																		.withTypeLong(typeLong)
+																		.withTypeShort(typeShort)
+																		.withTypeObjectBoolean(typeObjectBoolean)
+																		.withTypeObjectByte(typeObjectByte)
+																		.withTypeObjectDouble(typeObjectDouble)
+																		.withTypeObjectFloat(typeObjectFloat)
+																		.withTypeObjectInteger(typeObjectInteger)
+																		.withTypeObjectLong(typeObjectLong)
+																		.withTypeObjectShort(typeObjectShort)
+																		.withTypeString(typeString)
+																		.withTypeStringList(typeStringList)
+																		.withTypeStringListWitoutGenerics(typeStringListWitoutGenerics)
+																		.build();
 
 		// then
 		assertThat(classWithAllTypes.getTypeByte()).isEqualTo(typeByte);

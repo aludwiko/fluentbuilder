@@ -62,7 +62,7 @@ public class FluentBuilderProcessor extends AbstractProcessor {
 
 		final Set<? extends Element> elements = roundEnv.getRootElements();
 
-		context.logInfo("Found " + elements.size() + " classes with annotations.");
+		context.logInfo("Found " + elements.size() + " classes for analysis.");
 
 		final Collection<ClassMirror> classMirrors = classMirrorProvider.prepareMirrors(elements);
 
@@ -70,7 +70,7 @@ public class FluentBuilderProcessor extends AbstractProcessor {
 
 		classWriter.write(classMirrors);
 
-		return false;
+		return true;
 	}
 
 }

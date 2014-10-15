@@ -4,7 +4,9 @@
 
 package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
 
+import info.ludwikowski.fluentbuilder.annotation.GenerateBuilder;
 
+@GenerateBuilder
 public class ClassWithoutDefaultConstructor {
 
 	private Integer number;

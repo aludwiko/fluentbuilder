@@ -4,9 +4,11 @@
 
 package info.ludwikowski.fluentbuilder.sample.withdefaultcontructor;
 
+import info.ludwikowski.fluentbuilder.annotation.GenerateBuilder;
+
 import java.math.BigDecimal;
 
-
+@GenerateBuilder
 public class ClassWithDefaultConstructor {
 
 	private Integer number;
