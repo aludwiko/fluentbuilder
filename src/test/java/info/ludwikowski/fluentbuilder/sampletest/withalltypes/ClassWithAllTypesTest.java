@@ -46,6 +46,7 @@ public class ClassWithAllTypesTest {
 		short typeShort =66;
 		Short typeObjectShort = 77;
 		String typeString = "string";
+		String typeString2 = "string2";
 		List<String> typeStringList = Lists.newArrayList();
 		List typeStringListWitoutGenerics = new LinkedList();
 
@@ -68,7 +69,7 @@ public class ClassWithAllTypesTest {
 																		.withTypeObjectLong(typeObjectLong)
 																		.withTypeObjectShort(typeObjectShort)
 																		.withTypeString(typeString)
-																		.withTypeStringList(typeStringList)
+																		.withTypeStringList(typeString, typeString2)
 																		.withTypeStringListWitoutGenerics(typeStringListWitoutGenerics)
 																		.build();
 
@@ -89,7 +90,7 @@ public class ClassWithAllTypesTest {
 		assertThat(classWithAllTypes.getTypeObjectLong()).isEqualTo(typeObjectLong);
 		assertThat(classWithAllTypes.getTypeObjectShort()).isEqualTo(typeObjectShort);
 		assertThat(classWithAllTypes.getTypeString()).isEqualTo(typeString);
-		assertThat(classWithAllTypes.getTypeStringList()).isEqualTo(typeStringList);
+		assertThat(classWithAllTypes.getTypeStringList()).containsExactly(typeString, typeString2);
 		assertThat(classWithAllTypes.getComplexGeneric()).isEqualTo(complexGeneric);
 		assertThat(classWithAllTypes.getTypeStringListWitoutGenerics()).isEqualTo(typeStringListWitoutGenerics);
 

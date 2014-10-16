@@ -5,7 +5,7 @@ package info.ludwikowski.fluentbuilder.generator;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderPrinter;
 import info.ludwikowski.fluentbuilder.common.Context;
-import info.ludwikowski.fluentbuilder.common.OldBuilderPrinter;
+import info.ludwikowski.fluentbuilder.common.BuilderPrinter;
 import info.ludwikowski.fluentbuilder.model.ClassMirror;
 import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
 
@@ -144,7 +144,7 @@ public final class AbstractBuilderGenerator {
 
 		ClassMirror classMirror = new ClassMirrorImpl(clazz, context);
 		AbstractBuilderPrinter abstractBuilderPrinter = new AbstractBuilderPrinter(classMirror, context);
-		OldBuilderPrinter builderPrinter = new OldBuilderPrinter(classMirror, context);
+		BuilderPrinter builderPrinter = new BuilderPrinter(classMirror, context);
 
 		printStream.println(abstractBuilderPrinter.printClass());
 		printStream.println("/////////////////////////////////////");

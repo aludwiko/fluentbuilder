@@ -7,7 +7,7 @@
 package info.ludwikowski.fluentbuilder.processor;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderPrinter;
-import info.ludwikowski.fluentbuilder.common.OldBuilderPrinter;
+import info.ludwikowski.fluentbuilder.common.BuilderPrinter;
 import info.ludwikowski.fluentbuilder.model.ClassMirror;
 
 import java.io.IOException;
@@ -64,7 +64,7 @@ public class ClassWriter {
 
 		try {
 
-			final OldBuilderPrinter printer = new OldBuilderPrinter(classMirror, context);
+			final BuilderPrinter printer = new BuilderPrinter(classMirror, context);
 
 			final Filer filer = context.getProcessingEnvironment().getFiler();
 			final FileObject resource = filer.getResource(

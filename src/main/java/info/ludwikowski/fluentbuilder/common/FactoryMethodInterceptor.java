@@ -58,7 +58,7 @@ public class FactoryMethodInterceptor<X> implements MethodInterceptor {
 			if (method.getParameterTypes().length != 1) {
 				throw new UnsupportedOperationException("method should have one parameter");
 			}
-			invokeSetter(method, args);
+			invokeWith(method, args);
 			return proxy;
 		}
 		else if (methodName.contains(AbstractBuilder.CONSTRUCTOR_METHOD_PREFIX)) {
@@ -73,22 +73,12 @@ public class FactoryMethodInterceptor<X> implements MethodInterceptor {
 		}
 	}
 
-	// FIXME
-	private void invokeSetter(final Method method, final Object[] args) throws Exception {
+	private void invokeWith(final Method method, final Object[] args) throws Exception {
 
 		String methodName = method.getName();
 		final Field field = findField(targetObject.getClass(), methodName);
 		field.setAccessible(true);
 		field.set(targetObject, field.getType() == String.class ? (String) args[0] : args[0]);
-
-
-//		final ReferencedField referencedFieldAnnotation = method.getAnnotation(ReferencedField.class);
-//		final String annotationValue = referencedFieldAnnotation.value();
-//		final String fieldName = NameUtils.removePackageNameFromFullyQualifiedName(annotationValue);
-//		final Class<?> fieldClass = Class.forName(NameUtils.getPackageNameFromFullyQualifiedName(annotationValue));
-//
-//		setField(targetObject, args, fieldName, fieldClass);
-
 	}
 
 	private Field findField(Class<?> targetObjectClass, String methodName) throws NoSuchFieldException {

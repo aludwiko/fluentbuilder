@@ -16,10 +16,10 @@ import java.util.TreeSet;
 
 
 
-public class OldBuilderPrinter extends ClassPrinter {
+public class BuilderPrinter extends ClassPrinter {
 
 
-	public OldBuilderPrinter(ClassMirror classMirror, Context context) {
+	public BuilderPrinter(ClassMirror classMirror, Context context) {
 		super(classMirror, context);
 	}
 
