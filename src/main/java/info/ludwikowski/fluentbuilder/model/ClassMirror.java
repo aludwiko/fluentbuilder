@@ -6,6 +6,7 @@
  */
 package info.ludwikowski.fluentbuilder.model;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -75,5 +76,5 @@ public interface ClassMirror {
 	 * @return all members of the represented class which are collection fields
 	 *         as a list
 	 */
-	List<Constructor> getConstructors();
+	Collection<Constructor> getConstructors();
 }

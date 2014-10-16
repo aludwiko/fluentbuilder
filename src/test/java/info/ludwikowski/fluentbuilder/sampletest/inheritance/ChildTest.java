@@ -4,6 +4,7 @@
 
 package info.ludwikowski.fluentbuilder.sampletest.inheritance;
 
+import static info.ludwikowski.fluentbuilder.sample.inheritance.ChildBuilder.aChild;
 import static org.fest.assertions.api.Assertions.assertThat;
 import info.ludwikowski.fluentbuilder.sample.inheritance.Child;
 
@@ -21,12 +22,10 @@ public class ChildTest {
 		String granField = "granField";
 
 		// when
-		Child child = null;
-		// FIXME
-		// aChild().withChildField(childField)
-		// .withParentField(parentField)
-		// .withGranField(granField)
-		// .build();
+		Child child = aChild().withChildField(childField)
+								.withParentField(parentField)
+								.withGranField(granField)
+								.build();
 
 		// then
 		assertThat(child.getChildField()).isEqualTo(childField);

@@ -14,11 +14,11 @@ import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
+import java.util.TreeSet;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -36,12 +36,10 @@ import javax.lang.model.util.ElementFilter;
  */
 public class ClassMirrorImpl implements ClassMirror {
 
-	private static final Logger LOGGER = Logger.getLogger(ClassMirrorImpl.class.getName());
-
 	private final String simpleName;
 	private final String packageName;
 	private final List<MemberMirror> members = new LinkedList<MemberMirror>();
-	private final List<Constructor> constructors = new LinkedList<Constructor>();
+	private final Set<Constructor> constructors = new TreeSet<Constructor>();
 
 
 	/**
@@ -70,7 +68,6 @@ public class ClassMirrorImpl implements ClassMirror {
 		packageName = clazz.getCanonicalName().replace("." + simpleName, StringUtils.EMPTY);
 		fillMemberMirrors(clazz, context);
 		fillConstructors(clazz);
-		Collections.sort(constructors);
 	}
 
 	private void fillConstructors(Class<?> clazz) {
@@ -115,27 +112,25 @@ public class ClassMirrorImpl implements ClassMirror {
 	private void fillMemberMirrors(final Element element, final ProcessorContext context) {
 
 		final List<? extends Element> fieldsOfClass = ElementFilter.fieldsIn(element.getEnclosedElements());
-
-		final TypeElement el = (TypeElement) element;
-		TypeMirror parent = el.getSuperclass();
-
-
 		visitFieldsList(fieldsOfClass, context);
 
-		final DeclaredType parentType = (DeclaredType) parent;
-		context.logInfo("<<<" + parentType);
-
 		final List<ExecutableElement> constructorsOfClass = ElementFilter.constructorsIn(element.getEnclosedElements());
-
 		visitConstructorList(constructorsOfClass, context);
 
-		try {
-			final Class<?> baseClass = Class.forName(element.toString());
-			fillSuperMemberMirrors(baseClass, context);
+		if (hasParent(element)) {
+			fillMemberMirrors(parentType(element).asElement(), context);
 		}
-		catch (ClassNotFoundException e) {
-			LOGGER.severe("Could not find class: " + element.toString() + " No members added!");
-		}
+	}
+
+	private boolean hasParent(final Element element) {
+		final DeclaredType parentType = parentType(element);
+		return !parentType.toString().equals(Object.class.getCanonicalName());
+	}
+
+	private DeclaredType parentType(final Element element) {
+		final TypeMirror parent = ((TypeElement) element).getSuperclass();
+		final DeclaredType parentType = (DeclaredType) parent;
+		return parentType;
 	}
 
 	private void visitFieldsList(final List<? extends Element> fieldsOfClass, final ProcessorContext context) {
@@ -162,12 +157,6 @@ public class ClassMirrorImpl implements ClassMirror {
 		}
 	}
 
-	private void fillSuperMemberMirrors(final Class<?> clazz, final Context context) {
-		final Class<?> superClass = clazz.getSuperclass();
-		if (clazz.getSuperclass() != null && !"Object".equals(superClass.getName())) {
-			fillMemberMirrors(superClass, context);
-		}
-	}
 
 	@Override
 	public final List<MemberMirror> getMembers() {
@@ -175,7 +164,7 @@ public class ClassMirrorImpl implements ClassMirror {
 	}
 
 	@Override
-	public final List<Constructor> getConstructors() {
+	public final Collection<Constructor> getConstructors() {
 		return constructors;
 	}
 

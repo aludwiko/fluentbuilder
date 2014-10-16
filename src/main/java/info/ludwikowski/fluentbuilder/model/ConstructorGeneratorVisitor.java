@@ -4,17 +4,12 @@
 
 package info.ludwikowski.fluentbuilder.model;
 
-import java.util.logging.Logger;
-
 import javax.lang.model.element.Element;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.util.SimpleTypeVisitor6;
 
 
 public class ConstructorGeneratorVisitor extends SimpleTypeVisitor6<Constructor, Element> {
-
-	private static final Logger LOGGER = Logger.getLogger(ConstructorGeneratorVisitor.class.getName());
-
 
 	@Override
 	public Constructor visitExecutable(ExecutableType t, Element p) {
