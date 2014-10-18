@@ -3,7 +3,7 @@
  */
 package info.ludwikowski.fluentbuilder.common;
 
-import org.apache.commons.lang.StringUtils;
+import static info.ludwikowski.fluentbuilder.util.StringUtils.hasText;
 
 /**
  * This class provides default properties for the FluentBuilderGenerator and the
@@ -39,7 +39,7 @@ public class Context {
 	 * @param methodPrefix setter method prefix
 	 */
 	public final void setMethodPrefix(final String methodPrefix) {
-		if (StringUtils.isNotBlank(methodPrefix)) {
+		if (hasText(methodPrefix)) {
 			this.methodPrefix = methodPrefix;
 		}
 	}
@@ -59,7 +59,7 @@ public class Context {
 	 * @param builderClassPostfix new builder class postfix
 	 */
 	public final void setBuilderClassPostfix(final String builderClassPostfix) {
-		if (StringUtils.isNotBlank(builderClassPostfix)) {
+		if (hasText(builderClassPostfix)) {
 			this.builderClassPostfix = builderClassPostfix;
 		}
 	}
@@ -79,7 +79,7 @@ public class Context {
 	 * @param abstractBuilderClassPrefix new AbstractBuilder prefix
 	 */
 	public final void setAbstractBuilderClassPrefix(final String abstractBuilderClassPrefix) {
-		if (StringUtils.isNotBlank(abstractBuilderClassPrefix)) {
+		if (hasText(abstractBuilderClassPrefix)) {
 			this.abstractBuilderClassPrefix = abstractBuilderClassPrefix;
 		}
 	}
@@ -99,7 +99,7 @@ public class Context {
 	 * @param staticCreateMethodName new name of the static create method
 	 */
 	public final void setStaticCreateMethodName(final String staticCreateMethodName) {
-		if (StringUtils.isNotBlank(staticCreateMethodName)) {
+		if (hasText(staticCreateMethodName)) {
 			this.staticCreateMethodName = staticCreateMethodName;
 		}
 	}
@@ -159,7 +159,7 @@ public class Context {
 	 * @param buildMethodName new name of the build method
 	 */
 	public final void setBuildMethodName(final String buildMethodName) {
-		if (StringUtils.isNotBlank(buildMethodName)) {
+		if (hasText(buildMethodName)) {
 			this.buildMethodName = buildMethodName;
 		}
 	}

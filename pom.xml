@@ -21,6 +21,7 @@
 			<artifactId>spring-core</artifactId>
 			<version>3.1.2.RELEASE</version>
 		</dependency>
+		<!-- Tests -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -58,47 +59,13 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-jelly</groupId>
-			<artifactId>commons-jelly-tags-dynabean</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-jelly</groupId>
-			<artifactId>commons-jelly-tags-junit</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-jelly</groupId>
-			<artifactId>commons-jelly-tags-log</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>build-helper-maven-plugin</artifactId>
-			<version>1.9</version>
-			<type>maven-plugin</type>
-		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.commons</groupId> -->
-<!-- 			<artifactId>org.apache.commons.lang</artifactId> -->
-<!-- 			<version>2.6.0</version> -->
-<!-- 		</dependency> -->
-		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.3</version>
-			</plugin>
-		</plugins>
-	</reporting>
 	<profiles>
 		<profile>
 			<id>header</id>

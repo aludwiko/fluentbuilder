@@ -7,6 +7,7 @@
 package info.ludwikowski.fluentbuilder.processor;
 
 import info.ludwikowski.fluentbuilder.common.Context;
+import info.ludwikowski.fluentbuilder.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +18,6 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * This class provides settings for the annotation processor and builder
@@ -89,7 +88,7 @@ public class ProcessorContext extends Context {
 
 		final String option = options.get(key);
 
-		if (StringUtils.isNotBlank(option)) {
+		if (StringUtils.hasText(option)) {
 			return java.lang.Boolean.parseBoolean(option);
 		}
 
