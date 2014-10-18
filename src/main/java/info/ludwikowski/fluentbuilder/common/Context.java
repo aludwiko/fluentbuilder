@@ -14,7 +14,6 @@ import org.apache.commons.lang.StringUtils;
 public class Context {
 
 	private String methodPrefix = "with";
-	private String constructorMethodPrefix = "constructedWith";
 	private String builderClassPostfix = "Builder";
 	private String abstractBuilderClassPrefix = "Abstract";
 	private String staticCreateMethodName;
@@ -42,26 +41,6 @@ public class Context {
 	public final void setMethodPrefix(final String methodPrefix) {
 		if (StringUtils.isNotBlank(methodPrefix)) {
 			this.methodPrefix = methodPrefix;
-		}
-	}
-
-	/**
-	 * Returns the prefix for constructor selection methods.
-	 *
-	 * @return constructor selection method prefix
-	 */
-	public final String getConstructorMethodPrefix() {
-		return constructorMethodPrefix;
-	}
-
-	/**
-	 * Sets the constructor selection method prefix.
-	 *
-	 * @param constructorMethodPrefix new constructor selection method prefix
-	 */
-	public final void setConstructorMethodPrefix(final String constructorMethodPrefix) {
-		if (StringUtils.isNotBlank(constructorMethodPrefix)) {
-			this.constructorMethodPrefix = constructorMethodPrefix;
 		}
 	}
 
@@ -229,8 +208,6 @@ public class Context {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Context [methodPrefix=");
 		builder.append(methodPrefix);
-		builder.append(", constructorMethodPrefix=");
-		builder.append(constructorMethodPrefix);
 		builder.append(", builderClassPostfix=");
 		builder.append(builderClassPostfix);
 		builder.append(", abstractBuilderClassPrefix=");

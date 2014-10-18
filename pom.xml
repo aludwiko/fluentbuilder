@@ -213,6 +213,8 @@
 							<compilerArguments>
 								<!-- additional generator params -->
 								-Adebug=true -AuseIndefineArticles=true
+								-AbuilderClassPostfix=Builder
+								-AbuildMethodName=anotherBuildMethod
 							</compilerArguments>
 							<processors>
 								<processor>info.ludwikowski.fluentbuilder.processor.FluentBuilderProcessor</processor>

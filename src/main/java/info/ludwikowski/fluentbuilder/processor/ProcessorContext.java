@@ -68,7 +68,9 @@ public class ProcessorContext extends Context {
 	 *            Java Annotation Processor
 	 */
 	public ProcessorContext(final ProcessingEnvironment processingEnv) {
-		final Map<String, String> options = processingEnv.getOptions();
+		System.out.println(processingEnv.getOptions());
+		final Map<String, String> options = OptionsSplitter.splitOptions(processingEnv.getOptions());
+		System.out.println(options);
 		this.processingEnv = processingEnv;
 		this.debug = getBoolean(options, DEBUG, false);
 		this.acceptJavaPersistenceAnnotations = getBoolean(options, ACCEPT_JAVA_PERSISTENCE_ANNOTATIONS, false);
