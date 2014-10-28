@@ -37,6 +37,7 @@ public class ProcessorContext extends Context {
 	public static final String ACCEPT_JAVA_PERSISTENCE_ANNOTATIONS = "acceptJavaPersistenceAnnotations";
 	public static final String IGNORED_CLASS_PREFIX = "ignoredClassPrefix";
 	public static final String USE_INDEFINITE_ARTICLES = "useIndefiniteArticles";
+	public static final String IGNORE_FIELDS = "ignoreFields";
 	public static final String DEBUG = "debug";
 
 	public static final String JAVAX_PERSISTENCE_ENTITY = "javax.persistence.Entity";
@@ -82,6 +83,7 @@ public class ProcessorContext extends Context {
 		setVarArgsForCollections(getBoolean(options, GENERATE_VARARGS_FOR_COLLECTIONS, true));
 		setIgnoredClassPrefix(options.get(IGNORED_CLASS_PREFIX));
 		setUseIndefiniteArticles(getBoolean(options, USE_INDEFINITE_ARTICLES, true));
+		setIgnoreFields(options.get(IGNORE_FIELDS));
 	}
 
 	private boolean getBoolean(final Map<String, String> options, final String key, final boolean defaultValue) {

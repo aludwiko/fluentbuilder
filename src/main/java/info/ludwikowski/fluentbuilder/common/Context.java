@@ -5,6 +5,10 @@ package info.ludwikowski.fluentbuilder.common;
 
 import static info.ludwikowski.fluentbuilder.util.StringUtils.hasText;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * This class provides default properties for the FluentBuilderGenerator and the
  * ability to change them. It is used by the generator and by the builder.
@@ -22,6 +26,7 @@ public class Context {
 	private boolean staticCreate = true;
 	private boolean varArgsForCollections = true;
 	private boolean useIndefiniteArticles = true;
+	private String ignoreFields;
 
 
 	/**
@@ -203,6 +208,31 @@ public class Context {
 		this.useIndefiniteArticles = useIndefiniteArticles;
 	}
 
+	public List<String> getIgnoreFieldsRegexps() {
+		if (hasText(ignoreFields)) {
+			return toList(ignoreFields.split(";"));
+		}
+		return Collections.EMPTY_LIST;
+	}
+
+	private List<String> toList(String[] splitedignoreFields) {
+		if (splitedignoreFields.length == 0) {
+			return Collections.EMPTY_LIST;
+		}
+		List<String> regexps = new ArrayList<String>();
+		for (String regexp : splitedignoreFields) {
+			if (hasText(regexp)) {
+				regexps.add(regexp);
+			}
+		}
+		return regexps;
+	}
+
+
+	public void setIgnoreFields(String ignoreFields) {
+		this.ignoreFields = ignoreFields;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -224,6 +254,8 @@ public class Context {
 		builder.append(varArgsForCollections);
 		builder.append(", useIndefiniteArticles=");
 		builder.append(useIndefiniteArticles);
+		builder.append(", ignoreFields splitted=");
+		builder.append(getIgnoreFieldsRegexps());
 		builder.append("]");
 		return builder.toString();
 	}

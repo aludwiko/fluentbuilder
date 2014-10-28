@@ -34,8 +34,6 @@ public class ClassWithAllTypes {
 	private List typeStringListWitoutGenerics;
 	private Map<String, List<Integer>> complexGeneric;
 
-
-
 	public Map<String, List<Integer>> getComplexGeneric() {
 		return complexGeneric;
 	}

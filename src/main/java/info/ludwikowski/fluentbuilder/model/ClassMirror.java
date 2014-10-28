@@ -40,13 +40,6 @@ public interface ClassMirror {
 	List<MemberMirror> getMembers();
 
 	/**
-	 * Returns the members of the class which are fields.
-	 * 
-	 * @return all members of the represented class which are fields as a list
-	 */
-	List<MemberMirrorImpl> getFieldMembers();
-
-	/**
 	 * Returns the the necessary imports of the class.
 	 * 
 	 * @return all necessary imports as a set.

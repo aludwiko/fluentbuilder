@@ -3,9 +3,10 @@
  */
 package info.ludwikowski.fluentbuilder.common;
 
-import static org.junit.Assert.assertEquals;
+import static org.fest.assertions.api.Assertions.assertThat;
 
-import org.junit.Before;
+import java.util.List;
+
 import org.junit.Test;
 
 /**
@@ -13,70 +14,19 @@ import org.junit.Test;
  */
 public class ContextUnitTest {
 
-	Context testContext = null;
+	Context context = new Context();
 
-
-	@Before
-	public void setUp() {
-		testContext = new Context();
-	}
 
 	@Test
-	public void shouldGetMethodPrefix() {
-		String defaultValue = "with";
-		String returnedValue = testContext.getMethodPrefix();
-		assertEquals(defaultValue, returnedValue);
-	}
+	public void should_split_regexps() {
 
-	@Test
-	public void shouldSetNewMethodPrefix() {
-		String newValue = "newWith";
-		testContext.setMethodPrefix(newValue);
-		String returnedValue = testContext.getMethodPrefix();
-		assertEquals(returnedValue, newValue);
-	}
+		// given
+		context.setIgnoreFields("_.*;id;version");
 
-	@Test
-	public void shouldGetBuilderClassPostfix() {
-		String defaultValue = "Builder";
-		String returnedValue = testContext.getBuilderClassPostfix();
-		assertEquals(defaultValue, returnedValue);
-	}
+		// when
+		List<String> result = context.getIgnoreFieldsRegexps();
 
-	@Test
-	public void shouldSetNewBuilderClassPostfix() {
-		String newValue = "NewBuilder";
-		testContext.setBuilderClassPostfix(newValue);
-		String returnedValue = testContext.getBuilderClassPostfix();
-		assertEquals(newValue, returnedValue);
-	}
-
-	@Test
-	public void shouldGetAbstractBuilderClassPrefix() {
-		String defaultValue = "Abstract";
-		String returnedValue = testContext.getAbstractBuilderClassPrefix();
-		assertEquals(defaultValue, returnedValue);
-	}
-
-	@Test
-	public void shouldSetAbstractBuilderClassPrefix() {
-		String newValue = "NewAbstract";
-		testContext.setAbstractBuilderClassPrefix(newValue);
-		String returnedValue = testContext.getAbstractBuilderClassPrefix();
-		assertEquals(newValue, returnedValue);
-	}
-
-	@Test
-	public void shouldGetStaticCreateMethodName() {
-		String returnedValue = testContext.getStaticCreateMethodName();
-		assertEquals(null, returnedValue);
-	}
-
-	@Test
-	public void shouldSetStaticCreateMethodName() {
-		String newValue = "testName";
-		testContext.setStaticCreateMethodName(newValue);
-		String returnedValue = testContext.getStaticCreateMethodName();
-		assertEquals(newValue, returnedValue);
+		// then
+		assertThat(result).containsOnly("_.*", "id", "version");
 	}
 }

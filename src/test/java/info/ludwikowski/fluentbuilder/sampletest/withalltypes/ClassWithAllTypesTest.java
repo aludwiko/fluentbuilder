@@ -15,7 +15,6 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 
@@ -47,7 +46,6 @@ public class ClassWithAllTypesTest {
 		Short typeObjectShort = 77;
 		String typeString = "string";
 		String typeString2 = "string2";
-		List<String> typeStringList = Lists.newArrayList();
 		List typeStringListWitoutGenerics = new LinkedList();
 
 		// when

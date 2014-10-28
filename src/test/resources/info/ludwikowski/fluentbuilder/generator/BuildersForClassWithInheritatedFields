@@ -11,6 +11,7 @@ public abstract class AbstractChildBuilder<B> extends AbstractBuilder<Child, B> 
 
 	public abstract B withChildField(String childField);
 	public abstract B withParentField(String parentField);
+	public abstract B with_ignoredField(String _ignoredField);
 	public abstract B withGranField(String granField);
 
 }

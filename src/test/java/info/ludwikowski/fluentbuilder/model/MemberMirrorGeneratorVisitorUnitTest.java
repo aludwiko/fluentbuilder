@@ -6,7 +6,6 @@ package info.ludwikowski.fluentbuilder.model;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 import static org.mockito.Mockito.when;
-import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -14,11 +13,9 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.util.Types;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -27,8 +24,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class MemberMirrorGeneratorVisitorUnitTest {
 
-	private MemberMirrorGeneratorVisitor testVisitor = null;
-	private ProcessorContext mockedContext;
+	private MemberMirrorGeneratorVisitor testVisitor = new MemberMirrorGeneratorVisitor();
 	@Mock
 	private PrimitiveType mockedPrimitiveType;
 	@Mock
@@ -38,12 +34,6 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 	@Mock
 	private TypeElement mockedTypeElement;
 
-
-	@Before
-	public void setUp() throws Exception {
-		mockedContext = Mockito.mock(ProcessorContext.class);
-		testVisitor = new MemberMirrorGeneratorVisitor(mockedContext);
-	}
 
 	@Test
 	public void shouldCreateMemberMirrorWithNameFromPrimitiveElement() {
@@ -70,8 +60,7 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 	public void shouldCreateMemberMirrorWithNameFromDeclaredElement() {
 		// given
 		final Element element = new DeclaredElementMock();
-		when(mockedContext.getTypeUtils()).thenReturn(mockedType);
-		when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
+		when(mockedDeclaredType.asElement()).thenReturn(mockedTypeElement);
 		// when
 		final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);
 		// then
@@ -82,8 +71,7 @@ public class MemberMirrorGeneratorVisitorUnitTest {
 	public void shouldCreateMemberMirrorWithSimpleTypeFromDeclaredElement() {
 		// given
 		final Element element = new DeclaredElementMock();
-		when(mockedContext.getTypeUtils()).thenReturn(mockedType);
-		when(mockedType.asElement(mockedDeclaredType)).thenReturn(mockedTypeElement);
+		when(mockedDeclaredType.asElement()).thenReturn(mockedTypeElement);
 		when(mockedDeclaredType.toString()).thenReturn("String");
 		// when
 		final MemberMirror testMember = testVisitor.visitDeclared(mockedDeclaredType, element);

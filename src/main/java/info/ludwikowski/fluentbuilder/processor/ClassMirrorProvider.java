@@ -25,7 +25,6 @@ import javax.lang.model.element.ElementKind;
 public class ClassMirrorProvider {
 
 	private final ClassVerifier classVerifier;
-	private final ProcessorContext context;
 
 
 	/**
@@ -35,9 +34,8 @@ public class ClassMirrorProvider {
 	 *            should be generated.
 	 * @param context inhabits settings for the {@link FluentBuilderProcessor}
 	 */
-	public ClassMirrorProvider(final ClassVerifier classVerifier, final ProcessorContext context) {
+	public ClassMirrorProvider(final ClassVerifier classVerifier) {
 		this.classVerifier = classVerifier;
-		this.context = context;
 	}
 
 	/**
@@ -45,10 +43,11 @@ public class ClassMirrorProvider {
 	 * each found class {@link Element} a ClassMirror.
 	 * 
 	 * @param elements Set of Elements which are checked for classes
+	 * @param context
 	 * @return a Collection of ClassMirrors which represent the found classes in
 	 *         elements
 	 */
-	public final Collection<ClassMirror> prepareMirrors(final Set<? extends Element> elements) {
+	public final Collection<ClassMirror> prepareMirrors(final Set<? extends Element> elements, ProcessorContext context) {
 
 		final Set<ClassMirror> classMirrors = new HashSet<ClassMirror>();
 
@@ -60,7 +59,7 @@ public class ClassMirrorProvider {
 
 			if (classVerifier.generateBuilder(element)) {
 
-				classMirrors.add(new ClassMirrorImpl(element, context));
+				classMirrors.add(new ClassMirrorImpl(element, context.getIgnoreFieldsRegexps()));
 			}
 		}
 

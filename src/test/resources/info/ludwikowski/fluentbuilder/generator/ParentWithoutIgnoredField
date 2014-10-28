@@ -1,0 +1,32 @@
+package info.ludwikowski.fluentbuilder.sample.inheritance;
+
+import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
+
+
+/**
+ * Abstract builder for Parent.
+ * After changes in Parent this class will be overridden, so don't put any changes here, use ParentBuilder instead.
+ */
+public abstract class AbstractParentBuilder<B> extends AbstractBuilder<Parent, B> {
+
+	public abstract B withParentField(String parentField);
+	public abstract B withGranField(String granField);
+
+}
+
+/////////////////////////////////////
+package info.ludwikowski.fluentbuilder.sample.inheritance;
+
+import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
+
+
+/**
+ * Fluent builder for Parent.
+ * Don't hesitate to put your custom methods here.
+ */
+public abstract class ParentBuilder extends AbstractParentBuilder<ParentBuilder> {
+
+	public static ParentBuilder aParent(){
+		return AbstractBuilderFactory.createImplementation(ParentBuilder.class);
+	}
+}

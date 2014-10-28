@@ -4,8 +4,8 @@
 package info.ludwikowski.fluentbuilder.generator;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderPrinter;
-import info.ludwikowski.fluentbuilder.common.Context;
 import info.ludwikowski.fluentbuilder.common.BuilderPrinter;
+import info.ludwikowski.fluentbuilder.common.Context;
 import info.ludwikowski.fluentbuilder.model.ClassMirror;
 import info.ludwikowski.fluentbuilder.model.ClassMirrorImpl;
 
@@ -132,8 +132,14 @@ public final class AbstractBuilderGenerator {
 		return this;
 	}
 
+
 	public AbstractBuilderGenerator withIndefiniteArticles(boolean indefiniteArticles) {
 		context.setUseIndefiniteArticles(indefiniteArticles);
+		return this;
+	}
+
+	public AbstractBuilderGenerator withIgnoredFields(String ignoreFields) {
+		context.setIgnoreFields(ignoreFields);
 		return this;
 	}
 
@@ -142,7 +148,7 @@ public final class AbstractBuilderGenerator {
 	 */
 	public void printBuilders() {
 
-		ClassMirror classMirror = new ClassMirrorImpl(clazz, context);
+		ClassMirror classMirror = new ClassMirrorImpl(clazz, context.getIgnoreFieldsRegexps());
 		AbstractBuilderPrinter abstractBuilderPrinter = new AbstractBuilderPrinter(classMirror, context);
 		BuilderPrinter builderPrinter = new BuilderPrinter(classMirror, context);
 

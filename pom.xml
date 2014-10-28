@@ -182,6 +182,7 @@
 								-Adebug=true -AuseIndefineArticles=true
 								-AbuilderClassPostfix=Builder
 								-AbuildMethodName=anotherBuildMethod
+								-AignoreFields=_.*
 							</compilerArguments>
 							<processors>
 								<processor>info.ludwikowski.fluentbuilder.processor.FluentBuilderProcessor</processor>

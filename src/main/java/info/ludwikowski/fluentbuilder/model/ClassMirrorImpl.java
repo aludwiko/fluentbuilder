@@ -7,8 +7,7 @@
 
 package info.ludwikowski.fluentbuilder.model;
 
-import info.ludwikowski.fluentbuilder.common.Context;
-import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
+import static info.ludwikowski.fluentbuilder.util.TypeUtils.isStaticOrFinal;
 import info.ludwikowski.fluentbuilder.util.StringUtils;
 import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
@@ -40,33 +39,36 @@ public class ClassMirrorImpl implements ClassMirror {
 	private final String packageName;
 	private final List<MemberMirror> members = new LinkedList<MemberMirror>();
 	private final Set<Constructor> constructors = new TreeSet<Constructor>();
+	private List<String> ignoredFieldRegexps = new LinkedList<String>();
 
 
 	/**
 	 * Creates a ClassMirrorImpl from a given element which represents a class.
 	 * This is needed because the APT processes classes as elements.
-	 *
+	 * 
 	 * @param element - a class which is parsed to an element by the APT
-	 * @param context - configuration for mirror creation and code generation
+	 * @param ignoredFieldRegexps list with regexpes of fields that should be ignored. might be empty
 	 */
-	public ClassMirrorImpl(final Element element, final ProcessorContext context) {
+	public ClassMirrorImpl(final Element element, List<String> ignoredFieldRegexps) {
 		final TypeElement typeElement = (TypeElement) element;
 		simpleName = typeElement.getSimpleName().toString();
 		packageName = typeElement.getQualifiedName().toString().replace("." + simpleName, StringUtils.EMPTY);
-		fillMemberMirrors(element, context);
+		this.ignoredFieldRegexps = ignoredFieldRegexps;
+		fillMemberMirrors(element);
+		fillConstructors(element);
 	}
 
 	/**
 	 * Creates a ClassMirrorImpl from a given class with a given configuration.
 	 *
 	 * @param clazz - class which will be mirrored
-	 * @param context - configuration for mirror creation and code generation
 	 */
-	public ClassMirrorImpl(final Class<?> clazz, final Context context) {
+	public ClassMirrorImpl(final Class<?> clazz, List<String> ignoredFieldRegexps) {
 
 		simpleName = clazz.getSimpleName();
 		packageName = clazz.getCanonicalName().replace("." + simpleName, StringUtils.EMPTY);
-		fillMemberMirrors(clazz, context);
+		this.ignoredFieldRegexps = ignoredFieldRegexps;
+		fillMemberMirrors(clazz);
 		fillConstructors(clazz);
 	}
 
@@ -77,17 +79,17 @@ public class ClassMirrorImpl implements ClassMirror {
 		}
 	}
 
-	private void fillMemberMirrors(final Class<?> clazz, final Context context) {
+	private void fillMemberMirrors(final Class<?> clazz) {
 
 		final List<Field> properFields = properFields(clazz);
 		for (final Field field : properFields) {
-			members.add(MemberMirrorCreator.create(field, context));
+			members.add(MemberMirrorCreator.create(field));
 		}
 
 		final Class<?> superClass = clazz.getSuperclass();
 		if (isNotObjectClass(superClass)) {
 			// filling inheritted fields
-			fillMemberMirrors(superClass, context);
+			fillMemberMirrors(superClass);
 		}
 	}
 
@@ -109,16 +111,13 @@ public class ClassMirrorImpl implements ClassMirror {
 		return properFields;
 	}
 
-	private void fillMemberMirrors(final Element element, final ProcessorContext context) {
+	private void fillMemberMirrors(final Element element) {
 
 		final List<? extends Element> fieldsOfClass = ElementFilter.fieldsIn(element.getEnclosedElements());
-		visitFieldsList(fieldsOfClass, context);
-
-		final List<ExecutableElement> constructorsOfClass = ElementFilter.constructorsIn(element.getEnclosedElements());
-		visitConstructorList(constructorsOfClass, context);
+		visitFieldsList(fieldsOfClass);
 
 		if (hasParent(element)) {
-			fillMemberMirrors(parentType(element).asElement(), context);
+			fillMemberMirrors(parentType(element).asElement());
 		}
 	}
 
@@ -133,24 +132,29 @@ public class ClassMirrorImpl implements ClassMirror {
 		return parentType;
 	}
 
-	private void visitFieldsList(final List<? extends Element> fieldsOfClass, final ProcessorContext context) {
+	private void visitFieldsList(final List<? extends Element> fieldsOfClass) {
 		for (final Element field : fieldsOfClass) {
-			if (TypeUtils.isStaticOrFinal(field)) {
+			if (isStaticOrFinal(field)) {
 				continue;
 			}
-			visitField(field, context);
+			visitField(field);
 		}
 	}
 
-	private void visitField(final Element field, final ProcessorContext context) {
-		final MemberMirrorGeneratorVisitor visitor = new MemberMirrorGeneratorVisitor(context);
+	private void visitField(final Element field) {
+		final MemberMirrorGeneratorVisitor visitor = new MemberMirrorGeneratorVisitor();
 		final MemberMirror member = field.asType().accept(visitor, field);
 		if (member != null) {
 			members.add(member);
 		}
 	}
 
-	private void visitConstructorList(final List<ExecutableElement> constructorsOfClass, final ProcessorContext context) {
+	private void fillConstructors(Element element) {
+		final List<ExecutableElement> constructorsOfClass = ElementFilter.constructorsIn(element.getEnclosedElements());
+		visitConstructorList(constructorsOfClass);
+	}
+
+	private void visitConstructorList(final List<ExecutableElement> constructorsOfClass) {
 		for (ExecutableElement constructorOfClass : constructorsOfClass) {
 			final ConstructorGeneratorVisitor visitor = new ConstructorGeneratorVisitor();
 			constructors.add(constructorOfClass.asType().accept(visitor, constructorOfClass));
@@ -160,28 +164,37 @@ public class ClassMirrorImpl implements ClassMirror {
 
 	@Override
 	public final List<MemberMirror> getMembers() {
-		return members;
+		return filterMembers();
+	}
+
+	private List<MemberMirror> filterMembers() {
+
+		List<MemberMirror> filtered = new ArrayList<MemberMirror>();
+		for (MemberMirror member : members) {
+			if (notIgnore(member)) {
+				filtered.add(member);
+			}
+		}
+		return filtered;
+	}
+
+	private boolean notIgnore(MemberMirror memberMirror) {
+
+		if (ignoredFieldRegexps == null) {
+			return true;
+		}
+
+		for (String regexp : ignoredFieldRegexps) {
+			if (memberMirror.getName().matches(regexp)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public final Collection<Constructor> getConstructors() {
 		return constructors;
-	}
-
-	/**
-	 * This method returns all MemberMirrors which represent a class field.
-	 *
-	 * @return all class fields as a list of MemberMirrorImpl
-	 */
-	@Override
-	public final List<MemberMirrorImpl> getFieldMembers() {
-		final List<MemberMirrorImpl> fieldMembers = new ArrayList<MemberMirrorImpl>();
-		for (MemberMirror memberMirror : members) {
-			if (memberMirror instanceof MemberMirrorImpl) {
-				fieldMembers.add((MemberMirrorImpl) memberMirror);
-			}
-		}
-		return fieldMembers;
 	}
 
 	@Override
@@ -194,7 +207,7 @@ public class ClassMirrorImpl implements ClassMirror {
 
 		final Imports imports = new Imports();
 
-		for (final MemberMirror member : members) {
+		for (final MemberMirror member : getMembers()) {
 			imports.addAll(member.getImports());
 		}
 

@@ -8,6 +8,8 @@ package info.ludwikowski.fluentbuilder.sample.inheritance;
 public class Parent extends Gran {
 
 	private String parentField;
+	@SuppressWarnings("unused")
+	private String _ignoredField;
 
 
 	public String getParentField() {

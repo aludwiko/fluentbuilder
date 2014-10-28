@@ -10,7 +10,6 @@ import static info.ludwikowski.fluentbuilder.model.MemberMirrorImpl.simpleMirror
 import static info.ludwikowski.fluentbuilder.util.NameUtils.removePackageNameFromFullyQualifiedName;
 import static info.ludwikowski.fluentbuilder.util.TypeUtils.isGeneric;
 import static info.ludwikowski.fluentbuilder.util.TypeUtils.isListOrSet;
-import info.ludwikowski.fluentbuilder.common.Context;
 import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 import java.lang.reflect.Field;
@@ -35,10 +34,9 @@ public final class MemberMirrorCreator {
 	 * Creates a MemberMirror instance which represents a given class field.
 	 * 
 	 * @param field - represented field
-	 * @param context - settings for the builder
 	 * @return a MemberMirror which represents the given field
 	 */
-	public static MemberMirror create(final Field field, final Context context) {
+	public static MemberMirror create(final Field field) {
 
 		final Class<?> type = field.getType();
 

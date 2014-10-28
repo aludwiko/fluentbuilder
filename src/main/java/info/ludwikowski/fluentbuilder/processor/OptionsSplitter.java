@@ -27,7 +27,6 @@ public class OptionsSplitter {
 			String optionKey = option.getKey();
 			String optionValue = option.getValue();
 			if (optionForSplit(optionValue)) {
-				System.out.println(option);
 				splittedOptions.putAll(splitOption(option));
 			}
 			else {

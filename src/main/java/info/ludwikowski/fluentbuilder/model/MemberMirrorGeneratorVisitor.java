@@ -10,7 +10,6 @@ import static info.ludwikowski.fluentbuilder.model.ImportsFactory.createNecessar
 import static info.ludwikowski.fluentbuilder.model.MemberMirrorImpl.collectionMirror;
 import static info.ludwikowski.fluentbuilder.model.MemberMirrorImpl.simpleMirror;
 import static info.ludwikowski.fluentbuilder.util.NameUtils.removePackageNameFromFullyQualifiedName;
-import info.ludwikowski.fluentbuilder.processor.ProcessorContext;
 import info.ludwikowski.fluentbuilder.util.TypeUtils;
 
 import java.util.Collections;
@@ -32,18 +31,6 @@ import javax.lang.model.util.SimpleTypeVisitor6;
  * @author Jan van Esdonk
  */
 public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirror, Element> {
-
-	private final ProcessorContext context;
-
-
-	/**
-	 * Creates a MemberMirrorGeneratorVisitor with given settings.
-	 *
-	 * @param context - inhabits MirrorCreation settings
-	 */
-	public MemberMirrorGeneratorVisitor(final ProcessorContext context) {
-		this.context = context;
-	}
 
 	@Override
 	/**
@@ -81,7 +68,7 @@ public class MemberMirrorGeneratorVisitor extends SimpleTypeVisitor6<MemberMirro
 	 */
 	public final MemberMirror visitDeclared(final DeclaredType declaredType, final Element element) {
 
-		final TypeElement returnedElement = (TypeElement) context.getTypeUtils().asElement(declaredType);
+		final TypeElement returnedElement = (TypeElement) declaredType.asElement();
 
 		final String name = element.toString();
 		final String simpleType = removePackageNameFromFullyQualifiedName(declaredType.toString());

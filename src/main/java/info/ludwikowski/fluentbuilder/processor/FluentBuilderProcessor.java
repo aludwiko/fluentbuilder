@@ -49,7 +49,7 @@ public class FluentBuilderProcessor extends AbstractProcessor {
 		super.init(processingEnv);
 		context = new ProcessorContext(processingEnv);
 		final ClassVerifier classVerifier = new ClassVerifier(context);
-		classMirrorProvider = new ClassMirrorProvider(classVerifier, context);
+		classMirrorProvider = new ClassMirrorProvider(classVerifier);
 		classWriter = new ClassWriter(context);
 		context.logConfiguration();
 	}
@@ -64,7 +64,7 @@ public class FluentBuilderProcessor extends AbstractProcessor {
 
 		context.logInfo("Found " + elements.size() + " classes for analysis.");
 
-		final Collection<ClassMirror> classMirrors = classMirrorProvider.prepareMirrors(elements);
+		final Collection<ClassMirror> classMirrors = classMirrorProvider.prepareMirrors(elements, context);
 
 		context.logInfo("Selected " + classMirrors.size() + " classes for builders generation.");
 

@@ -5,6 +5,7 @@
 package info.ludwikowski.fluentbuilder.generator;
 
 import info.ludwikowski.fluentbuilder.sample.inheritance.Child;
+import info.ludwikowski.fluentbuilder.sample.inheritance.Parent;
 import info.ludwikowski.fluentbuilder.sample.withalltypes.ClassWithAllTypes;
 import info.ludwikowski.fluentbuilder.sample.withdefaultcontructor.ClassWithDefaultConstructor;
 import info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor.ClassWithoutDefaultConstructor;
@@ -19,6 +20,7 @@ import org.unitils.io.annotation.FileContent;
 
 public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 
+
 	@FileContent("BuildersForClassWithAllTypes")
 	private String buildersForClassWithAllTypes;
 	@FileContent("BuildersForClassWithoutDefaultConstructor")
@@ -27,10 +29,24 @@ public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 	private String buildersForClassWithDefaultConstrutor;
 	@FileContent("BuildersForClassWithInheritatedFields")
 	private String buildersForClassWithInheritatedFields;
+	@FileContent("ParentWithoutIgnoredField")
+	private String parentWithoutIgnoredField;
 	private ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	private PrintStream printStream = new PrintStream(baos);
 
 
+	@Test
+	public void shouldGenerateAbstractBuilderAndBuilderForClassWithIgnoredField() {
+
+		// when
+		AbstractBuilderGenerator.forClassWithWriter(Parent.class, printStream)
+								.withIgnoredFields("_.*")
+								.printBuilders();
+		String result = baos.toString();
+
+		// then
+		LineByLineAssertions.assertThat(result).isEqualsLineByLine(parentWithoutIgnoredField);
+	}
 
 	@Test
 	public void shouldGenerateAbstractBuilderAndBuilderForClassWithAllTypes() {
