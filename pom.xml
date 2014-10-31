@@ -136,19 +136,6 @@
 			              </sources>
 			            </configuration>
 			          </execution>
-			          <!-- FIXME -->
-			          <execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>src/test/java/de/bluecarat/fluentbuilder/integration/test</source>
-							</sources>
-						</configuration>
-					</execution>
 			        </executions>
 			</plugin>
 			<plugin>
@@ -193,38 +180,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.codehaus.mojo</groupId> -->
-<!-- 				<artifactId>build-helper-maven-plugin</artifactId> -->
-<!-- 				<version>1.9</version> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>add-test-source</id> -->
-<!-- 						<phase>generate-test-sources</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>add-test-source</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<sources> -->
-<!-- 								<source>target/generated-sources</source> -->
-<!-- 							</sources> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 					<execution> -->
-<!-- 						<id>add-source</id> -->
-<!-- 						<phase>generate-sources</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>add-source</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<sources> -->
-<!-- 								<source>src/test/java/de/bluecarat/fluentbuilder/integration/samples</source> -->
-<!-- 							</sources> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
 <!-- 			<plugin> -->
 <!-- 				<groupId>org.apache.maven.plugins</groupId> -->
 <!-- 				<artifactId>maven-surefire-plugin</artifactId> -->
@@ -499,11 +454,13 @@
 										</versionRange>
 										<goals>
 											<goal>add-test-source</goal>
-											<goal>add-source</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+											<runOnConfiguration>true</runOnConfiguration>
+										</execute>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
