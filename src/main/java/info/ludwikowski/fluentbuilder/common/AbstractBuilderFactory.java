@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 import net.sf.cglib.proxy.Enhancer;
 
-import org.springframework.core.GenericTypeResolver;
 
 /**
  * This class offers static methods for creating bean objects from builder
