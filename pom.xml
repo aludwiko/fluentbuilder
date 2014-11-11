@@ -36,10 +36,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>org.unitils</groupId>
-		    <artifactId>unitils-io</artifactId>
-		    <version>3.3</version>
-		    <scope>test</scope>
+			<groupId>org.unitils</groupId>
+			<artifactId>unitils-io</artifactId>
+			<version>3.3</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -92,43 +92,43 @@
 	<build>
 		<plugins>
 			<plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-shade-plugin</artifactId>
-		        <version>1.7.1</version>
-		        <executions>
-		          <execution>
-		            <phase>package</phase>
-		            <goals>
-		              <goal>shade</goal>
-		            </goals>
-		            <configuration>
-		              <artifactSet>
-		                <includes>
-		                  <include>cglib:cglib-nodep</include>
-		                </includes>
-		              </artifactSet>
-		              <filters>
-		              <filter>
-		                  <artifact>*:*</artifact>
-		                  <excludes>
-		                    <exclude>LICENSE</exclude>
-		                    <exclude>asm-license.txt</exclude>
-		                    <exclude>NOTICE</exclude>
-		                  </excludes>
-		                </filter>
-		                </filters>
-		                <relocations>
-                <relocation>
-                <pattern>net.sf.cglib</pattern>
-                  <shadedPattern>shaded.net.sf.cglib</shadedPattern>
-                </relocation>
-                </relocations>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.7.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>cglib:cglib-nodep</include>
+								</includes>
+							</artifactSet>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>LICENSE</exclude>
+										<exclude>asm-license.txt</exclude>
+										<exclude>NOTICE</exclude>
+									</excludes>
+								</filter>
+							</filters>
+							<relocations>
+								<relocation>
+									<pattern>net.sf.cglib</pattern>
+									<shadedPattern>shaded.net.sf.cglib</shadedPattern>
+								</relocation>
+							</relocations>
 
-		               <minimizeJar>true</minimizeJar>
-		            </configuration>
-		          </execution>
-		        </executions>
-		      </plugin>
+							<minimizeJar>true</minimizeJar>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -153,23 +153,23 @@
 				</executions>
 			</plugin>
 			<plugin>
-			        <groupId>org.codehaus.mojo</groupId>
-			        <artifactId>build-helper-maven-plugin</artifactId>
-			        <version>1.9</version>
-			        <executions>
-			          <execution>
-			            <id>add-test-source</id>
-			            <phase>generate-test-sources</phase>
-			            <goals>
-			              <goal>add-test-source</goal>
-			            </goals>
-			            <configuration>
-			              <sources>
-			                <source>target/generated-test-sources</source>
-			              </sources>
-			            </configuration>
-			          </execution>
-			        </executions>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9</version>
+				<executions>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-test-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -213,38 +213,6 @@
 					</execution>
 				</executions>
 			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-surefire-plugin</artifactId> -->
-<!-- 				<version>2.10</version> -->
-<!-- 				<configuration> -->
-<!-- 					<testNGArtifactName>none:none</testNGArtifactName> -->
-<!-- 					<argLine>-XX:PermSize=256m ${argLine}</argLine> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
-<!-- 			<plugin> -->
-<!-- 		        <groupId>org.codehaus.mojo</groupId> -->
-<!-- 		        <artifactId>cobertura-maven-plugin</artifactId> -->
-<!-- 		        <version>2.6</version> -->
-<!-- 		        <configuration> -->
-<!-- 		          <instrumentation> -->
-<!-- 		            <ignores> -->
-<!-- 		              <ignore>com.example.boringcode.*</ignore> -->
-<!-- 		            </ignores> -->
-<!-- 		            <excludes> -->
-<!-- 		              <exclude>com/example/dullcode/**/*.class</exclude> -->
-<!-- 		              <exclude>com/example/**/*Test.class</exclude> -->
-<!-- 		            </excludes> -->
-<!-- 		          </instrumentation> -->
-<!-- 		        </configuration> -->
-<!-- 		        <executions> -->
-<!-- 		          <execution> -->
-<!-- 		            <goals> -->
-<!-- 		              <goal>clean</goal> -->
-<!-- 		            </goals> -->
-<!-- 		          </execution> -->
-<!-- 		        </executions> -->
-<!-- 		      </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
@@ -264,26 +232,26 @@
 					<suppressionsLocation>${basedir}/tools/config/checkstyle-suppressions.xml</suppressionsLocation>
 				</configuration>
 			</plugin>
-<!-- 			<plugin> -->
-<!--         <groupId>org.codehaus.mojo</groupId> -->
-<!--         <artifactId>cobertura-maven-plugin</artifactId> -->
-<!--         <version>2.6</version> -->
-<!--         <configuration> -->
-<!--   <format>xml</format> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.mojo</groupId> -->
+			<!-- <artifactId>cobertura-maven-plugin</artifactId> -->
+			<!-- <version>2.6</version> -->
+			<!-- <configuration> -->
+			<!-- <format>xml</format> -->
 
-<!--         </configuration> -->
-<!--         <executions> -->
-<!--           <execution> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
 
-<!--                     <phase>test</phase> -->
-<!--                     <goals> -->
-<!--                         <goal>cobertura</goal> -->
-<!--                         <goal>check</goal> -->
-<!--                     </goals> -->
-<!--                 </execution> -->
+			<!-- <phase>test</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>cobertura</goal> -->
+			<!-- <goal>check</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
 
-<!--         </executions> -->
-<!--       </plugin> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
@@ -340,15 +308,15 @@
 									<banLatest>true</banLatest>
 									<banRelease>true</banRelease>
 									<banSnapshots>true</banSnapshots>
-<!-- 									<phases>clean,deploy,site</phases> -->
+									<!-- <phases>clean,deploy,site</phases> -->
 									<unCheckedPluginList>org.apache.maven.plugins:maven-clean-plugin,
-									org.apache.maven.plugins:maven-resources-plugin,
-									org.apache.maven.plugins:maven-deploy-plugin,
-									org.apache.maven.plugins:maven-jar-plugin,
-									org.apache.maven.plugins:maven-javadoc-plugin,
-									org.apache.maven.plugins:maven-install-plugin,
-									org.apache.maven.plugins:maven-site-plugin,
-									org.apache.maven.plugins:maven-surefire-plugin</unCheckedPluginList>
+										org.apache.maven.plugins:maven-resources-plugin,
+										org.apache.maven.plugins:maven-deploy-plugin,
+										org.apache.maven.plugins:maven-jar-plugin,
+										org.apache.maven.plugins:maven-javadoc-plugin,
+										org.apache.maven.plugins:maven-install-plugin,
+										org.apache.maven.plugins:maven-site-plugin,
+										org.apache.maven.plugins:maven-surefire-plugin</unCheckedPluginList>
 								</requirePluginVersions>
 							</rules>
 						</configuration>
