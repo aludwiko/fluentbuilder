@@ -92,6 +92,44 @@
 	<build>
 		<plugins>
 			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-shade-plugin</artifactId>
+		        <version>1.7.1</version>
+		        <executions>
+		          <execution>
+		            <phase>package</phase>
+		            <goals>
+		              <goal>shade</goal>
+		            </goals>
+		            <configuration>
+		              <artifactSet>
+		                <includes>
+		                  <include>cglib:cglib-nodep</include>
+		                </includes>
+		              </artifactSet>
+		              <filters>
+		              <filter>
+		                  <artifact>*:*</artifact>
+		                  <excludes>
+		                    <exclude>LICENSE</exclude>
+		                    <exclude>asm-license.txt</exclude>
+		                    <exclude>NOTICE</exclude>
+		                  </excludes>
+		                </filter>
+		                </filters>
+		                <relocations>
+                <relocation>
+                <pattern>net.sf.cglib</pattern>
+                  <shadedPattern>shaded.net.sf.cglib</shadedPattern>
+                </relocation>
+                </relocations>
+
+		               <minimizeJar>true</minimizeJar>
+		            </configuration>
+		          </execution>
+		        </executions>
+		      </plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
