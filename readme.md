@@ -17,5 +17,6 @@ NEW:
  * support for classes without default constructors #14
  * support for inheritance #13 (overridden/hidden fields are NOT supported, because it is bad programming practice and should be avoided)
  * ignoring fields by regexp enhancement #16 (additional parameter for ignoring e.g. technical fields that should not be included in generated builders)
+ 
 FIXED:
  * compiler arguments must be in single line #12
