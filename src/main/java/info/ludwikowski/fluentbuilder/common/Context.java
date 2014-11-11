@@ -208,6 +208,7 @@ public class Context {
 		this.useIndefiniteArticles = useIndefiniteArticles;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<String> getIgnoreFieldsRegexps() {
 		if (hasText(ignoreFields)) {
 			return toList(ignoreFields.split(";"));
@@ -215,6 +216,7 @@ public class Context {
 		return Collections.EMPTY_LIST;
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<String> toList(String[] splitedignoreFields) {
 		if (splitedignoreFields.length == 0) {
 			return Collections.EMPTY_LIST;
