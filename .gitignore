@@ -10,3 +10,4 @@ target/
 .pmdruleset.xml
 .fbExcludeFilterFile
 /bin/
+dependency-reduced-pom.xml
