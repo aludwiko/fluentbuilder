@@ -1,0 +1,76 @@
+@prefix atxa-rse-eclipse: <http://www.architexa.com/rdf/rse-eclipse#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix atxa-strata: <http://www.architexa.com/rdf/strata#> .
+@prefix atxa-jdt-wkspc: <http://www.architexa.com/rdf/jdt-wkspc#> .
+@prefix atxa-core: <http://www.architexa.com/rdf/core#> .
+@prefix atxa: <http://www.architexa.com/rdf/> .
+
+<http://www.architexa.com/rdf/rse-eclipse#code_unstructure.atxa> a atxa-core:strataFile .
+
+atxa:DetailNode atxa-core:detailLevel "0" .
+
+atxa-core:docRoot atxa-core:browseModel "com.architexa.diagrams.relo.jdt/com.architexa.diagrams.relo.jdt.browse.ClassStrucBrowseModel" ;
+	atxa-core:contains _:node196vo1sp7x1 .
+
+_:node196vo1sp7x1 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#info.ludwikowski.fluentbuilder.common> ;
+	atxa-core:containerState "false" , "false" , "false" ;
+	atxa-strata:nestedLayerIndexes ":0,false,false,true:1,false,false,true" ;
+	atxa-strata:layerIndex "1" ;
+	atxa-strata:indexWithinLayer "0" .
+
+atxa-core:docRoot atxa-core:contains _:node196vo1sp7x2 .
+
+_:node196vo1sp7x2 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#info.ludwikowski.fluentbuilder.util> ;
+	atxa-core:containerState "false" , "false" , "false" ;
+	atxa-strata:nestedLayerIndexes ":1,false,false,true:3,false,false,true" ;
+	atxa-strata:layerIndex "3" ;
+	atxa-strata:indexWithinLayer "1" .
+
+atxa-core:docRoot atxa-core:contains _:node196vo1sp7x3 .
+
+_:node196vo1sp7x3 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#info.ludwikowski.fluentbuilder.processor> ;
+	atxa-core:containerState "false" , "false" , "false" ;
+	atxa-strata:nestedLayerIndexes ":1,false,false,true:0,false,false,true" ;
+	atxa-strata:layerIndex "0" ;
+	atxa-strata:indexWithinLayer "1" .
+
+atxa-core:docRoot atxa-core:contains _:node196vo1sp7x4 .
+
+_:node196vo1sp7x4 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#info.ludwikowski.fluentbuilder.annotation> ;
+	atxa-core:containerState "false" , "false" , "false" ;
+	atxa-strata:nestedLayerIndexes ":0,false,false,true:3,false,false,true" ;
+	atxa-strata:layerIndex "3" ;
+	atxa-strata:indexWithinLayer "0" .
+
+atxa-core:docRoot atxa-core:contains _:node196vo1sp7x5 .
+
+_:node196vo1sp7x5 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#info.ludwikowski.fluentbuilder.model> ;
+	atxa-core:containerState "false" , "false" , "false" ;
+	atxa-strata:nestedLayerIndexes ":0,false,false,true:2,false,false,true" ;
+	atxa-strata:layerIndex "2" ;
+	atxa-strata:indexWithinLayer "0" .
+
+atxa-core:docRoot atxa-core:contains _:node196vo1sp7x6 .
+
+_:node196vo1sp7x6 a atxa-core:node ;
+	atxa-core:model <http://www.architexa.com/rdf/jdt-wkspc#info.ludwikowski.fluentbuilder.generator> ;
+	atxa-core:containerState "false" , "false" , "false" ;
+	atxa-strata:nestedLayerIndexes ":0,false,false,true:0,false,false,true" ;
+	atxa-strata:layerIndex "0" ;
+	atxa-strata:indexWithinLayer "0" .
+
+@prefix atxa-rse-eclipse: <http://www.architexa.com/rdf/rse-eclipse#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix atxa-strata: <http://www.architexa.com/rdf/strata#> .
+@prefix atxa-jdt-wkspc: <http://www.architexa.com/rdf/jdt-wkspc#> .
+@prefix atxa-core: <http://www.architexa.com/rdf/core#> .
+@prefix atxa: <http://www.architexa.com/rdf/> .
+
+<http://www.architexa.com/rdf/rse-eclipse#code_unstructure.atxa> a atxa-core:strataFile ;
+	atxa-core:contains _:node196vo1sp7x1 , _:node196vo1sp7x2 , _:node196vo1sp7x3 , _:node196vo1sp7x4 , _:node196vo1sp7x5 , _:node196vo1sp7x6 , atxa-core:docRoot , _:node196vo1sp7x1 , _:node196vo1sp7x2 , _:node196vo1sp7x3 , _:node196vo1sp7x4 , _:node196vo1sp7x5 , _:node196vo1sp7x6 , atxa-core:docRoot .
+
