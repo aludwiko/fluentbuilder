@@ -1,5 +1,5 @@
 /**
- * This package contains classes which are used by the Annotation Processing.
+ * This package contains classes implementing Annotation Processing Tool api.
  *
  */
 package info.ludwikowski.fluentbuilder.processor;
