@@ -172,8 +172,6 @@
 									<shadedPattern>shaded.net.sf.cglib</shadedPattern>
 								</relocation>
 							</relocations>
-
-							<minimizeJar>true</minimizeJar>
 						</configuration>
 					</execution>
 				</executions>
