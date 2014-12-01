@@ -14,7 +14,7 @@ GitHub Repository: https://github.com/aludwiko/fluentbuilder
 * inheritance support
 * many constructors support
 * varargs support
-* custom domain method support
+* custom domain methods support
 
 ##Setup Code Generation
 
