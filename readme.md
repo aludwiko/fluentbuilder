@@ -7,6 +7,15 @@ After the fork from [BLUECARAT AG](https://github.com/bluecarat/fluentbuilder) m
 
 GitHub Repository: https://github.com/aludwiko/fluentbuilder
 
+##Features
+* "on build" generation
+* fluent syntax
+* no setters needed
+* inheritance support
+* many constructors support
+* varargs support
+* custom domain method support
+
 ##Setup Code Generation
 
 Checkout project Wiki: https://github.com/aludwiko/fluentbuilder/wiki
