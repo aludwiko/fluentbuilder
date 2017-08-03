@@ -229,6 +229,13 @@ public class TypeUtilsTest {
 		assertThat(type).isEqualTo("GenericDeclaration");
 	}
 
+	@Test
+	public void shouldReturnClassNameOnlyFromGenericTypeDeclarationAsString() {
+		final String genericString = "GenericType<SubGenericType<ParametrizedType>";
+		final String type = NameUtils.getOnlyClassNameFromGenericDeclaration(genericString);
+		assertThat(type).isEqualTo("GenericType");
+	}
+
 	private String className(final Object object) {
 		return object.getClass().getName();
 	}

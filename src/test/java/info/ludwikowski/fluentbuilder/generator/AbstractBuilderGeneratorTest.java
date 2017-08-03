@@ -9,6 +9,7 @@ import info.ludwikowski.fluentbuilder.sample.inheritance.Parent;
 import info.ludwikowski.fluentbuilder.sample.withalltypes.ClassWithAllTypes;
 import info.ludwikowski.fluentbuilder.sample.withdefaultcontructor.ClassWithDefaultConstructor;
 import info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor.ClassWithoutDefaultConstructor;
+import info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor.ClassWithoutDefaultConstructorWithGenericTypes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -25,6 +26,8 @@ public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 	private String buildersForClassWithAllTypes;
 	@FileContent("BuildersForClassWithoutDefaultConstructor")
 	private String buildersForClassWithoutDefaultConstrutor;
+	@FileContent("BuildersForClassWithoutDefaultConstructorWithGenericTypes")
+	private String buildersForClassWithoutDefaultConstrutorWithGenericTypes;
 	@FileContent("BuildersForClassWithDefaultConstructor")
 	private String buildersForClassWithDefaultConstrutor;
 	@FileContent("BuildersForClassWithInheritatedFields")
@@ -93,5 +96,18 @@ public class AbstractBuilderGeneratorTest extends UnitilsJUnit4 {
 
 		// then
 		LineByLineAssertions.assertThat(result).isEqualsLineByLine(buildersForClassWithInheritatedFields);
+	}
+
+	@Test
+	//@Ignore
+	public void shouldGenerateAbstractBuilderAndBuilderForClassWithGenericTypes() {
+
+		// when
+		AbstractBuilderGenerator.forClassWithWriter(ClassWithoutDefaultConstructorWithGenericTypes.class, printStream).printBuilders();
+		String result = baos.toString();
+		//System.out.println(result);
+
+		// then
+		LineByLineAssertions.assertThat(result).isEqualsLineByLine(buildersForClassWithoutDefaultConstrutorWithGenericTypes);
 	}
 }

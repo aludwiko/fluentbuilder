@@ -1,0 +1,46 @@
+package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
+
+import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
+import info.ludwikowski.fluentbuilder.sample.types.GenericType;
+import info.ludwikowski.fluentbuilder.sample.types.SimpleType;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
+/**
+ * Abstract builder for ClassWithoutDefaultConstructorWithGenericTypes.
+ * After changes in ClassWithoutDefaultConstructorWithGenericTypes this class will be overridden, so don't put any changes here, use ClassWithoutDefaultConstructorWithGenericTypesBuilder instead.
+ */
+public abstract class AbstractClassWithoutDefaultConstructorWithGenericTypesBuilder<B> extends AbstractBuilder<ClassWithoutDefaultConstructorWithGenericTypes, B> {
+
+	public abstract B withNumber(Integer number);
+	public abstract B withBool(boolean bool);
+	public abstract B withSomeList(List<SimpleType> someList);
+	public abstract B withSomeListOfGeneric(List<GenericType<SimpleType>> someListOfGeneric);
+
+	public B withSomeList(SimpleType... someList){
+		return withSomeList(new ArrayList<SimpleType>(Arrays.asList(someList)));
+	}
+	public B withSomeListOfGeneric(GenericType<SimpleType>... someListOfGeneric){
+		return withSomeListOfGeneric(new ArrayList<GenericType<SimpleType>>(Arrays.asList(someListOfGeneric)));
+	}
+}
+
+/////////////////////////////////////
+package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
+
+import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
+import java.util.List;
+
+
+/**
+ * Fluent builder for ClassWithoutDefaultConstructorWithGenericTypes.
+ * Don't hesitate to put your custom methods here.
+ */
+public abstract class ClassWithoutDefaultConstructorWithGenericTypesBuilder extends AbstractClassWithoutDefaultConstructorWithGenericTypesBuilder<ClassWithoutDefaultConstructorWithGenericTypesBuilder> {
+
+	public static ClassWithoutDefaultConstructorWithGenericTypesBuilder aClassWithoutDefaultConstructorWithGenericTypes(Integer arg0, boolean arg1, List arg2, List arg3){
+		return AbstractBuilderFactory.createImplementation(ClassWithoutDefaultConstructorWithGenericTypesBuilder.class, arg0, arg1, arg2, arg3);
+	}
+}
