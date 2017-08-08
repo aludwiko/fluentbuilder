@@ -11,3 +11,6 @@ target/
 .fbExcludeFilterFile
 /bin/
 dependency-reduced-pom.xml
+
+*.iml
+.idea
