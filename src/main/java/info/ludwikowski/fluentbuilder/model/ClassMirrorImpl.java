@@ -7,6 +7,7 @@
 
 package info.ludwikowski.fluentbuilder.model;
 
+import static info.ludwikowski.fluentbuilder.model.ImportsFactory.onlyImports;
 import static info.ludwikowski.fluentbuilder.util.TypeUtils.isStaticOrFinal;
 import info.ludwikowski.fluentbuilder.util.StringUtils;
 import info.ludwikowski.fluentbuilder.util.TypeUtils;
@@ -220,7 +221,13 @@ public class ClassMirrorImpl implements ClassMirror {
 		final Imports imports = new Imports();
 
 		for (final Constructor constructor : constructors) {
-			imports.addAll(constructor.getParamsTypes());
+			List<String> importTypes = new LinkedList<String>();
+
+			for (final String paramType : constructor.getParamsTypes()) {
+				importTypes.addAll(onlyImports(paramType));
+			}
+
+			imports.addAll(importTypes);
 		}
 
 		return imports.asSet();

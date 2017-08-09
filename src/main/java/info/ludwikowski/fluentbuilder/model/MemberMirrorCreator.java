@@ -83,8 +83,15 @@ public final class MemberMirrorCreator {
 	private static String collectionElementSimpleName(final Field field) {
 		final Type genericType = field.getGenericType();
 		final ParameterizedType parameterizedType = (ParameterizedType) genericType;
-		final Class<?> type = (Class<?>) parameterizedType.getActualTypeArguments()[0];
-		return removePackageNameFromFullyQualifiedName(type.getName());
+
+		Object type = parameterizedType.getActualTypeArguments()[0];
+		if(type instanceof ParameterizedType) {
+			return removePackageNameFromFullyQualifiedName(type.toString());
+		}
+		else {
+			final Class<?> argumentType = (Class<?>) parameterizedType.getActualTypeArguments()[0];
+			return removePackageNameFromFullyQualifiedName(argumentType.getName());
+		}
 	}
 
 }

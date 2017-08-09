@@ -3,6 +3,8 @@
  */
 package info.ludwikowski.fluentbuilder.model;
 
+import static info.ludwikowski.fluentbuilder.util.TypeUtils.isPrimitiveType;
+
 import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
@@ -38,11 +40,16 @@ public class Imports {
 	public final void addAll(final Collection<String> imports) {
 
 		for (final String importString : imports) {
-
-			if (!importString.contains(JAVA_LANG)) {
-				this.imports.add(importString);
-			}
+			add(importString);
 		}
+	}
+
+	private boolean add(String importString) {
+		if(importString.startsWith(JAVA_LANG) || isPrimitiveType(importString)) {
+			return false;
+		}
+
+		return this.imports.add(importString);
 	}
 
 	/**
