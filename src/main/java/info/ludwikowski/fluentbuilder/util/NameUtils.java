@@ -87,4 +87,15 @@ public final class NameUtils {
 		final String generic = newString.replaceAll(">", "");
 		return generic;
 	}
+
+	/**
+	 * Extracts the generic type as a String from a String which includes a
+	 * generic declaration.
+	 *
+	 * @param genericString String with a generic declaration
+	 * @return generic type as a String
+	 */
+	public static String getOnlyClassNameFromGenericDeclaration(final String genericString) {
+		return genericString.replaceAll("<.+>", "");
+	}
 }
