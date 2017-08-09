@@ -1,10 +1,10 @@
-package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
+package info.ludwikowski.fluentbuilder.sample.generics;
 
 import java.util.List;
 
 import info.ludwikowski.fluentbuilder.annotation.GenerateBuilder;
-import info.ludwikowski.fluentbuilder.sample.types.GenericType;
-import info.ludwikowski.fluentbuilder.sample.types.SimpleType;
+import info.ludwikowski.fluentbuilder.sample.generics.GenericType;
+import info.ludwikowski.fluentbuilder.sample.generics.SimpleType;
 
 @GenerateBuilder
 public class ClassWithoutDefaultConstructorWithGenericTypes {

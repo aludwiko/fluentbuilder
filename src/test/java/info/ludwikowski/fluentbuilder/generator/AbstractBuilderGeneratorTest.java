@@ -9,7 +9,7 @@ import info.ludwikowski.fluentbuilder.sample.inheritance.Parent;
 import info.ludwikowski.fluentbuilder.sample.withalltypes.ClassWithAllTypes;
 import info.ludwikowski.fluentbuilder.sample.withdefaultcontructor.ClassWithDefaultConstructor;
 import info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor.ClassWithoutDefaultConstructor;
-import info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor.ClassWithoutDefaultConstructorWithGenericTypes;
+import info.ludwikowski.fluentbuilder.sample.generics.ClassWithoutDefaultConstructorWithGenericTypes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

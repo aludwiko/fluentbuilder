@@ -1,8 +1,8 @@
-package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
+package info.ludwikowski.fluentbuilder.sample.generics;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilder;
-import info.ludwikowski.fluentbuilder.sample.types.GenericType;
-import info.ludwikowski.fluentbuilder.sample.types.SimpleType;
+import info.ludwikowski.fluentbuilder.sample.generics.GenericType;
+import info.ludwikowski.fluentbuilder.sample.generics.SimpleType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +28,7 @@ public abstract class AbstractClassWithoutDefaultConstructorWithGenericTypesBuil
 }
 
 /////////////////////////////////////
-package info.ludwikowski.fluentbuilder.sample.withoutdefaultconstructor;
+package info.ludwikowski.fluentbuilder.sample.generics;
 
 import info.ludwikowski.fluentbuilder.common.AbstractBuilderFactory;
 import java.util.List;
