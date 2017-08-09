@@ -1,4 +1,4 @@
-#FluentBuilderGenerator
+# FluentBuilderGenerator
 
 The FluentBuilderGenerator generate builders (based on the Builder Pattern) for object creation for unit testing. With help of these generated classes it is possible to create custom objects in a fluent syntax style. The generator is implementation of javax.annotation.processing.AbstractProcessor
  from [Annotation Processing Tool](http://docs.oracle.com/javase/7/docs/technotes/guides/apt/) and it can be used with Maven, Gradle, Ant or just Eclipse.
@@ -7,7 +7,7 @@ After the fork from [BLUECARAT AG](https://github.com/bluecarat/fluentbuilder) m
 
 GitHub Repository: https://github.com/aludwiko/fluentbuilder
 
-##Features
+## Features
 * "on build" generation
 * fluent syntax
 * no setters needed
@@ -16,12 +16,12 @@ GitHub Repository: https://github.com/aludwiko/fluentbuilder
 * varargs support
 * custom domain methods support
 
-##Setup Code Generation
+## Setup Code Generation
 
 Checkout project Wiki: https://github.com/aludwiko/fluentbuilder/wiki
 
-##Changelog
-###1.1.0
+## Changelog
+### 1.1.0
 NEW:
  * support for classes without default constructors #14
  * support for inheritance #13 (overridden/hidden fields are NOT supported, because it is bad programming practice and should be avoided)
@@ -29,3 +29,7 @@ NEW:
  
 FIXED:
  * compiler arguments must be in single line #12
+
+### 1.2.0
+FIXED:
+ * [Invalid generic import and Primitive import while field is required in constructor.](https://github.com/aludwiko/fluentbuilder/issues/22)
